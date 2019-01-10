@@ -7,12 +7,12 @@ const router = require('./server/routes')
 const eventControllers = require('./server/controllers/eventControllers')
 
 const dev = process.env.NODE_ENV !== 'production'
-const mount = next({ dev })
-const handle = mount.getRequestHandler()
+const nextApp = next({ dev })
+const handle = nextApp.getRequestHandler()
 
-const port = 3000
+const port = process.env.PORT || 3000
 
-mount.prepare()
+nextApp.prepare()
   .then(() => {
     const app = express()
     app.use(cors())

@@ -2,7 +2,7 @@ const io = require('socket.io-client')
 
 const http = require('../utilities/promisifiedHTTP')
 
-const domain = 'http://localhost:8000'
+const domain = 'http://localhost:3000'
 
 function handleNewOrder (order, socket) {
   console.log('New order is', order)

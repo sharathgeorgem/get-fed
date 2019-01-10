@@ -1,7 +1,7 @@
 const http = require('../utilities/promisifiedHTTP')
 
 const key = '10a6760a0a87faec6c36ce16cd426eb6'
-const domain = 'http://localhost:8000'
+const domain = 'http://localhost:3000'
 const placeholder = 'https://www.engel-vimbuch.de/images/placeholder/restaurant_raeume/restaurant_raeume_schnapsstueble.jpg'
 
 async function addRestaurant (details) {

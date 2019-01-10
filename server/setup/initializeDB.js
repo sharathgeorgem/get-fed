@@ -1,6 +1,6 @@
 const http = require('../utilities/promisifiedHTTP')
 
-const domain = 'http://localhost:8000'
+const domain = 'http://localhost:3000'
 
 async function addUser (name) {
   return http.request('http', 'POST', domain, 'user/new', { name: name })
