@@ -1,7 +1,9 @@
+import React from 'react'
+import io from 'socket.io-client'
+
 import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
 import Restaurants from '../Components/Restaurants'
-import React from 'react'
 
 import {
   Col,
@@ -18,6 +20,14 @@ class Index extends React.Component {
       query: ''
     }
   }
+  componentDidMount () {
+    this.socket = io()
+    this.socket.on('check', data => {
+      this.setState({
+        query: data.message
+      })
+    })
+  }
   onChange (e) {
     this.setState({ query: e.target.value.toLowerCase() })
   }
@@ -32,6 +42,7 @@ class Index extends React.Component {
                   <InputGroupAddon addonType='append'> Search </InputGroupAddon>
                   <Input onChange={this.onChange.bind(this)} />
                 </InputGroup>
+                <h3>{this.state.query}</h3>
               </div>
               <Restaurants restaurants={this.props.restaurants} />
             </Col>

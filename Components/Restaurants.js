@@ -30,7 +30,7 @@ const Restaurants = (props) => {
               >
                 <CardImg
                   top
-                  style={{ height: 250 }}
+                  style={{ height: 250, maxHeight: 250 }}
                   src={`${res.thumb}`}
                 />
                 <CardBody>
