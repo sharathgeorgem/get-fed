@@ -5,18 +5,18 @@ import Link from 'next/link'
 import { Container, Nav, NavItem } from 'reactstrap'
 
 class Layout extends React.Component {
-  static async getInitialProps ({ req }) {
-    let pageProps = {}
+  // static async getInitialProps ({ req }) {
+  //   let pageProps = {}
 
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps(ctx)
-    }
-    return { pageProps }
-  }
+  //   if (Component.getInitialProps) {
+  //     pageProps = await Component.getInitialProps(ctx)
+  //   }
+  //   return { pageProps }
+  // }
 
   render () {
     const { children } = this.props
-    const title = 'Welcome to Nextjs'
+    const title = 'get-fed'
     return (
       <div>
         <Head>
@@ -38,7 +38,7 @@ class Layout extends React.Component {
           <Nav className='navbar navbar-dark bg-dark'>
             <NavItem>
               <Link href='/'>
-                <a className='navbar-brand'>Home</a>
+                <a className='navbar-brand'>Get Fed</a>
               </Link>
             </NavItem>
 
