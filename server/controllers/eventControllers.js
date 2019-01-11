@@ -14,10 +14,9 @@ exports.acceptOrder = async function (orderId, connections) {
 
 exports.acceptDelivery = async function (delivererId, orderId, connections) {
   console.log('Delivery accepted')
-  let order = await model.acceptDelivery(delivererId, orderId).catch(console.log)
-  if (order) {
-    let deliverer = await model.getDelivererName(delivererId).catch(console.log)
-    connections[order.customer].emit('delivererAssigned', orderId, deliverer)
+  let res = await model.acceptDelivery(delivererId, orderId).catch(console.log)
+  if (res) {
+    connections[res.customer].emit('delivererAssigned', orderId, res.deliverer)
     Object.entries(connections.deliverers).forEach(([key, value]) => value.socket.emit('orderTaken'))
     // only emit event to previously messaged deliverers
   }
@@ -45,5 +44,6 @@ exports.delivered = async function (orderId, connections) {
 exports.updateLocation = async function (delivererId, lat, long, connections) {
   connections.deliverers[delivererId].latitude = lat
   connections.deliverers[delivererId].longitude = long
-  // emit to all relevant customers
+  let customers = await model.getCustomers(delivererId)
+  customers.forEach(id => connections[id].emit('updateLocation', [lat, long]))
 }
