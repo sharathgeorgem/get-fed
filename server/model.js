@@ -167,7 +167,8 @@ exports.getRestaurants = async function () {
 
 exports.getItems = async function () {
   let res = await Restaurant.find().populate('menu.items')
-  return res[0].menu
+  let menu = res[0].menu
+  return menu.map(cat => Object.assign({}, { [cat.category]: cat.items }))
 }
 
 exports.getCart = async function (userId) {
