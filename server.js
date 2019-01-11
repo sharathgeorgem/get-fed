@@ -45,6 +45,9 @@ nextApp.prepare()
 
     serverSocket.on('connection', client => {
       console.log('Connection made')
+      client.emit('check', {
+        message: 'Checked'
+      })
       client.on('identify', id => addConnection(id, client))
       client.on('identifyDeliverer', id => addDeliverer(id, client))
       client.on('placeOrder', (userId, addressId) => eventControllers.placeOrder(userId, addressId, connections))
