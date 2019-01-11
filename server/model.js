@@ -73,7 +73,8 @@ const DelivererSchema = createSchema({
   name: String,
   score: Number,
   votes: Number,
-  currentOrders: [{ type: ObjectId, ref: 'Order' }]
+  currentOrders: [{ type: ObjectId, ref: 'Order' }],
+  currentCustomers: [{ type: ObjectId, ref: 'User' }]
 })
 
 // Models
@@ -248,15 +249,25 @@ exports.submitOrder = async function (userId, addressId) {
   return order
 }
 
+exports.getCustomers = async function (delivererId) {
+  let deliverer = await Deliverer.findById(delivererId)
+  return deliverer.customers
+}
+
 exports.acceptOrder = async function (orderId) {
   return Order.findOneAndUpdate({ _id: orderId }, { accepted: true })
 }
 
-exports.acceptDelivery = async function (deliverer, orderId) {
+exports.acceptDelivery = async function (delivererId, orderId) {
   let order = await Order.findById(orderId)
   if (order.deliverer) return false
-  order['deliverer'] = deliverer
-  return order.save()
+  order.deliverer = delivererId
+  order.save()
+  let deliverer = await Deliverer.findById(delivererId)
+  deliverer.currentOrders.push(orderId)
+  deliverer.currentCustomers.push(order.customer)
+  deliverer.save()
+  return { customer: order.customer, deliverer: deliverer.name }
 }
 
 exports.pickedUp = async function (orderId) {
