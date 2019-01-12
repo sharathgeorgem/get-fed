@@ -25,6 +25,12 @@ nextApp.prepare()
       console.log(`Server listening on port ${port}`)
     })
 
+    app.get('/items-list', (req, res) => {
+      const actualPage = '/items-list'
+      console.log('Request for items reached')
+      app.render(req, res, actualPage)
+    })
+
     app.get('*', (req, res) => {
       return handle(req, res)
     })

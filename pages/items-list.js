@@ -32,8 +32,9 @@ class Items extends React.Component {
       Object.entries(names).map(([key, res]) => {
         display.push(...res.map(dish => {
           return <Card
-            style={{ width: '30%', margin: '0 10px' }}
+            style={{ width: '30%', margin: '10px 10px 10px 0' }}
             key={dish._id}
+            className='h-100'
           >
             <CardImg
               top
@@ -48,30 +49,6 @@ class Items extends React.Component {
               <Button outline color='primary'>
                 + Add To Cart
               </Button>
-
-              <style jsx>
-                {`
-                a {
-                  color: white;
-                }
-                a:link {
-                  text-decoration: none;
-                  color: white;
-                }
-                .container-fluid {
-                  margin-bottom: 30px;
-                }
-                .btn-outline-primary {
-                  color: #007bff !important;
-                }
-                a:hover {
-                  color: white !important;
-                }
-                .card {
-                  display: inline-block !important;
-                }
-              `}
-              </style>
             </div>
           </Card>
         })
@@ -84,15 +61,43 @@ class Items extends React.Component {
       return (
         <React.Fragment>
           <Layout>
-            <Row>
-              <Col xs='9' style={{ padding: 0 }}>
-                <div style={{ display: 'inline-block' }} className='h-100'>
-                  <Container fluid>
-                    {display}
-                  </Container>
-                </div>
-              </Col>
-            </Row>
+            <div className='container-fluid'>
+              <Row>
+                <Col xs='9' style={{ padding: 0 }}>
+                  <div className='h-100'>
+                    <Container fluid>
+                      {display}
+                    </Container>
+                    <style jsx global>
+                      {`
+                      a {
+                        color: white;
+                      }
+                      a:link {
+                        text-decoration: none;
+                        color: white;
+                      }
+                      .container-fluid {
+                        margin-bottom: 30px;
+                      }
+                      .btn-outline-primary {
+                        color: #007bff !important;
+                      }
+                      a:hover {
+                        color: white !important;
+                      }
+                      .card-columns {
+                        column-count: 3;
+                      }
+                      .card {
+                        display: inline-block !important;
+                      }
+                    `}
+                    </style>
+                  </div>
+                </Col>
+              </Row>
+            </div>
           </Layout>
         </React.Fragment>)
     }
