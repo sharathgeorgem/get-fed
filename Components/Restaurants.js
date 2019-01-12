@@ -1,11 +1,11 @@
 import Link from 'next/link'
 import {
-  Button,
+  // Button,
   Card,
   CardBody,
-  CardColumns,
+  // CardColumns,
   CardImg,
-  CardSubtitle,
+  // CardSubtitle,
   CardText,
   CardTitle,
   Col,
@@ -45,12 +45,14 @@ const Restaurants = (props) => {
                   </Row>
                 </CardBody>
                 <div className='card-footer'>
-                  <Link
+                  {/* <Link
                     as={`/restaurants/${res._id}`}
                     href={`/restaurants?id=${res._id}`}
-                  >
+                  > */}
+                  <Link as={`/items`} href={`/items`}>
                     <a className='btn btn-primary'>View</a>
                   </Link>
+                  {/* </Link> */}
                 </div>
               </Card>
             ))}
