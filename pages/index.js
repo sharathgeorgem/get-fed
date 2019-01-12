@@ -42,7 +42,6 @@ class Index extends React.Component {
                   <InputGroupAddon addonType='append'> Search </InputGroupAddon>
                   <Input onChange={this.onChange.bind(this)} />
                 </InputGroup>
-                <h3>{this.state.query}</h3>
               </div>
               <Restaurants restaurants={this.props.restaurants} />
             </Col>
