@@ -6,7 +6,7 @@ const domain = 'http://localhost:3000'
 
 async function makeOrder (id, socket) {
   let res = await http.getRequest('http', 'json', domain, 'items')
-  let cart = res.menu.map(item => Object.assign({}, { item: item.id, quantity: 1 }))
+  let cart = res.menu[0][Object.keys(res.menu[0])[0]].map(item => Object.assign({}, { item: item.id, quantity: 1 }))
   res = await http.request('http', 'POST', domain, `user/cart/${id}`, { cart: cart })
   let address = {
     latitude: 12.9615365,
