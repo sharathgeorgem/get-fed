@@ -13,10 +13,8 @@ class RestaurantPortal extends React.Component {
   initializeConnection = async () => {
     this.socket = io.connect(domain)
     this.socket.emit('identify', this.props.id)
-    this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
-    this.socket.on('acceptOrderConfirmed', order => this.setState({ orders: [order].concat(this.state.orders.filter(oldOrder => oldOrder.id !== order.id)) }))
-    this.socket.on('delivererArrivedRestaurant', (orderId, delivererId) => null)
-    this.socket.on('orderPickedUp', )
+    this.socket.on('newOrder', order => this.setState({ orders: [order].concat(this.state.orders) }))
+    this.socket.on('updateOrderStatus', order => this.setState({ orders: [order].concat(this.state.orders.filter(oldOrder => oldOrder.id !== order.id)) }))
   }
   acceptOrder = (orderId) => {
     this.socket.emit('acceptOrder', orderId)
@@ -35,8 +33,8 @@ class RestaurantPortal extends React.Component {
         <p>-----</p>
         {this.state.orders.filter(order => order.accepted).map(order => {
           return <RestaurantOrderCard
-            restaurantName={order.restaurant.name}
-            restaurantAddress={order.restaurant.address.value}
+            timePlaced={order.timePlaced}
+            customerAddress={order.address.value}
             items={order.items}
             accepted={true}
           />
@@ -51,8 +49,8 @@ class RestaurantOrderCard extends React.Component {
     return (
       <div>
         <Card>
-          <CardTitle>{this.props.restaurantName}</CardTitle>
-          <CardSubtitle>{this.props.restaurantAddress}</CardSubtitle>
+          <CardTitle>{this.props.timePlaced}</CardTitle>
+          <CardSubtitle>{this.props.customerAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
           { this.props.accepted ? <p>Order Accepted</p> : <Button>Accept Order</Button> }
         </Card>
@@ -60,6 +58,5 @@ class RestaurantOrderCard extends React.Component {
     )
   }
 }
-
 
 export default RestaurantPortal
