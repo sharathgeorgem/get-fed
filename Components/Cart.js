@@ -1,6 +1,6 @@
 import React from 'react'
 import { withContext } from './Context/ItemsContextProvider'
-// import Link from 'next/link'
+import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
 
@@ -31,9 +31,9 @@ class Cart extends React.Component {
   }
 
   render () {
-    // const { items } = this.props.context
+    const { items } = this.props.context
     console.log('The props are ', this.props)
-    // console.log('The items here are ', items)
+    console.log('The items here are ', items)
     return (
       <div>
         <Card style={{ padding: '10px 5px' }} className='cart'>
@@ -44,7 +44,7 @@ class Cart extends React.Component {
               <small>Items:</small>
             </div>
             <div>
-              {/* {items
+              {items
                 ? items.map(item => {
                   if (item.quantity > 0) {
                     return (
@@ -113,7 +113,7 @@ class Cart extends React.Component {
                     </div>
                   ) : null}
                 </div>
-              ) : null} */}
+              ) : null}
             </div>
           </CardBody>
         </Card>

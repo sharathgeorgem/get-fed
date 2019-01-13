@@ -1,4 +1,5 @@
 import React from 'react'
+import http from '../../utilities/promisifiedHTTP'
 
 const AppContext = React.createContext()
 
@@ -21,9 +22,9 @@ class ItemsContextProvider extends React.Component {
     //   return fetch('http://localhost:3000/user/cart/:' + response.id)
     // })
     
-    // if items in cart, set items and total from cookie
-    // console.log(cart)
-    let total
+    // // if items in cart, set items and total from cookie
+    // // console.log(cart)
+    // let total
     // if (cart) {
     //   cart.map(item => {
     //     total = item.price * item.quantity;
@@ -46,7 +47,8 @@ class ItemsContextProvider extends React.Component {
           items: this.state.items.concat(item),
           total: this.state.total + item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        // () => Cookies.set("cart", this.state.items)
+        
       )
     } else {
       this.setState(
@@ -59,7 +61,7 @@ class ItemsContextProvider extends React.Component {
           ),
           total: this.state.total + item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        // () => Cookies.set("cart", this.state.items)
       )
     }
   }
@@ -79,7 +81,7 @@ class ItemsContextProvider extends React.Component {
           ),
           total: this.state.total - item.price
         },
-        () => Cookies.set("cart", this.state.items)
+        // () => Cookies.set("cart", this.state.items)
       )
     } else {
       const items = [...this.state.items];
@@ -88,7 +90,7 @@ class ItemsContextProvider extends React.Component {
       items.splice(index, 1);
       this.setState(
         { items: items, total: this.state.total - item.price },
-        () => Cookies.set("cart", this.state.items)
+        // () => Cookies.set("cart", this.state.items)
       )
     }
   }
