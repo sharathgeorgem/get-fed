@@ -10,6 +10,7 @@ exports.acceptOrder = async function (orderId, connections) {
   let order = await model.acceptOrder(orderId).catch(console.log)
   Object.keys(connections.deliverers).forEach(id => connections.deliverers[id].socket.emit('newOrder', order)) // change to nearby deliverers
   connections[order.customer].emit('orderAccepted', orderId)
+  connections[order.restaurant].emit('acceptOrderConfirmed', order)
 }
 
 exports.acceptDelivery = async function (delivererId, orderId, connections) {

@@ -1,11 +1,11 @@
 const io = require('socket.io-client')
 
-const http = require('../utilities/promisifiedHTTP')
+const http = require('../../utilities/promisifiedHTTP')
 
 const domain = 'http://localhost:3000'
 
 function handleNewOrder (order, socket) {
-  console.log('New order is', order)
+  // console.log('New order is', order)
   setTimeout(() => socket.emit('acceptOrder', order.id), 5000)
 }
 
