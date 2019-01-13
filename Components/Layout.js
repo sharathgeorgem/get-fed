@@ -11,6 +11,7 @@ class Layout extends React.Component {
   //   if (Component.getInitialProps) {
   //     pageProps = await Component.getInitialProps(ctx)
   //   }
+
   //   return { pageProps }
   // }
 
@@ -32,7 +33,6 @@ class Layout extends React.Component {
             integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
             crossOrigin='anonymous'
           />
-          <script src='https://js.stripe.com/v3' />
         </Head>
         <header>
           <Nav className='navbar navbar-dark bg-dark'>

@@ -1,6 +1,9 @@
 import React from 'react'
 import App, { Container } from 'next/app'
-import Head from 'next/head'
+// import Head from 'next/head'
+import ItemsContextProvider from '../Components/Context/ItemsContextProvider'
+// import compose from 'recompose'
+import Layout from '../Components/Layout'
 
 export default class MyApp extends App {
   static async getInitialProps ({ Component, router, ctx }) {
@@ -16,17 +19,32 @@ export default class MyApp extends App {
     const { Component, pageProps } = this.props
     return (
       <React.Fragment>
-        <Head>
-          <link
-            rel='stylesheet'
-            href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-            integrity='sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm'
-            crossOrigin='anonymous'
-          />
-        </Head>
-
         <Container>
-          <Component {...pageProps} />
+          <ItemsContextProvider>
+            <Layout {...pageProps}>
+              <Component {...pageProps} />
+            </Layout>
+          </ItemsContextProvider>
+          <style jsx global>
+            {`
+              a {
+                color: white !important;
+              }
+              a:link {
+                text-decoration: none !important;
+                color: white !important;
+              }
+              a:hover {
+                color: white;
+              }
+              .card {
+                display: inline-block !important;
+              }
+              .card-columns {
+                column-count: 3;
+              }
+            `}
+          </style>
         </Container>
       </React.Fragment>
     )

@@ -1,14 +1,13 @@
 import React from 'react'
-import { withContext } from '../Context/AppProvider'
-import Link from 'next/link'
+import { withContext } from './Context/ItemsContextProvider'
+// import Link from 'next/link'
 import { withRouter } from 'next/router'
+import { compose } from 'recompose'
 
 import {
   Button,
   Card,
   CardBody,
-  CardSubtitle,
-  CardText,
   CardTitle,
   Badge
 } from 'reactstrap'
@@ -22,15 +21,19 @@ class Cart extends React.Component {
   }
 
   addItem (item) {
-    this.props.context.addItem(item)
+    // this.props.context.addItem(item)
+    console.log('Add item')
   }
 
   removeItem (item) {
-    this.props.context.removeItem(item)
+    // this.props.context.removeItem(item)
+    console.log('Remove item')
   }
 
   render () {
-    const { items } = this.props.context
+    // const { items } = this.props.context
+    console.log('The props are ', this.props)
+    // console.log('The items here are ', items)
     return (
       <div>
         <Card style={{ padding: '10px 5px' }} className='cart'>
@@ -41,7 +44,7 @@ class Cart extends React.Component {
               <small>Items:</small>
             </div>
             <div>
-              {items
+              {/* {items
                 ? items.map(item => {
                   if (item.quantity > 0) {
                     return (
@@ -110,7 +113,7 @@ class Cart extends React.Component {
                     </div>
                   ) : null}
                 </div>
-              ) : null}
+              ) : null} */}
             </div>
           </CardBody>
         </Card>
@@ -134,4 +137,7 @@ class Cart extends React.Component {
   }
 }
 
-export default Cart
+export default compose(
+  withContext,
+  withRouter
+)(Cart)

@@ -1,7 +1,7 @@
 import React from 'react'
 import io from 'socket.io-client'
 
-import Layout from '../Components/Layout'
+// import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
 import Restaurants from '../Components/Restaurants'
 
@@ -33,29 +33,27 @@ class Index extends React.Component {
   }
   render () {
     return (
-      <Layout>
-        <div className='container-fluid'>
-          <Row>
-            <Col>
-              <div className='search'>
-                <InputGroup>
-                  <InputGroupAddon addonType='append'> Search </InputGroupAddon>
-                  <Input onChange={this.onChange.bind(this)} />
-                </InputGroup>
-              </div>
-              <Restaurants restaurants={this.props.restaurants} />
-            </Col>
-          </Row>
-          <style jsx>
-            {`
-              .search {
-                margin: 20px;
-                width: 500px;
-              }
-            `}
-          </style>
-        </div>
-      </Layout>
+      <div className='container-fluid'>
+        <Row>
+          <Col>
+            <div className='search'>
+              <InputGroup>
+                <InputGroupAddon addonType='append'> Search </InputGroupAddon>
+                <Input onChange={this.onChange.bind(this)} />
+              </InputGroup>
+            </div>
+            <Restaurants restaurants={this.props.restaurants} />
+          </Col>
+        </Row>
+        <style jsx>
+          {`
+            .search {
+              margin: 20px;
+              width: 500px;
+            }
+          `}
+        </style>
+      </div>
     )
   }
 }

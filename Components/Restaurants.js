@@ -49,7 +49,7 @@ const Restaurants = (props) => {
                     as={`/restaurants/${res._id}`}
                     href={`/restaurants?id=${res._id}`}
                   > */}
-                  <Link as={`/items-list`} href={`/items-list`}>
+                  <Link href={`/items-list`}>
                     <a className='btn btn-primary'>View</a>
                   </Link>
                   {/* </Link> */}
