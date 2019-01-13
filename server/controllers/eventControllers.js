@@ -10,6 +10,7 @@ exports.acceptOrder = async function (orderId, connections) {
   let order = await model.acceptOrder(orderId).catch(console.log)
   Object.keys(connections.deliverers).forEach(id => connections.deliverers[id].socket.emit('newOrder', order)) // change to nearby deliverers
   connections[order.customer].emit('orderAccepted', orderId)
+  connections[order.restaurant].emit('updateOrderStatus', order)
 }
 
 exports.acceptDelivery = async function (delivererId, orderId, connections) {
@@ -24,7 +25,7 @@ exports.acceptDelivery = async function (delivererId, orderId, connections) {
 
 exports.arrivedRestaurant = async function (orderId, connections) {
   let order = await model.getOrderDetails(orderId).catch(console.log)
-  connections[order.restaurant].emit('delivererArrivedRestaurant', orderId, order.deliverer)
+  connections[order.restaurant].emit('updateOrderStatus', order)
   connections[order.customer].emit('delivererArrivedRestaurant', orderId)
 }
 
@@ -32,7 +33,7 @@ exports.pickedUp = async function (orderId, connections) {
   console.log('Order picked up')
   let order = await model.pickedUp(orderId).catch(console.log)
   connections[order.customer].emit('orderPickedUp', orderId)
-  connections[order.restaurant].emit('orderPickedUp', orderId)
+  connections[order.restaurant].emit('updateOrderStatus', order)
 }
 
 exports.delivered = async function (orderId, connections) {

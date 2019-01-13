@@ -10,6 +10,8 @@ db.once('open', function () {
   console.log('Mongoose Connected')
 })
 
+mongoose.set('useFindAndModify', false)
+
 // Schemas
 
 function createSchema (contents) {
@@ -38,7 +40,10 @@ const AddressSchema = createSchema({
 const OrderSchema = createSchema({
   customer: { type: ObjectId, ref: 'User' },
   restaurant: { type: ObjectId, ref: 'Restaurant' },
-  items: [{ item: { type: ObjectId, ref: 'Item' }, quantity: Number }],
+  items: [{
+    item: { type: ObjectId, ref: 'Item' },
+    quantity: Number
+  }],
   timePlaced: Date,
   accepted: Boolean,
   timeFulfilled: Date,
@@ -49,7 +54,10 @@ const OrderSchema = createSchema({
 })
 const UserSchema = createSchema({
   name: String,
-  cart: [{ item: { type: ObjectId, ref: 'Item' }, quantity: Number }],
+  cart: [{
+    item: { type: ObjectId, ref: 'Item' },
+    quantity: Number
+  }],
   currentOrders: [{ type: ObjectId, ref: 'Order' }],
   pastOrders: [{ type: ObjectId, ref: 'Order' }],
   addresses: { home: AddressSchema, work: AddressSchema, others: [AddressSchema] }
@@ -63,7 +71,10 @@ const RestaurantSchema = createSchema({
   thumb: String,
   img: String,
   cuisines: [String],
-  menu: [{ category: String, items: [{ type: ObjectId, ref: 'Item' }] }],
+  menu: [{
+    category: String,
+    items: [{ type: ObjectId, ref: 'Item' }]
+  }],
   currentOrders: [{ type: ObjectId, ref: 'Order' }],
   pastOrders: [{ type: ObjectId, ref: 'Order' }]
 })
@@ -192,14 +203,15 @@ exports.getOrderDetails = async function (orderId) {
 
 exports.addToCart = async function (userId, item) {
   let user = await User.findById(userId)
-  let index = user.cart.findIndex(itemType => itemType.item === item)
+  let index = user.cart.findIndex(itemType => itemType.item.toString() === item)
   if (index < 0) {
     user.cart.push({ item: item, quantity: 1 })
   } else {
     user.cart[index].quantity++
   }
-  let res = await user.save().populate('cart.item')
-  return { cart: res.cart, total: costOfCart(res.cart) }
+  await user.save()
+  user = await User.findById(userId).populate('cart.item')
+  return { cart: user.cart, total: costOfCart(user.cart) }
 }
 
 exports.removeFromCart = async function (userId, item) {
@@ -210,12 +222,13 @@ exports.removeFromCart = async function (userId, item) {
   } else {
     user.cart.splice(index, 1)
   }
-  let res = await user.save().populate('cart.item')
-  return { cart: res.cart, total: costOfCart(res.cart) }
+  await user.save()
+  user = await User.findById(userId).populate('cart.item')
+  return { cart: user.cart, total: costOfCart(user.cart) }
 }
 
 exports.setCart = async function (userId, cartContents) {
-  let user = await User.findOneAndUpdate({ _id: userId }, { cart: cartContents }).populate('cart.item')
+  let user = await User.findOneAndUpdate({ _id: userId }, { cart: cartContents }, { new: true }).populate('cart.item')
   return { cart: user.cart, total: costOfCart(user.cart) }
 }
 
@@ -256,7 +269,7 @@ exports.getCustomers = async function (delivererId) {
 }
 
 exports.acceptOrder = async function (orderId) {
-  return Order.findOneAndUpdate({ _id: orderId }, { accepted: true })
+  return Order.findOneAndUpdate({ _id: orderId }, { accepted: true }, { new: true }).populate('items.item restaurant')
 }
 
 exports.acceptDelivery = async function (delivererId, orderId) {
@@ -272,7 +285,7 @@ exports.acceptDelivery = async function (delivererId, orderId) {
 }
 
 exports.pickedUp = async function (orderId) {
-  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeFulfilled: Date.now() })
+  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeFulfilled: Date.now() }, { new: true })
   let restaurant = await Restaurant.findById(order.restaurant)
   restaurant.currentOrders.splice(restaurant.currentOrders.indexOf(orderId), 1)
   restaurant.pastOrders.push(order)
@@ -281,7 +294,7 @@ exports.pickedUp = async function (orderId) {
 }
 
 exports.delivered = async function (orderId) {
-  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeDelivered: Date.now() })
+  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeDelivered: Date.now() }, { new: true })
   let user = await User.findById(order.customer)
   user.currentOrders.splice(user.currentOrders.indexOf(orderId), 1)
   user.pastOrders.push(order)

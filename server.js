@@ -31,6 +31,12 @@ nextApp.prepare()
       app.render(req, res, actualPage)
     })
 
+    app.get('/deliverer-portal', (req, res) => {
+      let delivererPage = '/deliverer-portal'
+      console.log('Request for deliverer portal')
+      app.render(req, res, delivererPage)
+    })
+
     app.get('*', (req, res) => {
       return handle(req, res)
     })

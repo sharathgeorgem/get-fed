@@ -1,6 +1,6 @@
 const io = require('socket.io-client')
 
-const http = require('../utilities/promisifiedHTTP')
+const http = require('../../utilities/promisifiedHTTP')
 
 const domain = 'http://localhost:3000'
 
