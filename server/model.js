@@ -10,11 +10,11 @@ db.once('open', function () {
   console.log('Mongoose Connected')
 })
 
-mongoose.set('useFindAndModify', false)
+mongoose.set('useFindAndModify', false) // findAndModify is deprecated but enabled by default
 
 // Schemas
 
-function createSchema (contents) {
+function createSchema (contents) { // wraps all created schemas with id field, which is a copy of _id field
   let schema = new mongoose.Schema(contents)
   schema.virtual('id').get(function () { return this._id })
   schema.set('toObject', { virtuals: true })
@@ -131,6 +131,8 @@ exports.getDummyDeliverer = async function () {
   let deliverers = await Deliverer.find()
   return deliverers[0].id
 }
+
+// --- above only for development
 
 exports.addUser = async function (name) {
   let user = new User({ name: name, cart: [], currentOrders: [], pastOrders: [], addresses: { home: {}, work: {}, others: [] } })

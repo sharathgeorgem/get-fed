@@ -104,7 +104,7 @@ class Cart extends React.Component {
                 <div>
                   <Badge style={{ width: 200, padding: 10 }} color='light'>
                     <h5 style={{ fontWeight: 100, color: 'gray' }}>Total:</h5>
-                    <h3>${this.props.context.total}</h3>
+                    <h3>₹{this.props.context.total}</h3>
                   </Badge>
                   {this.props.router.pathname !== '/checkout' ? (
                     <div

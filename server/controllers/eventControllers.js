@@ -43,6 +43,7 @@ exports.delivered = async function (orderId, connections) {
 }
 
 exports.updateLocation = async function (delivererId, lat, long, connections) {
+  // gets location updates from deliverer, stores it in connection obj, and emits to relevant customers
   connections.deliverers[delivererId].latitude = lat
   connections.deliverers[delivererId].longitude = long
   let customers = await model.getCustomers(delivererId)
