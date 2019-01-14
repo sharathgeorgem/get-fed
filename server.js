@@ -31,11 +31,18 @@ nextApp.prepare()
       app.render(req, res, actualPage)
     })
 
+    app.get('/restaurant-portal', (req, res) => {
+      let restaurantPage = '/restaurant-portal'
+      console.log('Request for restaurant portal')
+      app.render(req, res, restaurantPage)
+    })
+
     app.get('/deliverer-portal', (req, res) => {
       let delivererPage = '/deliverer-portal'
       console.log('Request for deliverer portal')
       app.render(req, res, delivererPage)
     })
+
 
     app.get('*', (req, res) => {
       return handle(req, res)

@@ -22,6 +22,7 @@ class RestaurantPortal extends React.Component {
   render () {
     return (
       <div>
+      <h1>Restaurant Portal</h1>
         {this.state.orders.filter(order => !order.accepted).map(order => {
           return <RestaurantOrderCard
             restaurantName={order.restaurant.name}

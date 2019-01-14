@@ -1,72 +1,34 @@
 import React from 'react'
-import io from 'socket.io-client'
-
-// import Layout from '../Components/Layout'
-import fetch from 'isomorphic-unfetch'
-import Restaurants from '../Components/Restaurants'
-
-import {
-  Col,
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  Row
-} from 'reactstrap'
+import Link from 'next/link'
 
 class Index extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      query: ''
+      location: ''
     }
-  }
-  componentDidMount () {
-    this.socket = io()
-    this.socket.on('check', data => {
-      this.setState({
-        query: data.message
-      })
-    })
-  }
-  onChange (e) {
-    this.setState({ query: e.target.value.toLowerCase() })
   }
   render () {
     return (
-      <div className='container-fluid'>
-        <Row>
-          <Col>
-            <div className='search'>
-              <InputGroup>
-                <InputGroupAddon addonType='append'> Search </InputGroupAddon>
-                <Input onChange={this.onChange.bind(this)} />
-              </InputGroup>
-            </div>
-            <Restaurants restaurants={this.props.restaurants} />
-          </Col>
-        </Row>
-        <style jsx>
+      <React.Fragment>
+        <ul>
+          <li><Link href='/restaurant-scaffold'>Customer</Link></li>
+          <li><Link href='/deliverer-portal'>Deliverer</Link></li>
+          <li><Link href='/restaurant-portal'>Restaurant</Link></li>
+        </ul>
+        <style jsx global>
           {`
-            .search {
-              margin: 20px;
-              width: 500px;
+            li {
+              color: white;
+            }
+
+            body {
+              background-color: gray;
             }
           `}
         </style>
-      </div>
+      </React.Fragment>
     )
-  }
-}
-
-Index.getInitialProps = async function () {
-  const res = await fetch('http://localhost:3000/restaurant')
-  const data = await res.json()
-
-  // console.log(`The data fetched is : ${JSON.stringify(data, null, 4)}`)
-  console.log(`The data fetched : ${data.length}`)
-
-  return {
-    restaurants: data
   }
 }
 
