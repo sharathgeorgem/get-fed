@@ -68,7 +68,7 @@ class Cart extends React.Component {
                         <div>
                           <Button
                             style={{
-                              height: 25,tems-list
+                              height: 25,
                               padding: 0,
                               width: 15,
                               marginRight: 5,
