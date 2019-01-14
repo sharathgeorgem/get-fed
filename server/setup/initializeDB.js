@@ -140,7 +140,7 @@ async function setupDummyData () {
     description: "Grandma's secret recipe",
     price: 650,
     img: 'http://comicpoplibrary.com/wp-content/uploads/2011/06/herring-and-pumpkin-pie.jpg',
-    available: false,
+    available: true,
     restaurant: res.id
   }, 'Dessert')
   await addItem({

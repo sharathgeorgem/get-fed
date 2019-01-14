@@ -10,7 +10,7 @@ class DelivererPortal extends React.Component {
     this.state = { orders: [] }
     this.initializeConnection()
   }
-  initializeConnection = async () => {
+  initializeConnection = () => {
     this.socket = io.connect(domain)
     this.socket.emit('identifyDeliverer', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
@@ -22,7 +22,7 @@ class DelivererPortal extends React.Component {
   render () {
     return (
       <div>
-      <h1>Deliverer Portal</h1>
+      <h2>Deliverer Portal</h2>
         {this.state.orders.map(order => {
           return <DelivererOrderCard
             restaurantName={order.restaurant.name}

@@ -50,8 +50,8 @@ class Items extends React.Component {
     console.log('Items in render are ', items)
     let display = []
     if (items) {
-      items.map((names) => {
-        Object.entries(names).map(([key, res]) => {
+      items.map((category) => {
+        Object.entries(category).map(([key, res]) => {
           display.push(...res.map(dish => {
             return <Card
               style={{ width: '30%', margin: '10px 10px 10px 0' }}
@@ -68,18 +68,21 @@ class Items extends React.Component {
                 <CardText>{dish.description}</CardText>
               </CardBody>
               <div className='card-footer'>
-                <Button
-                  outline color='primary'
-                  onClick={this.addItem.bind(this, dish)}
-                >
+                { dish.available ?
+                  <Button
+                    outline color='primary'
+                    onClick={this.addItem.bind(this, dish)}
+                  >
                   + Add To Cart
-                </Button>
+                  </Button>
+                  : <p>Sold Out</p>            
+                }
               </div>
             </Card>
           })
           )
         })
-        console.log('The names after map are ', names)
+        console.log('The names after map are ', category)
       })
     }
     console.log(display)
