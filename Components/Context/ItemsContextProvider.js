@@ -1,5 +1,5 @@
 import React from 'react'
-import http from '../../utilities/promisifiedHTTP'
+import fetch from 'isomorphic-unfetch'
 
 const AppContext = React.createContext()
 
@@ -10,10 +10,18 @@ class ItemsContextProvider extends React.Component {
     this.state = {
       items: [],
       total: null,
-      menu: {}
+      user: ''
     }
+    this.domain = 'http://localhost:3000'
   }
   componentDidMount() {
+    fetch(`${this.domain}/user/dummy`)
+      .then(res => res.json())
+      .then(res => {
+        this.setState({
+          user: res.id
+        })
+      })
     // const cart = Cookies.getJSON("cart")
     // const cart = fetch('http://localhost:3000/user/dummy')
     // .then(res => res.json())
@@ -31,6 +39,10 @@ class ItemsContextProvider extends React.Component {
     //     this.setState({ items: cart, total: total })
     //   })
     // }
+  }
+
+  updateCart = cart => {
+    this.setState({ items: cart.cart, total: cart.total })
   }
 
   addItem = item => {
@@ -101,8 +113,10 @@ class ItemsContextProvider extends React.Component {
           items: this.state.items,
           addItem: this.addItem,
           removeItem: this.removeItem,
+          updateCart: this.updateCart,
           total: this.state.total,
-          menu: this.state.menu
+          user: this.state.user,
+          domain: this.domain
         }}
       >
         {this.props.children}

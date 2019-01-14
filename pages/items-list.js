@@ -27,7 +27,7 @@ class Items extends React.Component {
   }
 
   componentDidMount () {
-    fetch('http://localhost:3000/items')
+    fetch(`${this.props.context.domain}/items`)
       .then(res => res.json())
       .then(dish => {
         this.setState({
@@ -36,12 +36,16 @@ class Items extends React.Component {
       })
   }
 
-  addItem (item) {
-    this.props.context.addItem(item)
+  addItem = item => {
+    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${item.id}`, {
+      method: 'PUT'
+    })
+    .then(res => res.json())
+    .then(this.props.context.updateCart)
   }
 
   render () {
-    console.log('The props for items-list are ', this.props)
+    console.log('The context props for items-list are ', this.props.context)
     const items = this.state.items.menu
     console.log('Items in render are ', items)
     let display = []

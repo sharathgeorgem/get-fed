@@ -62,7 +62,7 @@ Index.getInitialProps = async function () {
   const res = await fetch('http://localhost:3000/restaurant')
   const data = await res.json()
 
-  console.log(`The data fetched is : ${JSON.stringify(data, null, 4)}`)
+  // console.log(`The data fetched is : ${JSON.stringify(data, null, 4)}`)
   console.log(`The data fetched : ${data.length}`)
 
   return {

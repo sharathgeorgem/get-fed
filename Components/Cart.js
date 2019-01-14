@@ -20,14 +20,22 @@ class Cart extends React.Component {
     }
   }
 
-  addItem (item) {
-    // this.props.context.addItem(item)
-    console.log('Add item')
+  addItem = itemType => {
+    console.log('added item is', itemType.item.id)
+    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${itemType.item.id}`, {
+      method: 'PUT'
+    })
+    .then(res => res.json())
+    .then(this.props.context.updateCart)
   }
 
-  removeItem (item) {
-    // this.props.context.removeItem(item)
-    console.log('Remove item')
+  removeItem = itemType => {
+    console.log('removed item is', itemType.item.id)
+    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${itemType.item.id}`, {
+      method: 'DELETE'
+    })
+    .then(res => res.json())
+    .then(this.props.context.updateCart)
   }
 
   render () {
@@ -45,28 +53,28 @@ class Cart extends React.Component {
             </div>
             <div>
               {items
-                ? items.map(item => {
-                  if (item.quantity > 0) {
+                ? items.map(itemType => {
+                  if (itemType.quantity > 0) {
                     return (
                       <div
                         className='items-one'
                         style={{ marginBottom: 15 }}
-                        key={item._id}
+                        key={itemType.item._id}
                       >
                         <div>
-                          <span id='item-price'>&nbsp; ${item.price}</span>
-                          <span id='item-name'>&nbsp; {item.name}</span>
+                          <span id='item-price'>&nbsp; ₹{itemType.item.price}</span>
+                          <span id='item-name'>&nbsp; {itemType.item.name}</span>
                         </div>
                         <div>
                           <Button
                             style={{
-                              height: 25,
+                              height: 25,tems-list
                               padding: 0,
                               width: 15,
                               marginRight: 5,
                               marginLeft: 10
                             }}
-                            onClick={this.addItem.bind(this, item)}
+                            onClick={this.addItem.bind(this, itemType)}
                             color='link'
                           >
                               +
@@ -78,13 +86,13 @@ class Cart extends React.Component {
                               width: 15,
                               marginRight: 10
                             }}
-                            onClick={this.removeItem.bind(this, item)}
+                            onClick={this.removeItem.bind(this, itemType)}
                             color='link'
                           >
                               -
                           </Button>
                           <span style={{ marginLeft: 5 }} id='item-quantity'>
-                            {item.quantity}x
+                            {itemType.quantity}
                           </span>
                         </div>
                       </div>

@@ -216,7 +216,7 @@ exports.addToCart = async function (userId, item) {
 
 exports.removeFromCart = async function (userId, item) {
   let user = await User.findById(userId)
-  let index = user.cart.findIndex(itemType => itemType.item === item)
+  let index = user.cart.findIndex(itemType => itemType.item.toString() === item)
   if (user.cart[index].quantity > 1) {
     user.cart[index].quantity--
   } else {
