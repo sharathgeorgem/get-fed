@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
 import Cart from '../Components/Cart'
+import Router from 'next/router'
 import CheckoutForm from '../Components/CheckoutForm'
 
 import { Row, Col } from 'reactstrap'
 import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withCartContext } from '../Components/Context/CartContextProvider'
+import { withRouter } from 'next/router'
 import { compose } from 'recompose'
-import Router from 'next/router'
 
 class Checkout extends Component {
   constructor (props) {
@@ -47,6 +48,7 @@ class Checkout extends Component {
 }
 
 export default compose(
+  withRouter,
   withUserContext,
   withCartContext
 )(Checkout)
