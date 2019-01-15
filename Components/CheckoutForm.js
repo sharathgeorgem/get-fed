@@ -1,6 +1,7 @@
 import React from 'react'
+import Link from 'next/link'
 
-import { FormGroup, Label, Input } from 'reactstrap'
+import { FormGroup, Label, Input, button } from 'reactstrap'
 // import Router from 'next/router'
 
 class CheckoutForm extends React.Component {
@@ -45,6 +46,13 @@ class CheckoutForm extends React.Component {
             <Label>State</Label>
             <Input onChange={this.onChange.bind(this, 'state')} />
           </div>
+        </FormGroup>
+        <FormGroup style={{ display: 'flex' }}>
+            <button>
+              <Link href='/track-order'>
+                <a>Place Order</a>
+              </Link>
+            </button>
         </FormGroup>
 
         <style jsx global>

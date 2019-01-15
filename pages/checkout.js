@@ -3,6 +3,7 @@ import Cart from '../Components/Cart'
 import CheckoutForm from '../Components/CheckoutForm'
 
 import { Row, Col } from 'reactstrap'
+import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withCartContext } from '../Components/Context/CartContextProvider'
 import { compose } from 'recompose'
 import Router from 'next/router'
@@ -15,15 +16,16 @@ class Checkout extends Component {
     }
   }
   componentDidMount () {
-    const { context } = this.props
-    if (context.items.length === 0) {
+    const { cartContext } = this.props
+    if (cartContext.items.length === 0) {
       Router.push('/')
     }
   }
 
   render () {
-    const { context } = this.props
-    if (context.items.length === 0) {
+    console.log('checkout.js props are ', this.props)
+    const { cartContext } = this.props
+    if (cartContext.items.length === 0) {
       return <h1>Cart Empty</h1>
     } else {
       return (
@@ -45,5 +47,6 @@ class Checkout extends Component {
 }
 
 export default compose(
+  withUserContext,
   withCartContext
 )(Checkout)
