@@ -53,7 +53,7 @@ class RestaurantOrderCard extends React.Component {
           <CardTitle>{this.props.timePlaced}</CardTitle>
           <CardSubtitle>{this.props.customerAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
-          { this.props.accepted ? <p>Order Accepted</p> : <Button>Accept Order</Button> }
+          { this.props.accepted ? <p>Order Accepted</p> : <Button onClick={() => this.acceptOrder(this.props.id)}>Accept Order</Button> }
         </Card>
       </div>
     )

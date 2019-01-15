@@ -17,7 +17,9 @@ class DelivererPortal extends React.Component {
   }
   acceptDelivery = (orderId) => {
     this.socket.emit('acceptDelivery', this.props.id, orderId)
-    this.setState({ }) // change order status to accepted
+    let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
+    order.status = 'accepted'
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
   }
   render () {
     return (
@@ -43,7 +45,10 @@ class DelivererOrderCard extends React.Component {
           <CardTitle>{this.props.restaurantName}</CardTitle>
           <CardSubtitle>{this.props.restaurantAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
-          <Button>Deliver Order</Button>
+          { order.status === 'new'
+            ? <Button onClick={() => this.acceptDelivery(this.props.id)}>Deliver Order</Button>
+            : <p>Delivering this order</p>
+          }
         </Card>
       </div>
     )

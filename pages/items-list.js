@@ -1,7 +1,8 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
 // import Layout from '../Components/Layout'
-import { withContext } from '../Components/Context/ItemsContextProvider'
+import { withCartContext } from '../Components/Context/CartContextProvider'
+import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
 import Cart from '../Components/Cart'
@@ -27,7 +28,7 @@ class Items extends React.Component {
   }
 
   componentDidMount () {
-    fetch(`${this.props.context.domain}/items`)
+    fetch(`${this.props.cartContext.domain}/items`)
       .then(res => res.json())
       .then(dish => {
         this.setState({
@@ -37,15 +38,14 @@ class Items extends React.Component {
   }
 
   addItem = item => {
-    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${item.id}`, {
+    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${item.id}`, {
       method: 'PUT'
     })
     .then(res => res.json())
-    .then(this.props.context.updateCart)
+    .then(this.props.cartContext.updateCart)
   }
 
   render () {
-    console.log('The context props for items-list are ', this.props.context)
     const items = this.state.items.menu
     console.log('Items in render are ', items)
     let display = []
@@ -75,7 +75,7 @@ class Items extends React.Component {
                   >
                   + Add To Cart
                   </Button>
-                  : <p>Sold Out</p>            
+                  : <p>Sold Out</p>
                 }
               </div>
             </Card>
@@ -151,5 +151,6 @@ Items.getInitialProps = async function () {
 
 export default compose(
   withRouter,
-  withContext
+  withCartContext,
+  withUserContext
 )(Items)

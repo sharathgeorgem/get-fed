@@ -1,5 +1,4 @@
 import React from 'react'
-import io from 'socket.io-client'
 
 // import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
@@ -19,14 +18,6 @@ class RestaurantScaffold extends React.Component {
     this.state = {
       query: ''
     }
-  }
-  componentDidMount () {
-    this.socket = io()
-    this.socket.on('check', data => {
-      this.setState({
-        query: data.message
-      })
-    })
   }
   onChange (e) {
     this.setState({ query: e.target.value.toLowerCase() })

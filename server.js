@@ -43,7 +43,6 @@ nextApp.prepare()
       app.render(req, res, delivererPage)
     })
 
-
     app.get('*', (req, res) => {
       return handle(req, res)
     })
@@ -64,9 +63,7 @@ nextApp.prepare()
 
     serverSocket.on('connection', client => {
       console.log('Connection made')
-      client.emit('check', {
-        message: 'Checked'
-      })
+      client.emit('confirmConnection')
       client.on('identify', id => addConnection(id, client))
       client.on('identifyDeliverer', id => addDeliverer(id, client))
       client.on('placeOrder', (userId, addressId) => eventControllers.placeOrder(userId, addressId, connections))

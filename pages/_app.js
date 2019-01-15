@@ -1,7 +1,8 @@
 import React from 'react'
 import App, { Container } from 'next/app'
 // import Head from 'next/head'
-import ItemsContextProvider from '../Components/Context/ItemsContextProvider'
+import UserContextProvider from '../Components/Context/UserContextProvider'
+import CartContextProvider from '../Components/Context/CartContextProvider'
 // import compose from 'recompose'
 import Layout from '../Components/Layout'
 
@@ -20,11 +21,12 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Container>
-          <ItemsContextProvider>
+          <UserContextProvider />
+          <CartContextProvider>
             <Layout {...pageProps}>
               <Component {...pageProps} />
             </Layout>
-          </ItemsContextProvider>
+          </CartContextProvider>
           <style jsx global>
             {`
               a {

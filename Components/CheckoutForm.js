@@ -6,6 +6,7 @@ import { FormGroup, Label, Input } from 'reactstrap'
 class CheckoutForm extends React.Component {
   constructor (props) {
     super(props)
+    console.log('Checkout props are', props) // debug
     this.state = {
       data: {
         address: '',
@@ -77,7 +78,7 @@ class CheckoutForm extends React.Component {
               line-height: 50px;
               font-size: 40px;
               margin: 20px 0;
-              padding: 0;
+              padd-> https://github.com/sharathgeorgem/get-feding: 0;
             }
             .Checkout {
               margin: 0 auto;

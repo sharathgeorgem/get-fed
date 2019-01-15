@@ -3,7 +3,7 @@ import Cart from '../Components/Cart'
 import CheckoutForm from '../Components/CheckoutForm'
 
 import { Row, Col } from 'reactstrap'
-import { withContext } from '../Components/Context/ItemsContextProvider'
+import { withCartContext } from '../Components/Context/CartContextProvider'
 import { compose } from 'recompose'
 import Router from 'next/router'
 
@@ -36,7 +36,7 @@ class Checkout extends Component {
             <Cart />
           </Col>
           <Col style={{ paddingLeft: 5 }} sm={{ size: 6, order: 2 }}>
-            <CheckoutForm context={this.props.context} />
+            <CheckoutForm context={this.props.cartContext} />
           </Col>
         </Row>
       )
@@ -45,5 +45,5 @@ class Checkout extends Component {
 }
 
 export default compose(
-  withContext
+  withCartContext
 )(Checkout)

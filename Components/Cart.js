@@ -1,5 +1,6 @@
 import React from 'react'
-import { withContext } from './Context/ItemsContextProvider'
+import { withCartContext } from './Context/CartContextProvider'
+import { withUserContext } from './Context/UserContextProvider'
 import Link from 'next/link'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
@@ -22,24 +23,24 @@ class Cart extends React.Component {
 
   addItem = itemType => {
     console.log('added item is', itemType.item.id)
-    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${itemType.item.id}`, {
+    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
       method: 'PUT'
     })
     .then(res => res.json())
-    .then(this.props.context.updateCart)
+    .then(this.props.cartContext.updateCart)
   }
 
   removeItem = itemType => {
     console.log('removed item is', itemType.item.id)
-    fetch(`${this.props.context.domain}/user/cart/${this.props.context.user}/${itemType.item.id}`, {
+    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())
-    .then(this.props.context.updateCart)
+    .then(this.props.cartContext.updateCart)
   }
 
   render () {
-    const { items } = this.props.context
+    const { items } = this.props.cartContext
     console.log('The props are ', this.props)
     console.log('The items here are ', items)
     return (
@@ -104,7 +105,7 @@ class Cart extends React.Component {
                 <div>
                   <Badge style={{ width: 200, padding: 10 }} color='light'>
                     <h5 style={{ fontWeight: 100, color: 'gray' }}>Total:</h5>
-                    <h3>₹{this.props.context.total}</h3>
+                    <h3>₹{this.props.cartContext.total}</h3>
                   </Badge>
                   {this.props.router.pathname !== '/checkout' ? (
                     <div
@@ -146,6 +147,7 @@ class Cart extends React.Component {
 }
 
 export default compose(
-  withContext,
+  withCartContext,
+  withUserContext,
   withRouter
 )(Cart)
