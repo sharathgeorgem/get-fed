@@ -125,8 +125,7 @@ class CheckoutForm extends React.Component {
               box-shadow: 0 7px 14px rgba(50, 50, 93, 0.1),
                 0 3px 6px rgba(0, 0, 0, 0.08);
             }
-            input,
-            .StripeElement {
+            input {
               display: block;
               margin: 10px 0 20px 0;
               max-width: 500px;
@@ -143,16 +142,11 @@ class CheckoutForm extends React.Component {
             input::placeholder {
               color: #aab7c4;
             }
-            input:focus,
-            .StripeElement--focus {
+            input:focus {
               box-shadow: rgba(50, 50, 93, 0.109804) 0px 4px 6px,
                 rgba(0, 0, 0, 0.0784314) 0px 1px 3px;
               -webkit-transition: all 150ms ease;
               transition: all 150ms ease;
-            }
-            .StripeElement.IdealBankElement,
-            .StripeElement.PaymentRequestButton {
-              padding: 0;
             }
           `}
         </style>
