@@ -17,14 +17,20 @@ class Checkout extends Component {
   }
   componentDidMount () {
     const { cartContext } = this.props
+<<<<<<< HEAD
+=======
+>>>>>>> 70a3bb81275ee1a19396b8bbd1c1063b10e6cb75
     if (cartContext.items.length === 0) {
       Router.push('/')
     }
   }
 
   render () {
-    console.log('checkout.js props are ', this.props)
+<<<<<<< HEAD
+=======
     const { cartContext } = this.props
+    console.log('Context props at render are', this.props)
+>>>>>>> 70a3bb81275ee1a19396b8bbd1c1063b10e6cb75
     if (cartContext.items.length === 0) {
       return <h1>Cart Empty</h1>
     } else {
