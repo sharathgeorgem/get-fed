@@ -25,7 +25,7 @@ class UserContextProvider extends React.Component {
     return (
       <UserContext.Provider
         value={{
-          user: this.state.user,
+          userId: this.state.userId,
           socket: this.state.socket,
           domain: this.domain
         }}

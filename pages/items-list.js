@@ -151,6 +151,6 @@ Items.getInitialProps = async function () {
 
 export default compose(
   withRouter,
-  withCartContext,
-  withUserContext
+  withUserContext,
+  withCartContext
 )(Items)

@@ -147,7 +147,7 @@ class Cart extends React.Component {
 }
 
 export default compose(
-  withCartContext,
+  withRouter,
   withUserContext,
-  withRouter
+  withCartContext
 )(Cart)

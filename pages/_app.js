@@ -21,12 +21,13 @@ export default class MyApp extends App {
     return (
       <React.Fragment>
         <Container>
-          <UserContextProvider />
-          <CartContextProvider>
-            <Layout {...pageProps}>
-              <Component {...pageProps} />
-            </Layout>
-          </CartContextProvider>
+          <UserContextProvider>
+            <CartContextProvider>
+              <Layout {...pageProps}>
+                <Component {...pageProps} />
+              </Layout>
+            </CartContextProvider>
+          </UserContextProvider>
           <style jsx global>
             {`
               a {
