@@ -38,7 +38,7 @@ class Checkout extends Component {
             <Cart />
           </Col>
           <Col style={{ paddingLeft: 5 }} sm={{ size: 6, order: 2 }}>
-            <CheckoutForm context={this.props.cartContext} />
+            <CheckoutForm userContext={this.props.userContext} cartContext={this.props.cartContext} />
           </Col>
         </Row>
       )

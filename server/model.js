@@ -262,7 +262,7 @@ exports.submitOrder = async function (userId, addressId) {
   restaurant.currentOrders.push(order)
   restaurant = await restaurant.save()
 
-  return order
+  return [order, restaurant.address]
 }
 
 exports.getCustomers = async function (delivererId) {

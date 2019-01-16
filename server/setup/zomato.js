@@ -1,6 +1,7 @@
 const http = require('../../utilities/promisifiedHTTP')
 
-const key = '10a6760a0a87faec6c36ce16cd426eb6'
+const keys = require('../../keys')
+
 const domain = 'http://localhost:3000'
 const placeholder = 'https://www.engel-vimbuch.de/images/placeholder/restaurant_raeume/restaurant_raeume_schnapsstueble.jpg'
 
@@ -10,7 +11,7 @@ async function addRestaurant (details) {
 
 async function getRestaurantData (lat, lon, start) {
   return http.getRequest('https', 'json', 'https://developers.zomato.com/api/v2.1',
-    `search?sort=real_distance&lat=${lat}&lon=${lon}&start=${start}`, { 'user-key': key })
+    `search?sort=real_distance&lat=${lat}&lon=${lon}&start=${start}`, { 'user-key': keys.zomato })
 }
 
 function formatRestaurantData (data) {

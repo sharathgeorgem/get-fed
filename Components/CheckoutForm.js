@@ -17,6 +17,7 @@ class CheckoutForm extends React.Component {
       },
       error: ''
     }
+    this.props.userContext.socket.on('restaurantAddress') // take address and load track-order page
     // this.submitOrder = this.submitOrder.bind(this)
   }
 
@@ -24,6 +25,10 @@ class CheckoutForm extends React.Component {
     const { data } = this.state
     data[propertyName] = e.target.value
     this.setState({ data })
+  }
+
+  submitOrder () {
+    this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId) // also address id
   }
 
   render () {
@@ -48,11 +53,11 @@ class CheckoutForm extends React.Component {
           </div>
         </FormGroup>
         <FormGroup style={{ display: 'flex' }}>
-            <button>
-              <Link href='/track-order'>
-                <a>Place Order</a>
-              </Link>
-            </button>
+          <button>
+            <Link onClick={this.submitOrder} href='/track-order'>
+              <a>Place Order</a>
+            </Link>
+          </button>
         </FormGroup>
 
         <style jsx global>
