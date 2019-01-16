@@ -7,7 +7,7 @@ const domain = 'http://localhost:3000'
 class DelivererPortal extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { orders: [] }
+    this.state = { orders: [], lat: 0, long: 0 }
     this.initializeConnection()
   }
   initializeConnection = () => {
@@ -19,7 +19,24 @@ class DelivererPortal extends React.Component {
     this.socket.emit('acceptDelivery', this.props.id, orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'accepted'
-    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+    this.setState({ 
+      orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)),
+      // for testing
+      lat: order.restaurant.address.latitude,
+      long: order.restaurant.address.longitude
+    })
+  }
+  simulateDelivery = (order) => { // only for development
+    const time = 30
+    const latDelta = (order.address.latitude - this.state.lat)/time
+    const longDelta = (order.address.longitude - this.state.long)/time
+    let timer = setInterval(() => this.transmitLocation(latDelta, longDelta), 1000)
+  }
+  transmitLocation = (latDelta, longDelta) => {
+    this.setState(
+      { lat: this.state.lat + latDelta, long: this.state.long + longDelta }, 
+      () => this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
+    )
   }
   arrivedAtRestaurant = (orderId) => {
     this.socket.emit('arrivedAtRestaurant', orderId)
@@ -31,7 +48,8 @@ class DelivererPortal extends React.Component {
     this.socket.emit('pickedUp', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'pickedUp'
-    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
+      this.simulateDelivery) // callback for testing
   }
   delivered = (orderId) => {
     this.socket.emit('delivered', orderId)
@@ -49,6 +67,7 @@ class DelivererPortal extends React.Component {
             restaurantAddress={order.restaurant.address.value}
             items={order.items}
             status={order.status}
+            deliverAddress={order.address.value}
             acceptDelivery={this.acceptDelivery}
             arrived={this.arrivedAtRestaurant}
             pickedUp={this.pickedUp}
@@ -81,6 +100,7 @@ class DelivererOrderCard extends React.Component {
         <Card>
           <CardTitle>{this.props.restaurantName}</CardTitle>
           <CardSubtitle>{this.props.restaurantAddress}</CardSubtitle>
+          <CardSubtitle>Deliver to {this.props.deliverAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
           { this.renderButton() }
         </Card>
