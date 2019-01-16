@@ -1,11 +1,31 @@
 import React, { Component } from 'react'
+import { compose } from 'recompose'
+import fetch from 'isomorphic-unfetch'
+// import Router from 'next/router'
+
+import { withUserContext } from '../Components/Context/UserContextProvider'
+import keys from '../keys'
+
+function mapRequest (locations) { // takes an array of array of lat/long
+  locations = locations.map(loc => loc.join(',')).join('||')
+  return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${keys.mapquest}&locations=${locations}`)
+}
+
+function mapRouteRequest (start, end) {
+  start = start.join(',')
+  end = end.join(',')
+  return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${keys.mapquest}&start=${start}&end=${end}`)
+}
 
 class TrackOrder extends Component {
-  render() {
+  render () {
+    console.log('Tracking props are', this.props)
     return (
-      <h1>TrackOrder Page</h1>
+      <h2>Track Order</h2>
     )
   }
 }
 
-export default TrackOrder
+export default compose(
+  withUserContext
+)(TrackOrder)
