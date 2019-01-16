@@ -17,8 +17,26 @@ class CheckoutForm extends React.Component {
       },
       error: ''
     }
-    this.props.userContext.socket.on('restaurantAddress') // take address and load track-order page
+    this.props.userContext.socket.on('restaurantAddress', address => {
+      console.log('The restaurant address received is ', address)
+      this.props.cartContext.restaurantAddress = address
+    }) // take address and load track-order page
     // this.submitOrder = this.submitOrder.bind(this)
+  }
+
+  componentDidMount () {
+    fetch(`${this.props.userContext.domain}/user/addresses/userId/home`, {
+      method: 'PUT',
+      body: {
+        latitude: this.props.userContext.userLocation.coords.latitude,
+        longitude: this.props.userContext.userLocation.coords.longitude,
+        value: this.props.userContext.userAddress,
+        apartment: '',
+        landmark: ''
+      }
+    })
+      .then(res => res.json())
+      .then(response => console.log('The received address is ', response))
   }
 
   onChange (propertyName, e) {
@@ -36,7 +54,10 @@ class CheckoutForm extends React.Component {
       <div className='paper'>
         <h5>Your information:</h5>
         <hr />
-        <FormGroup style={{ display: 'flex' }}>
+        <h4><Label>Home</Label></h4>
+        <h5>{this.props.userContext.userAddress}</h5>
+        <hr />
+        {/* <FormGroup style={{ display: 'flex' }}>
           <div style={{ flex: '0.90', marginRight: 10 }}>
             <Label>Address</Label>
             <Input onChange={this.onChange.bind(this, 'address')} />
@@ -51,11 +72,11 @@ class CheckoutForm extends React.Component {
             <Label>State</Label>
             <Input onChange={this.onChange.bind(this, 'state')} />
           </div>
-        </FormGroup>
+        </FormGroup> */}
         <FormGroup style={{ display: 'flex' }}>
           <button>
-            <Link onClick={this.submitOrder} href='/track-order'>
-              <a>Place Order</a>
+            <Link href='/track-order'>
+              <a onClick={this.submitOrder.bind(this)}>Place Order</a>
             </Link>
           </button>
         </FormGroup>

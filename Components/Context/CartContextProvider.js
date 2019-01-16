@@ -9,6 +9,7 @@ class CartContextProvider extends React.Component {
     this.state = {
       items: [],
       total: null,
+      restaurantAddress: {}
     }
     this.domain = 'http://localhost:3000'
   }
@@ -23,7 +24,8 @@ class CartContextProvider extends React.Component {
           items: this.state.items,
           total: this.state.total,
           domain: this.domain,
-          updateCart: this.updateCart
+          updateCart: this.updateCart,
+          restaurantAddress: this.state.restaurantAddress
         }}
       >
         {this.props.children}
