@@ -15,7 +15,8 @@ class CheckoutForm extends React.Component {
         state: '',
         country: ''
       },
-      error: ''
+      error: '',
+      addressId: null // For the user
     }
     this.props.userContext.socket.on('restaurantAddress', address => {
       console.log('The restaurant address received is ', address)
@@ -25,18 +26,23 @@ class CheckoutForm extends React.Component {
   }
 
   componentDidMount () {
-    fetch(`${this.props.userContext.domain}/user/addresses/userId/home`, {
+    fetch(`${this.props.userContext.domain}/user/addresses/${this.props.userContext.userId}/home`, {
       method: 'PUT',
-      body: {
+      body: {address: {
         latitude: this.props.userContext.userLocation.coords.latitude,
         longitude: this.props.userContext.userLocation.coords.longitude,
         value: this.props.userContext.userAddress,
         apartment: '',
         landmark: ''
       }
+      }
     })
       .then(res => res.json())
-      .then(response => console.log('The received address is ', response))
+      .then(response => {
+        console.log('The received address is ', response)
+        this.setState({addressId: response.addresses.home.id})
+        console.log('After setting state ', this.state.addressId)
+      })
   }
 
   onChange (propertyName, e) {
@@ -46,7 +52,7 @@ class CheckoutForm extends React.Component {
   }
 
   submitOrder () {
-    this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId) // also address id
+    this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId, this.state.addressId) // also address id
   }
 
   render () {

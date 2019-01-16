@@ -249,7 +249,7 @@ exports.submitOrder = async function (userId, addressId) {
   let user = await User.findById(userId).populate('cart.item')
   let price = costOfCart(user.cart)
   let address = getAddressFromId(user, addressId)
-
+  console.log('Whatever ', user.cart)
   let restaurantId = user.cart[0].item.restaurant
   let order = new Order({ customer: userId, restaurant: restaurantId, items: user.cart, timePlaced: Date.now(), accepted: false, total: price, address: address })
   await order.save()

@@ -25,13 +25,13 @@ class RestaurantPortal extends React.Component {
       <h2>Restaurant Portal</h2>
         {this.state.orders.filter(order => !order.accepted).map(order => {
           return <RestaurantOrderCard
-            restaurantName={order.restaurant.name}
-            restaurantAddress={order.restaurant.address.value}
+            // restaurantName={order.restaurant.name}
+            // restaurantAddress={order.restaurant.address.value}
             items={order.items}
             accepted={false}
           />
         })}
-        <p>-----</p>
+        <hr />
         {this.state.orders.filter(order => order.accepted).map(order => {
           return <RestaurantOrderCard
             timePlaced={order.timePlaced}
@@ -47,6 +47,7 @@ class RestaurantPortal extends React.Component {
 
 class RestaurantOrderCard extends React.Component {
   render () {
+    console.log('The props for Restaurant are ', this.props)
     return (
       <div>
         <Card>
