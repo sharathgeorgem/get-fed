@@ -21,6 +21,24 @@ class DelivererPortal extends React.Component {
     order.status = 'accepted'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
   }
+  arrivedAtRestaurant = (orderId) => {
+    this.socket.emit('arrivedAtRestaurant', orderId)
+    let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
+    order.status = 'arrived'
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+  }
+  pickedUp = (orderId) => {
+    this.socket.emit('pickedUp', orderId)
+    let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
+    order.status = 'pickedUp'
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+  }
+  delivered = (orderId) => {
+    this.socket.emit('delivered', orderId)
+    let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
+    order.status = 'delivered'
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+  }
   render () {
     return (
       <div>
@@ -30,6 +48,11 @@ class DelivererPortal extends React.Component {
             restaurantName={order.restaurant.name}
             restaurantAddress={order.restaurant.address.value}
             items={order.items}
+            status={order.status}
+            acceptDelivery={this.acceptDelivery}
+            arrived={this.arrivedAtRestaurant}
+            pickedUp={this.pickedUp}
+            delivered={this.delivered}
           />
         })}
       </div>
@@ -38,6 +61,20 @@ class DelivererPortal extends React.Component {
 }
 
 class DelivererOrderCard extends React.Component {
+  renderButton = () => {
+    switch (this.props.status) {
+      case 'new':
+        return <Button onClick={() => this.props.acceptDelivery(this.props.id)}>Deliver Order</Button>
+      case 'accepted':
+        return <Button onClick={() => this.props.arrivedAtRestaurant(this.props.id)}>Arrived at Restaurant</Button>
+      case 'arrivedAtRestaurant':
+        return <Button onClick={() => this.props.pickedUp(this.props.id)}>Picked Up</Button>
+      case 'pickedUp':
+        return <Button onClick={() => this.props.delivered(this.props.id)}>Delivered</Button>
+      case 'delivered':
+        return <p>Order delivered</p>
+    }
+  }
   render () {
     return (
       <div>
@@ -45,18 +82,11 @@ class DelivererOrderCard extends React.Component {
           <CardTitle>{this.props.restaurantName}</CardTitle>
           <CardSubtitle>{this.props.restaurantAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
-          { order.status === 'new'
-            ? <Button onClick={() => this.acceptDelivery(this.props.id)}>Deliver Order</Button>
-            : <p>Delivering this order</p>
-          }
+          { this.renderButton() }
         </Card>
       </div>
     )
   }
 }
-
-// socket.emit('arrivedAtRestaurant', order.id)
-// socket.emit('pickedUp', order.id)
-// socket.emit('delivered', order.id)
 
 export default DelivererPortal
