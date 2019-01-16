@@ -9,7 +9,8 @@ class UserContextProvider extends React.Component {
     super(props)
     this.state = {
       userId: '',
-      socket: null
+      socket: null,
+      userLocation: null
     }
     this.domain = 'http://localhost:3000'
   }
