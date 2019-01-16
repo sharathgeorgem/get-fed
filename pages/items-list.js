@@ -48,6 +48,7 @@ class Items extends React.Component {
   render () {
     const items = this.state.items.menu
     console.log('Items in render are ', items)
+    console.log('The props are all ', this.props)
     let display = []
     if (items) {
       items.map((category) => {

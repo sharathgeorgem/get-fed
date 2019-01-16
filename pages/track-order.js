@@ -4,6 +4,7 @@ import fetch from 'isomorphic-unfetch'
 // import Router from 'next/router'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
+import { withCartContext } from '../Components/Context/CartContextProvider'
 import keys from '../keys'
 
 function mapRequest (locations) { // takes an array of array of lat/long
@@ -27,5 +28,6 @@ class TrackOrder extends Component {
 }
 
 export default compose(
-  withUserContext
+  withUserContext,
+  withCartContext
 )(TrackOrder)

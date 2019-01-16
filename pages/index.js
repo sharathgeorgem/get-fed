@@ -5,16 +5,6 @@ import { withRouter } from 'next/router'
 import { compose } from 'recompose'
 
 class Index extends React.Component {
-  setPosition = position => {
-    console.log(position)
-    console.log('The props are ', this.props)
-    this.props.userContext.userLocation = position
-  }
-  componentDidMount () {
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(this.setPosition, console.log, {enableHighAccuracy: true})
-    } else console.log('not available')
-  }
   render () {
     return (
       <React.Fragment>
