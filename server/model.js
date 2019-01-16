@@ -242,7 +242,7 @@ exports.addAddress = async function (userId, addressType, addressDetails) {
     user.addresses[addressType] = address
   } else user.addresses.others.push(address)
   let res = await user.save()
-  return res.addresses
+  return res.addresses // needs to return the populated address schema
 }
 
 exports.submitOrder = async function (userId, addressId) {
@@ -252,7 +252,11 @@ exports.submitOrder = async function (userId, addressId) {
 
   let restaurantId = user.cart[0].item.restaurant
   let order = new Order({ customer: userId, restaurant: restaurantId, items: user.cart, timePlaced: Date.now(), accepted: false, total: price, address: address })
-  await order.save()
+  console.log('Order is', order) // debug
+  order = await order.save()
+  console.log('Order is', order) // debug
+  order = await Order.findById(order.id).populate('items.item')
+  console.log('Order is', order) // debug
 
   user.cart = []
   user.currentOrders.push(order)

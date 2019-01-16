@@ -2,8 +2,8 @@ const model = require('../model')
 
 exports.placeOrder = async function (userId, addressId, connections) {
   let [order, address] = await model.submitOrder(userId, addressId).catch(console.log)
-  connections[order.restaurant].emit('newOrder', order)
   connections[userId].emit('restaurantAddress', address)
+  connections[order.restaurant].emit('newOrder', order)
 }
 
 exports.acceptOrder = async function (orderId, connections) {
