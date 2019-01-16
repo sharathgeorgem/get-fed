@@ -1,12 +1,19 @@
 import React from 'react'
 import Link from 'next/link'
+import { withUserContext } from '../Components/Context/UserContextProvider'
+import { withRouter } from 'next/router'
+import { compose } from 'recompose'
 
 class Index extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      location: ''
-    }
+  setPosition = position => {
+    console.log(position)
+    console.log('The props are ', this.props)
+    this.props.userContext.userLocation = position
+  }
+  componentDidMount () {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(this.setPosition, console.log, {enableHighAccuracy: true})
+    } else console.log('not available')
   }
   render () {
     return (
@@ -32,4 +39,7 @@ class Index extends React.Component {
   }
 }
 
-export default Index
+export default compose(
+  withRouter,
+  withUserContext
+)(Index)
