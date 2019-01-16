@@ -30,6 +30,5 @@ class Index extends React.Component {
 }
 
 export default compose(
-  withRouter,
-  withUserContext
+  withRouter
 )(Index)
