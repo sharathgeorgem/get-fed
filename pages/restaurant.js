@@ -32,6 +32,8 @@ class Restaurant extends React.Component {
     fetch(`${this.props.cartContext.domain}/menu/${this.props.router.query.id}`)
       .then(res => res.json())
       .then(res => {
+        console.log('The response restaurant address ', res.address)
+        this.props.cartContext.restaurantAddress = res.address
         this.setState({
           categories: res.menu
         })
