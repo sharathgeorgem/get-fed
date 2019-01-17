@@ -162,10 +162,10 @@ exports.addDeliverer = async function (name) {
   return deliverer.save()
 }
 
-exports.addItem = async function (itemDetails, category) {
+exports.addItem = async function (resId, itemDetails, category) {
   let item = new Item(itemDetails)
   await item.save()
-  let restaurant = await Restaurant.findById(itemDetails.restaurant)
+  let restaurant = await Restaurant.findById(resId)
   let index = restaurant.menu.findIndex(val => val.category === category)
   if (index >= 0) {
     restaurant.menu[index].items.push(item.id)
@@ -178,10 +178,8 @@ exports.getRestaurants = async function () {
   return Restaurant.find()
 }
 
-exports.getItems = async function () {
-  let res = await Restaurant.find().populate('menu.items')
-  let menu = res[0].menu
-  return menu.map(cat => Object.assign({}, { [cat.category]: cat.items }))
+exports.getMenu = async function (resId) {
+  return Restaurant.findById(resId).populate('menu.items')
 }
 
 exports.getCart = async function (userId) {
@@ -200,7 +198,7 @@ exports.getDelivererName = async function (delivererId) {
 }
 
 exports.getOrderDetails = async function (orderId) {
-  return Order.findById(orderId)
+  return Order.findById(orderId).populate('items.item')
 }
 
 exports.addToCart = async function (userId, item) {
@@ -249,14 +247,11 @@ exports.submitOrder = async function (userId, addressId) {
   let user = await User.findById(userId).populate('cart.item')
   let price = costOfCart(user.cart)
   let address = getAddressFromId(user, addressId)
-  console.log('Whatever ', user.cart)
+  let cart = user.cart.map(itemType => Object.assign({}, { item: itemType.item._id, quantity: itemType.quantity }))
   let restaurantId = user.cart[0].item.restaurant
-  let order = new Order({ customer: userId, restaurant: restaurantId, items: user.cart, timePlaced: Date.now(), accepted: false, total: price, address: address })
-  console.log('Order is', order) // debug
+  let order = new Order({ customer: userId, restaurant: restaurantId, items: cart, timePlaced: Date.now(), accepted: false, total: price, address: address })
   order = await order.save()
-  console.log('Order is', order) // debug
   order = await Order.findById(order.id).populate('items.item')
-  console.log('Order is', order) // debug
 
   user.cart = []
   user.currentOrders.push(order)
@@ -291,7 +286,7 @@ exports.acceptDelivery = async function (delivererId, orderId) {
 }
 
 exports.pickedUp = async function (orderId) {
-  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeFulfilled: Date.now() }, { new: true })
+  let order = await Order.findOneAndUpdate({ _id: orderId }, { timeFulfilled: Date.now() }, { new: true }).populate('items.item')
   let restaurant = await Restaurant.findById(order.restaurant)
   restaurant.currentOrders.splice(restaurant.currentOrders.indexOf(orderId), 1)
   restaurant.pastOrders.push(order)
