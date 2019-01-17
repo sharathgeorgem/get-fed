@@ -23,16 +23,17 @@ class Restaurant extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      items: {}
+      categories: []
     }
   }
 
   componentDidMount () {
+    console.log('Component mounting')
     fetch(`${this.props.cartContext.domain}/menu/${this.props.router.query.id}`)
       .then(res => res.json())
-      .then(dish => {
+      .then(res => {
         this.setState({
-          items: dish
+          categories: res.menu
         })
       })
   }
@@ -46,48 +47,17 @@ class Restaurant extends React.Component {
   }
 
   render () {
-    const items = this.state.items.menu
-    console.log('Items in render are ', items)
+    console.log('Categories in render are ', this.state.categories)
     console.log('The props are all ', this.props)
-    let display = []
-    if (items) {
-      items.map((category) => {
-        Object.entries(category).map(([key, res]) => {
-          display.push(...res.map(dish => {
-            return <Card
-              style={{ width: '30%', margin: '10px 10px 10px 0' }}
-              key={dish._id}
-              className='h-100'
-            >
-              <CardImg
-                top
-                style={{ height: 250 }}
-                src={dish.img}
-              />
-              <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-              </CardBody>
-              <div className='card-footer'>
-                { dish.available ?
-                  <Button
-                    outline color='primary'
-                    onClick={this.addItem.bind(this, dish)}
-                  >
-                  + Add To Cart
-                  </Button>
-                  : <p>Sold Out</p>
-                }
-              </div>
-            </Card>
-          })
-          )
-        })
-        console.log('The names after map are ', category)
-      })
-    }
-    console.log(display)
-    if (items) {
+    let display = this.state.categories.map(category => {
+      return <CategorySection
+        key={category._id}
+        name={category.category}
+        items={category.items}
+        addItem={this.addItem}
+      />
+    })
+    if (this.state.categories) {
       return (
         <React.Fragment>
           <div className='container-fluid'>
@@ -136,6 +106,55 @@ class Restaurant extends React.Component {
         </React.Fragment>)
     }
     return <h1>Loading</h1>
+  }
+}
+
+class CategorySection extends React.Component {
+  render () {
+    return (
+      <div>
+        <h2>{this.props.name}</h2>
+        {this.props.items.map(dish => {
+          return <ItemCard 
+            key={dish._id}
+            dish={dish}
+            addItem={this.props.addItem}
+          />
+        })}
+      </div>
+    )
+  }
+}
+
+class ItemCard extends React.Component {
+  render () {
+    return (
+      <Card
+        style={{ width: '30%', margin: '10px 10px 10px 0' }}
+        className='h-100'
+      >
+        <CardImg
+          top
+          style={{ height: 250 }}
+          src={this.props.dish.img}
+        />
+        <CardBody>
+          <CardTitle>{this.props.dish.name}</CardTitle>
+          <CardText>{this.props.dish.description}</CardText>
+        </CardBody>
+        <div className='card-footer'>
+          { this.props.dish.available ?
+            <Button
+              outline color='primary'
+              onClick={this.props.addItem.bind(this, this.props.dish)}
+            >
+            + Add To Cart
+            </Button>
+            : <p>Sold Out</p>
+          }
+        </div>
+      </Card>   
+    )
   }
 }
 

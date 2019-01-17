@@ -45,27 +45,27 @@ async function setupDummyData () {
   ids.forEach(addMenu)
 }
 
-function addMenu (resId) {
-  addMenuItem('Red Red Wine', 'Goes to your head', 400, images.wine, true, resId, 'Beverages')
-  addMenuItem('Coffee', 'Pa pa ra pa pa ra ra, pa pa ra pa pa ra ra - Nescafe!', 50, images.coffee, true, resId, 'Beverages')
-  addMenuItem('Heineken', 'Probably the best beer in the world', 300, images.beer, true, resId, 'Beverages')
-  addMenuItem('Ramune', 'Finely aged for the better part of a decade', 73, images.lemonade, true, resId, 'Beverages')
-  addMenuItem('Milk', 'Piyo glassful Doodh hai must in every season, Piyo doodh for healthy reason', 40, images.milk, true, resId, 'Beverages')
-  addMenuItem("Maulik's Chocolate", '100% Cocoa', 150, images.chocolate, true, resId, 'Snacks')
-  addMenuItem('Choco Cornet', 'Which side will YOU eat it from?', 125, images.cornet, true, resId, 'Snacks')
-  addMenuItem('Microwaved Banana', 'Delivered from the future just for you', 25, images.banana, true, resId, 'Snacks')
-  addMenuItem('Soy Buttered Potatoes', '', 50, images.potatoes, true, resId, 'Snacks')
-  addMenuItem('Cheese Lemon Custard Chiffon Pie', 'Now with separate custard cream and cheese lemon chiffon layers!', 225, images.lemonpie, true, resId, 'Dessert')
-  addMenuItem('Tomato Sorbet', 'Made with leftover fresh garden tomatoes', 125, images.sorbet, true, resId, 'Dessert')
-  addMenuItem('The Cake', '...is a lie', 750, images.cake, false, resId, 'Dessert')
-  addMenuItem('Herring and Pumpkin Pie', "Grandma's secret recipe", 650, images.pumpkinpie, true, resId, 'Dessert')
-  addMenuItem('Omurice', 'Omelette rice with ketchup. Made with love!', 100, images.omurice, true, resId, 'Main Courses')
-  addMenuItem('Chocolate Curry Rice', 'Made with beloved turmeric, green jalapenos, cinnamon & cardamom, impossible paprika, green coriander, and now garam masala. We present to you delicious curry!', 300, images.curry, true, resId, 'Main Courses')
-  addMenuItem('Happy Pizza', 'Not legal in all territories. Conditions apply. Happiness not guaranteed.', 200, images.omurice, true, resId, 'Main Courses')
+async function addMenu (resId) {
+  await addMenuItem('Red Red Wine', 'Goes to your head', 400, images.wine, true, resId, 'Beverages')
+  await addMenuItem('Coffee', 'Pa pa ra pa pa ra ra, pa pa ra pa pa ra ra - Nescafe!', 50, images.coffee, true, resId, 'Beverages')
+  await addMenuItem('Heineken', 'Probably the best beer in the world', 300, images.beer, true, resId, 'Beverages')
+  await addMenuItem('Ramune', 'Finely aged for the better part of a decade', 73, images.lemonade, true, resId, 'Beverages')
+  await addMenuItem('Milk', 'Piyo glassful Doodh hai must in every season, Piyo doodh for healthy reason', 40, images.milk, true, resId, 'Beverages')
+  await addMenuItem("Maulik's Chocolate", '100% Cocoa', 150, images.chocolate, true, resId, 'Snacks')
+  await addMenuItem('Choco Cornet', 'Which side will YOU eat it from?', 125, images.cornet, true, resId, 'Snacks')
+  await addMenuItem('Microwaved Banana', 'Delivered from the future just for you', 25, images.banana, true, resId, 'Snacks')
+  await addMenuItem('Soy Buttered Potatoes', '', 50, images.potatoes, true, resId, 'Snacks')
+  await addMenuItem('Cheese Lemon Custard Chiffon Pie', 'Now with separate custard cream and cheese lemon chiffon layers!', 225, images.lemonpie, true, resId, 'Dessert')
+  await addMenuItem('Tomato Sorbet', 'Made with leftover fresh garden tomatoes', 125, images.sorbet, true, resId, 'Dessert')
+  await addMenuItem('The Cake', '...is a lie', 750, images.cake, false, resId, 'Dessert')
+  await addMenuItem('Herring and Pumpkin Pie', "Grandma's secret recipe", 650, images.pumpkinpie, true, resId, 'Dessert')
+  await addMenuItem('Omurice', 'Omelette rice with ketchup. Made with love!', 100, images.omurice, true, resId, 'Main Courses')
+  await addMenuItem('Chocolate Curry Rice', 'Made with beloved turmeric, green jalapenos, cinnamon & cardamom, impossible paprika, green coriander, and now garam masala. We present to you delicious curry!', 300, images.curry, true, resId, 'Main Courses')
+  await addMenuItem('Happy Pizza', 'Not legal in all territories. Conditions apply. Happiness not guaranteed.', 200, images.pizza, true, resId, 'Main Courses')
 }
 
 function addMenuItem (name, description, price, img, available, id, category) {
-  addItem(id, {
+  return addItem(id, {
     name: name,
     description: description,
     price: price,
