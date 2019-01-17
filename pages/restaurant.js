@@ -28,7 +28,7 @@ class Restaurant extends React.Component {
   }
 
   componentDidMount () {
-    fetch(`${this.props.cartContext.domain}/menu/5c401d0e6753203a12ded752`)
+    fetch(`${this.props.cartContext.domain}/menu/${this.props.router.query.id}`)
       .then(res => res.json())
       .then(dish => {
         this.setState({
