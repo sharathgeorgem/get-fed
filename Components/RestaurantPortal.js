@@ -25,19 +25,23 @@ class RestaurantPortal extends React.Component {
       <h2>Restaurant Portal</h2>
         {this.state.orders.filter(order => !order.accepted).map(order => {
           return <RestaurantOrderCard
+          key={order.id}
           timePlaced={order.timePlaced}
           items={order.items}
           accepted={false}
+          acceptOrder={this.acceptOrder}
           />
         })}
         <hr />
         {this.state.orders.filter(order => order.accepted).map(order => {
           return <RestaurantOrderCard
+            key={order.id}
             timePlaced={order.timePlaced}
             customerAddress={order.address.value}
             items={order.items}
             accepted={true}
-          />
+            acceptOrder={this.acceptOrder}
+            />
         })}
       </div>
     )
@@ -53,7 +57,7 @@ class RestaurantOrderCard extends React.Component {
           <CardTitle>{this.props.timePlaced}</CardTitle>
           <CardSubtitle>{this.props.customerAddress}</CardSubtitle>
           <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
-          { this.props.accepted ? <p>Order Accepted</p> : <Button onClick={() => this.acceptOrder(this.props.id)}>Accept Order</Button> }
+          { this.props.accepted ? <p>Order Accepted</p> : <Button onClick={() => this.props.acceptOrder(this.props.id)}>Accept Order</Button> }
         </Card>
       </div>
     )

@@ -31,7 +31,7 @@ exports.addDeliverer = async function (req, res) {
 }
 
 exports.addItem = async function (req, res) {
-  let result = await model.addItem(req.body.item, req.body.category).catch(console.log)
+  let result = await model.addItem(req.params.restaurantId, req.body.item, req.body.category).catch(console.log)
   res.send(result)
 }
 
@@ -40,9 +40,9 @@ exports.getRestaurants = async function (req, res) {
   res.send(result)
 }
 
-exports.getItems = async function (req, res) {
-  let result = await model.getItems().catch(console.log)
-  res.send({ menu: result })
+exports.getMenu = async function (req, res) {
+  let result = await model.getMenu(req.params.restaurantId).catch(console.log)
+  res.send(result)
 }
 
 exports.getCart = async function (req, res) {

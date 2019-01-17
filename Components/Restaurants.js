@@ -47,11 +47,8 @@ const Restaurants = (props) => {
                 <div className='card-footer'>
                   <Link
                     as={`/restaurants/${res._id}`}
-                    href={`/restaurants?id=${res._id}`}
-                  >
-                    {/* <Link href={`/items-list`}> */}
+                    href={`/restaurants?id=${res._id}`}>
                     <a className='btn btn-primary'>View</a>
-                    {/* </Link> */}
                   </Link>
                 </div>
               </Card>
