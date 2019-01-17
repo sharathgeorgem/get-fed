@@ -42,7 +42,11 @@ nextApp.prepare()
       console.log('Request for deliverer portal')
       app.render(req, res, delivererPage)
     })
-
+    app.get('_error', (req, res) => {
+      let errorPage = '_error'
+      console.log('Error page reached')
+      app.render(req, res, errorPage)
+    })
     app.get('*', (req, res) => {
       return handle(req, res)
     })

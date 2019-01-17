@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { compose } from 'recompose'
 import fetch from 'isomorphic-unfetch'
+import { withRouter } from 'next/router'
 // import Router from 'next/router'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
@@ -28,6 +29,7 @@ class TrackOrder extends Component {
 }
 
 export default compose(
+  withRouter,
   withUserContext,
   withCartContext
 )(TrackOrder)

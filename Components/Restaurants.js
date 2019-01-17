@@ -45,14 +45,14 @@ const Restaurants = (props) => {
                   </Row>
                 </CardBody>
                 <div className='card-footer'>
-                  {/* <Link
+                  <Link
                     as={`/restaurants/${res._id}`}
                     href={`/restaurants?id=${res._id}`}
-                  > */}
-                  <Link href={`/items-list`}>
+                  >
+                    {/* <Link href={`/items-list`}> */}
                     <a className='btn btn-primary'>View</a>
+                    {/* </Link> */}
                   </Link>
-                  {/* </Link> */}
                 </div>
               </Card>
             ))}

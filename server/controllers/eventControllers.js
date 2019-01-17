@@ -2,6 +2,7 @@ const model = require('../model')
 
 exports.placeOrder = async function (userId, addressId, connections) {
   let [order, address] = await model.submitOrder(userId, addressId).catch(console.log)
+  // console.log('UserId in eventcontroller', userId, 'addressId in eventcontroller', addressId, 'connections in eventcontroller', connections)
   connections[userId].emit('restaurantAddress', address)
   connections[order.restaurant].emit('newOrder', order)
 }

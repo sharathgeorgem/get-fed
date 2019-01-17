@@ -18,14 +18,15 @@ class CheckoutForm extends React.Component {
       error: '',
       addressId: null // For the user
     }
-    this.props.userContext.socket.on('restaurantAddress', address => {
-      console.log('The restaurant address received is ', address)
-      this.props.cartContext.restaurantAddress = address
-    }) // take address and load track-order page
     // this.submitOrder = this.submitOrder.bind(this)
   }
 
   componentDidMount () {
+    this.props.userContext.socket.on('restaurantAddress', address => {
+      console.log('The restaurant address received is ', address)
+      this.props.cartContext.restaurantAddress = address
+      console.log('The props are ', this.props)
+    }) // take address and load track-order page
     fetch(`${this.props.userContext.domain}/user/addresses/${this.props.userContext.userId}/home`, {
       method: 'PUT',
       body: {address: {
