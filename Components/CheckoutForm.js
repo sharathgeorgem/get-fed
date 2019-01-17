@@ -16,7 +16,7 @@ class CheckoutForm extends React.Component {
         country: ''
       },
       error: '',
-      addressId: null // For the user
+      address: null // For the user
     }
     // this.submitOrder = this.submitOrder.bind(this)
   }
@@ -27,23 +27,23 @@ class CheckoutForm extends React.Component {
       this.props.cartContext.restaurantAddress = address
       console.log('The props are ', this.props)
     }) // take address and load track-order page
-    fetch(`${this.props.userContext.domain}/user/addresses/${this.props.userContext.userId}/home`, {
-      method: 'PUT',
-      body: {address: {
-        latitude: this.props.userContext.userLocation.coords.latitude,
-        longitude: this.props.userContext.userLocation.coords.longitude,
-        value: this.props.userContext.userAddress,
-        apartment: '',
-        landmark: ''
-      }
-      }
+
+    this.setState({ address: {
+      latitude: this.props.userContext.userLocation.coords.latitude,
+      longitude: this.props.userContext.userLocation.coords.longitude,
+      value: this.props.userContext.userAddress,
+      apartment: '',
+      landmark: ''
+    } },
+    () => {
+      fetch(`${this.props.userContext.domain}/user/addresses/${this.props.userContext.userId}/home`, {
+        method: 'PUT',
+        body: { address: this.state.address }
+      }).then(res => res.json())
+        .then(response => {
+          console.log('The received address is ', response)
+        })
     })
-      .then(res => res.json())
-      .then(response => {
-        console.log('The received address is ', response)
-        this.setState({addressId: response.addresses.home.id})
-        console.log('After setting state ', this.state.addressId)
-      })
   }
 
   onChange (propertyName, e) {
@@ -53,7 +53,7 @@ class CheckoutForm extends React.Component {
   }
 
   submitOrder () {
-    this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId, this.state.addressId) // also address id
+    this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId, this.state.address)
   }
 
   render () {

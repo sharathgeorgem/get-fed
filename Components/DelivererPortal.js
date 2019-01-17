@@ -41,7 +41,7 @@ class DelivererPortal extends React.Component {
   arrivedAtRestaurant = (orderId) => {
     this.socket.emit('arrivedAtRestaurant', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
-    order.status = 'arrived'
+    order.status = 'arrivedAtRestaurant'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
   }
   pickedUp = (orderId) => {
@@ -49,7 +49,7 @@ class DelivererPortal extends React.Component {
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'pickedUp'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
-      this.simulateDelivery) // callback for testing
+      () => this.simulateDelivery(order)) // callback for testing
   }
   delivered = (orderId) => {
     this.socket.emit('delivered', orderId)
@@ -62,7 +62,10 @@ class DelivererPortal extends React.Component {
       <div>
       <h2>Deliverer Portal</h2>
         {this.state.orders.map(order => {
+          console.log('Here is where I send the stuff', order.address)
           return <DelivererOrderCard
+            key={order.id}
+            id={order.id}
             restaurantName={order.restaurant.name}
             restaurantAddress={order.restaurant.address.value}
             items={order.items}
@@ -85,7 +88,7 @@ class DelivererOrderCard extends React.Component {
       case 'new':
         return <Button onClick={() => this.props.acceptDelivery(this.props.id)}>Deliver Order</Button>
       case 'accepted':
-        return <Button onClick={() => this.props.arrivedAtRestaurant(this.props.id)}>Arrived at Restaurant</Button>
+        return <Button onClick={() => this.props.arrived(this.props.id)}>Arrived at Restaurant</Button>
       case 'arrivedAtRestaurant':
         return <Button onClick={() => this.props.pickedUp(this.props.id)}>Picked Up</Button>
       case 'pickedUp':
@@ -95,6 +98,7 @@ class DelivererOrderCard extends React.Component {
     }
   }
   render () {
+    console.log('The deliverer order card props are', this.props)
     return (
       <div>
         <Card>

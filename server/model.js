@@ -243,10 +243,10 @@ exports.addAddress = async function (userId, addressType, addressDetails) {
   return res.addresses // needs to return the populated address schema
 }
 
-exports.submitOrder = async function (userId, addressId) {
+exports.submitOrder = async function (userId, address) {
   let user = await User.findById(userId).populate('cart.item')
   let price = costOfCart(user.cart)
-  let address = getAddressFromId(user, addressId)
+  address = new Address(address) // check
   let cart = user.cart.map(itemType => Object.assign({}, { item: itemType.item._id, quantity: itemType.quantity }))
   let restaurantId = user.cart[0].item.restaurant
   let order = new Order({ customer: userId, restaurant: restaurantId, items: cart, timePlaced: Date.now(), accepted: false, total: price, address: address })

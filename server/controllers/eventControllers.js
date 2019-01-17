@@ -1,18 +1,17 @@
 const model = require('../model')
 
-exports.placeOrder = async function (userId, addressId, connections) {
-  let [order, address] = await model.submitOrder(userId, addressId).catch(console.log)
-  // console.log('UserId in eventcontroller', userId, 'addressId in eventcontroller', addressId, 'connections in eventcontroller', connections)
-  connections[userId].emit('restaurantAddress', address)
+exports.placeOrder = async function (userId, address, connections) {
+  let [order, resAddress] = await model.submitOrder(userId, address).catch(console.log)
+  connections[userId].emit('restaurantAddress', resAddress)
   connections[order.restaurant].emit('newOrder', order)
 }
 
 exports.acceptOrder = async function (orderId, connections) {
   console.log('Order accepted')
   let order = await model.acceptOrder(orderId).catch(console.log)
-  Object.keys(connections.deliverers).forEach(id => connections.deliverers[id].socket.emit('newOrder', order)) // change to nearby deliverers
+  Object.values(connections.deliverers).forEach(val => val.socket.emit('newOrder', order)) // change to nearby deliverers
   connections[order.customer].emit('orderAccepted', orderId)
-  connections[order.restaurant].emit('updateOrderStatus', order)
+  connections[order.restaurant.id].emit('updateOrderStatus', order)
 }
 
 exports.acceptDelivery = async function (delivererId, orderId, connections) {
