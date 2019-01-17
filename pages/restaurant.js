@@ -32,11 +32,12 @@ class Restaurant extends React.Component {
     fetch(`${this.props.cartContext.domain}/menu/${this.props.router.query.id}`)
       .then(res => res.json())
       .then(res => {
-        console.log('The response restaurant address ', res.address)
-        this.props.cartContext.restaurantAddress = res.address
+        console.log('Props available can be', this.props)
         this.setState({
           categories: res.menu
         })
+        console.log('The response restaurant address ', res.address)
+        this.props.cartContext.updateRestaurantAddress(res.address)
       })
   }
 

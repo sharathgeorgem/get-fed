@@ -17,6 +17,9 @@ class CartContextProvider extends React.Component {
   updateCart = cart => {
     this.setState({ items: cart.cart, total: cart.total })
   }
+  updateRestaurantAddress = address => {
+    this.setState({ restaurantAddress: address})
+  }
   render() {
     return (
       <CartContext.Provider
@@ -25,7 +28,8 @@ class CartContextProvider extends React.Component {
           total: this.state.total,
           restaurantAddress: this.state.restaurantAddress,
           domain: this.domain,
-          updateCart: this.updateCart
+          updateCart: this.updateCart,
+          updateRestaurantAddress: this.updateRestaurantAddress
         }}
       >
         {this.props.children}
