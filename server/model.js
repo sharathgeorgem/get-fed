@@ -85,7 +85,7 @@ const DelivererSchema = createSchema({
   score: Number,
   votes: Number,
   currentOrders: [{ type: ObjectId, ref: 'Order' }],
-  currentCustomers: [{ type: ObjectId, ref: 'User' }]
+  customers: [{ type: ObjectId, ref: 'User' }]
 })
 
 // Models
@@ -105,14 +105,6 @@ function costOfCart (cart) {
     cost += itemType.item.price * itemType.quantity
   }
   return cost
-}
-
-function getAddressFromId (user, id) {
-  if (user.addresses.home._id.toString() === id) {
-    return user.addresses.home
-  } if (user.addresses.work._id.toString() === id) {
-    return user.addresses.work
-  } return user.addresses.others[user.addresses.others.findIndex(obj => obj._id.toString() === id)]
 }
 
 // Exported methods
@@ -280,7 +272,7 @@ exports.acceptDelivery = async function (delivererId, orderId) {
   order.save()
   let deliverer = await Deliverer.findById(delivererId)
   deliverer.currentOrders.push(orderId)
-  deliverer.currentCustomers.push(order.customer)
+  deliverer.customers.push(order.customer)
   deliverer.save()
   return { customer: order.customer, deliverer: deliverer.name }
 }
@@ -303,6 +295,7 @@ exports.delivered = async function (orderId) {
 
   let deliverer = await Deliverer.findById(order.deliverer)
   deliverer.currentOrders.splice(deliverer.currentOrders.indexOf(orderId), 1)
+  deliverer.customers.splice(deliverer.customers.indexOf(order.customer), 1)
   await deliverer.save()
 
   return order
