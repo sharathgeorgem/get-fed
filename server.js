@@ -77,7 +77,7 @@ nextApp.prepare()
       client.on('pickedUp', (orderId) => eventControllers.pickedUp(orderId, connections))
       client.on('delivered', (orderId) => eventControllers.delivered(orderId, connections))
       client.on('updateLocation', (delivererId, lat, long) => eventControllers.updateLocation(delivererId, lat, long, connections))
-      client.on('cancel', (userId) => console.log('Cancellation', userId, connections[userId].id, client.id)) // debug
+      client.on('cancel', (orderId) => eventControllers.cancelOrder(orderId, client, connections))
     })
   })
   .catch((ex) => {

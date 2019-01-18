@@ -9,16 +9,21 @@ class CartContextProvider extends React.Component {
     this.state = {
       items: [],
       total: null,
-      restaurantAddress: null
+      restaurantId: '',
+      restaurantAddress: null,
+      orderId: ''
     }
     this.domain = 'http://localhost:3000'
   }
 
   updateCart = cart => {
-    this.setState({ items: cart.cart, total: cart.total })
+    this.setState({ items: cart.cart, total: cart.total, restaurantId: cart.cart[0].restaurant })
   }
   updateRestaurantAddress = address => {
     this.setState({ restaurantAddress: address})
+  }
+  updateOrderId = id => {
+    this.setState({ orderId: id })
   }
   render() {
     return (
@@ -26,10 +31,13 @@ class CartContextProvider extends React.Component {
         value={{
           items: this.state.items,
           total: this.state.total,
+          restaurantId: this.state.restaurantId,
           restaurantAddress: this.state.restaurantAddress,
+          orderId: this.state.orderId,
           domain: this.domain,
           updateCart: this.updateCart,
-          updateRestaurantAddress: this.updateRestaurantAddress
+          updateRestaurantAddress: this.updateRestaurantAddress,
+          updateOrderId: this.updateOrderId
         }}
       >
         {this.props.children}

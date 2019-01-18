@@ -17,6 +17,9 @@ class RestaurantPortal extends React.Component {
     this.socket.on('updateOrderStatus', order => this.setState(
       { orders: [order].concat(this.state.orders.filter(oldOrder => oldOrder.id !== order.id)) },
       () => console.log('Updated') ))
+    this.socket.on('cancel', id => this.setState(
+      { orders: this.state.orders.filter(order => order.id !== id) }
+    ))
   }
   acceptOrder = (orderId) => {
     this.socket.emit('acceptOrder', orderId)

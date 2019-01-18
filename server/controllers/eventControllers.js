@@ -1,9 +1,17 @@
 const model = require('../model')
 
 exports.placeOrder = async function (userId, address, connections) {
-  let [order, resAddress] = await model.submitOrder(userId, address).catch(console.log)
-  connections[userId].emit('restaurantAddress', resAddress)
+  let order = await model.submitOrder(userId, address).catch(console.log)
+  connections[userId].emit('orderDetails', order._id)
   connections[order.restaurant].emit('newOrder', order)
+}
+
+exports.cancelOrder = async function (orderId, client, connections) {
+  let restaurant = await model.cancelOrder(orderId).catch(console.log)
+  if (restaurant) {
+    connections[restaurant].emit('cancel', orderId)
+    client.emit('cancelConfirmed', orderId)
+  }
 }
 
 exports.acceptOrder = async function (orderId, connections) {

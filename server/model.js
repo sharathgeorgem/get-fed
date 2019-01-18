@@ -253,7 +253,22 @@ exports.submitOrder = async function (userId, address) {
   restaurant.currentOrders.push(order)
   restaurant = await restaurant.save()
 
-  return [order, restaurant.address]
+  return order
+}
+
+exports.cancelOrder = async function (orderId) {
+  let order = await Order.findById(orderId)
+  if (order.accepted) return false
+
+  let user = await User.findById(order.customer)
+  user.currentOrders.splice(user.currentOrders.findIndex(order => order.toString() === orderId), 1)
+  await user.save()
+
+  let restaurant = await Restaurant.findById(order.restaurant)
+  restaurant.currentOrders.splice(restaurant.currentOrders.findIndex(order => order.toString() === orderId), 1)
+  await restaurant.save()
+
+  return order.restaurant
 }
 
 exports.getCustomers = async function (delivererId) {

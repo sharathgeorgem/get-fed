@@ -22,11 +22,10 @@ class CheckoutForm extends React.Component {
   }
 
   componentDidMount () {
-    this.props.userContext.socket.on('restaurantAddress', address => {
-      console.log('The restaurant address received is ', address)
-      this.props.cartContext.restaurantAddress = address
-      console.log('The props are ', this.props)
-    }) // take address and load track-order page
+    this.props.userContext.socket.on('orderDetails', id => {
+      this.props.cartContext.updateOrderId(id)
+      console.log('The checkout props are ', this.props)
+    })
 
     this.setState({ address: {
       latitude: this.props.userContext.userLocation.coords.latitude,
