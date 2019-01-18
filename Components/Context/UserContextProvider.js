@@ -65,13 +65,8 @@ class UserContextProvider extends React.Component {
   }
 }
 
-/* then make a consumer which will surface it as an HOC */
-// This function takes a component...
 export function withUserContext (Component) {
-  // ...and returns another component...
   return function UserContextComponent (props) {
-    // ... and renders the wrapped component with the context theme!
-    // Notice that we pass through any additional props as well
     return (
       <UserContext.Consumer>
         {context => <Component {...props} userContext={context} />}

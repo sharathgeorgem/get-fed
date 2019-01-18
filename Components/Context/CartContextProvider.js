@@ -38,13 +38,8 @@ class CartContextProvider extends React.Component {
   }
 }
 
-/* then make a consumer which will surface it as an HOC */
-// This function takes a component...
 export function withCartContext(Component) {
-  // ...and returns another component...
   return function CartContextComponent(props) {
-    // ... and renders the wrapped component with the context theme!
-    // Notice that we pass through any additional props as well
     return (
       <CartContext.Consumer>
         {context => <Component {...props} cartContext={context} />}

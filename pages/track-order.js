@@ -69,10 +69,28 @@ componentDidMount () {
     if(this.state.mapReceived)
     return (
       <React.Fragment>
+        <style jsx global>
+          {`
+            .img-container {
+              background-color: #ffffff;
+              animation: loading 1.3s ease-in-out infinite;
+              -webkit-animation: loading 1.3s ease-in-out infinite;
+            }
+            @keyframes loading {
+              0% { background-color: #00C9A7; }
+              50% { background-color: #C4FCEF; }
+              100% { background-color: #4D8076; }
+            }
+          `}
+        </style>
         <h2>Track Order</h2>
-        <img src={this.state.mapURL} alt='Map image'/>
+        <div className='img-container' style={{height: 400, width: 400}}>
+          <img src={this.state.mapURL} alt='Map image'/>
+        </div>
         <hr />
-        <img src={this.state.mapRouteURL} alt='Map route request'/>
+        <div className='img-container' style={{height: 400, width: 400}}>
+          <img src={this.state.mapRouteURL} alt='Map route request'/>
+        </div>
         <p>{this.state.orderStatus}</p>
       </React.Fragment>)
     else return (
