@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { compose } from 'recompose'
 import fetch from 'isomorphic-unfetch'
 import { withRouter } from 'next/router'
+import io from 'socket.io-client'
 // import Router from 'next/router'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
@@ -14,7 +15,9 @@ class TrackOrder extends Component {
     this.state = {
       mapReceived: false,
       mapURL: '',
-      mapRouteURL: ''
+      mapRouteURL: '',
+      orderStatus: 'Awaiting restaurant confirmation',
+      delivererCoords: [0, 0]
     }
     this.mapRequest = this.mapRequest.bind(this)
     this.mapRouteRequest = this.mapRouteRequest.bind(this)
@@ -28,6 +31,14 @@ componentDidMount () {
   console.log('The final array is ', locations)
   this.mapRequest(locations)
   this.mapRouteRequest(locations[0], locations[1])
+
+  this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: 'Order Confirmed' }))
+  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: 'Delivery man is on his way to the restaurant' }, console.log('Deliverer is', deliverer)))
+  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: 'Delivery man has arrived at the restaurant' }))
+  this.props.userContext.socket.on('orderPickedUp', () => this.setState( { orderStatus: 'Order picked up, tasty food is on its way!' }))
+  this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: 'Your order has been delivered, enjoy!' }))
+  this.props.userContext.socket.on('updateLocation', coords => this.setState({ delivererCoords: coords }))
+  console.log('Socket is', this.props.userContext.socket) // debug
 }
 
   mapRequest = locations => {
@@ -62,6 +73,7 @@ componentDidMount () {
         <img src={this.state.mapURL} alt='Map image'/>
         <hr />
         <img src={this.state.mapRouteURL} alt='Map route request'/>
+        <p>{this.state.orderStatus}</p>
       </React.Fragment>)
     else return (
       <h3>No map</h3>
