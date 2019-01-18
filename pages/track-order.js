@@ -4,6 +4,7 @@ import fetch from 'isomorphic-unfetch'
 import { withRouter } from 'next/router'
 import io from 'socket.io-client'
 // import Router from 'next/router'
+import { Button } from 'reactstrap'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withCartContext } from '../Components/Context/CartContextProvider'
@@ -87,11 +88,12 @@ componentDidMount () {
         <div className='img-container' style={{height: 400, width: 400}}>
           <img src={this.state.mapURL} alt='Map image'/>
         </div>
+        <h4>{this.state.orderStatus}</h4>
+        <Button>Cancel Order</Button>
         <hr />
         <div className='img-container' style={{height: 400, width: 400}}>
           <img src={this.state.mapRouteURL} alt='Map route request'/>
         </div>
-        <p>{this.state.orderStatus}</p>
       </React.Fragment>)
     else return (
       <h3>No map</h3>
