@@ -31,16 +31,19 @@ componentDidMount () {
   locations.push([userLocation.latitude, userLocation.longitude])
   console.log('The final array is ', locations)
   this.mapRequest(locations)
-  this.mapRouteRequest(locations[0], locations[1])
 
   this.props.userContext.socket.emit('identify', this.props.userContext.userId)
 
   this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: 'Order Confirmed' }))
-  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: 'Delivery man is on his way to the restaurant' }, console.log('Deliverer is', deliverer)))
-  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: 'Delivery man has arrived at the restaurant' }))
+  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: 'Manjunath is on his way to the restaurant' }, console.log('Deliverer is', deliverer)))
+  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: 'Manjunath has arrived at the restaurant' }))
   this.props.userContext.socket.on('orderPickedUp', () => this.setState({ orderStatus: 'Order picked up, tasty food is on its way!' }))
   this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: 'Your order has been delivered, enjoy!' }))
-  this.props.userContext.socket.on('updateLocation', coords => this.setState({ delivererCoords: coords }))
+  this.props.userContext.socket.on('updateLocation', coords => {
+    this.setState({
+      delivererCoords: coords
+    }, () => this.mapRouteRequest(this.state.delivererCoords, locations[1]))
+  })
 }
 
   mapRequest = locations => {
@@ -70,6 +73,7 @@ componentDidMount () {
   }
   render () {
     console.log('Tracking props are', this.props)
+    console.log('The tracked deliverer co-ordinates are ', this.state.delivererCoords)
     if(this.state.mapReceived)
     return (
       <React.Fragment>

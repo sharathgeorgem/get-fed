@@ -27,10 +27,10 @@ class DelivererPortal extends React.Component {
     })
   }
   simulateDelivery = (order) => { // only for development
-    const time = 30
+    const time = 10
     const latDelta = (order.address.latitude - this.state.lat)/time
     const longDelta = (order.address.longitude - this.state.long)/time
-    let timer = setInterval(() => this.transmitLocation(latDelta, longDelta), 1000)
+    let timer = setInterval(() => this.transmitLocation(latDelta, longDelta), 6000)
   }
   transmitLocation = (latDelta, longDelta) => {
     this.setState(
