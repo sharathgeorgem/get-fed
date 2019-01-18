@@ -31,6 +31,7 @@ class DelivererPortal extends React.Component {
     const latDelta = (order.address.latitude - this.state.lat)/time
     const longDelta = (order.address.longitude - this.state.long)/time
     let timer = setInterval(() => this.transmitLocation(latDelta, longDelta), 6000)
+    setTimeout(() => clearInterval(timer), 60000)
   }
   transmitLocation = (latDelta, longDelta) => {
     this.setState(
