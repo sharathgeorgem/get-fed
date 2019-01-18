@@ -66,9 +66,9 @@ componentDidMount () {
               -webkit-animation: loading 1.3s ease-in-out infinite;
             }
             @keyframes loading {
-              0% { background-color: #e0e0e0; }
-              50% { background-color: #eeeeee; }
-              100% { background-color: #e0e0e0; }
+              0% { background-color: #00C9A7; }
+              50% { background-color: #C4FCEF; }
+              100% { background-color: #4D8076; }
             }
           `}
         </style>
