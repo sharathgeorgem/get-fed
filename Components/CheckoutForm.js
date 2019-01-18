@@ -80,11 +80,10 @@ class CheckoutForm extends React.Component {
           </div>
         </FormGroup> */}
         <FormGroup style={{ display: 'flex' }}>
-          <button>
-            <Link href='/track-order'>
-              <a onClick={this.submitOrder.bind(this)}>Place Order</a>
-            </Link>
-          </button>
+          
+          <Link href='/track-order'>
+            <a onClick={this.submitOrder.bind(this)}><button>Place Order</button></a>
+          </Link>
         </FormGroup>
 
         <style jsx global>
