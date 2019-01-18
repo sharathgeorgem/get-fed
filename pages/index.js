@@ -1,12 +1,12 @@
 import React from 'react'
 import Link from 'next/link'
-import { withUserContext } from '../Components/Context/UserContextProvider'
+// import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
 
 class Index extends React.Component {
   componentDidMount () {
-    let e = ['🏻', '🏼', '🏽', '🏾', '🏿'];
+    let e = ['🏻', '🏼', '🏽', '🏾', '🏿']
 
     function loop () {
       let s = ''
