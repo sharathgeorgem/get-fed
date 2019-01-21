@@ -25,23 +25,36 @@ nextApp.prepare()
       console.log(`Server listening on port ${port}`)
     })
 
-    app.get('/items-list', (req, res) => {
-      const actualPage = '/items-list'
-      console.log('Request for items reached')
+    app.get('restaurant-scaffold', (req, res) => {
+      const actualPage = 'restaurant-scaffold'
+      console.log('Request for restaurants reached')
+      // console.log('The request is ', req)
+      console.log('The response is ', res)
+      console.log('The actualPage is ', actualPage)
       app.render(req, res, actualPage)
     })
 
-    app.get('/restaurant-portal', (req, res) => {
-      let restaurantPage = '/restaurant-portal'
+    app.get('restaurant/:id', (req, res) => {
+      console.log('Request for menu reached')
+      const actualPage = '/restaurant'
+      const queryParams = { id: req.params.id, apiRoute: 'restaurant' }
+      console.log('The actual page is ', actualPage)
+      console.log('Query params are ', queryParams)
+      app.render(req, res, actualPage, queryParams)
+    })
+
+    app.get('restaurant-portal', (req, res) => {
+      let restaurantPage = 'restaurant-portal'
       console.log('Request for restaurant portal')
       app.render(req, res, restaurantPage)
     })
 
-    app.get('/deliverer-portal', (req, res) => {
-      let delivererPage = '/deliverer-portal'
+    app.get('deliverer-portal', (req, res) => {
+      let delivererPage = 'deliverer-portal'
       console.log('Request for deliverer portal')
       app.render(req, res, delivererPage)
     })
+
     app.get('_error', (req, res) => {
       let errorPage = '_error'
       console.log('Error page reached')
