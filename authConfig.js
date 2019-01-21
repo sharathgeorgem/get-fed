@@ -23,7 +23,7 @@
   /* 'postgresql' or 'mongodb' */	
 
    connectionString: 'mongodb+srv://admin:chwiggy@get-fed-2q8ne.mongodb.net/authentication?retryWrites=true'	
-  // Required to connect to the data base you choose...	
+  // Required to connect to the data base you choose.	
   /*	
     'postgresql://dbuser:secretpassword@database.server.com:port/mydb'	
     or	
