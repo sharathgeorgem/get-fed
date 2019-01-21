@@ -11,23 +11,26 @@ class UserContextProvider extends React.Component {
     this.state = {
       userId: '',
       socket: null,
-      userLocation: null,
+      userLocation: false,
       userAddress: ''
     }
     this.domain = 'http://localhost:3000'
   }
 
   componentDidMount () {
-    let socket = io()
-    socket.on('confirmConnection', () => this.setState({ socket: socket }))
+    if(!this.state.userId) {
+      let socket = io()
+      socket.on('confirmConnection', () => this.setState({ socket: socket }))
+      
+      fetch(`${this.domain}/user/dummy`)
+      .then(res => res.json())
+      .then(res => this.setState({ userId: res.id }, () => socket.emit('identify', this.state.userId)))
+    }
     !this.state.userLocation
     ? (('geolocation' in navigator)
       ? (navigator.geolocation.getCurrentPosition(this.setPosition, console.log, {enableHighAccuracy: true})
       ) : console.log('Unavailable')
     ) : this.state.userLocation
-    fetch(`${this.domain}/user/dummy`)
-      .then(res => res.json())
-      .then(res => this.setState({ userId: res.id }, () => socket.emit('identify', this.state.userId)))
   }
 
   setPosition = position => {

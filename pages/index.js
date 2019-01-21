@@ -1,29 +1,26 @@
 import React from 'react'
 import Link from 'next/link'
-// import { withUserContext } from '../Components/Context/UserContextProvider'
+import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
+import { Button } from 'reactstrap'
 
 class Index extends React.Component {
-  componentDidMount () {
-    let e = ['🏻', '🏼', '🏽', '🏾', '🏿']
+  // componentDidMount () {
+  //   let e = ['🏻', '🏼', '🏽', '🏾', '🏿']
+  //   function loop () {
+  //     let s = ''
+  //     let i, m
+  //     for (i = 0; i < 10; i++) {
+  //       m = Math.floor(e.length * ((Math.sin((Date.now() / 100) + i) + 1) / 2))
+  //       s += '👶' + e[m]
+  //     }
+  //     window.location.hash = s
+  //     setTimeout(loop, 50)
+  //   }
+  //   loop()
+  // }
 
-    function loop () {
-      let s = ''
-      let i, m
-
-      for (i = 0; i < 10; i++) {
-        m = Math.floor(e.length * ((Math.sin((Date.now() / 100) + i) + 1) / 2))
-        s += '👶' + e[m]
-      }
-
-      window.location.hash = s
-
-      setTimeout(loop, 50)
-    }
-
-    loop()
-  }
   render () {
     return (
       <React.Fragment>
@@ -49,5 +46,6 @@ class Index extends React.Component {
 }
 
 export default compose(
-  withRouter
+  withRouter,
+  withUserContext
 )(Index)
