@@ -44,7 +44,11 @@ class Authenticate extends React.Component {
             className={this.state.activeTab===1 ? 'active' : 'not'}
             onClick={() => { this.switchTab(1) }}
           >
-            Sign Up
+            <span 
+              style={{ color: '#000' }}
+            >
+              Sign Up
+            </span>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -52,10 +56,20 @@ class Authenticate extends React.Component {
             className={this.state.activeTab===2 ? 'active' : 'not'}
             onClick={() => { this.switchTab(2) }}
           >
-            Log In
+          <span 
+            style={{ color: '#000' }}
+          >
+            Login
+          </span>
           </NavLink>
         </NavItem>
       </Nav>
+      <style jsx global>
+        {`.active {
+          background: 'black';
+          }
+        `}
+      </style>
       <TabContent activeTab={this.state.activeTab}>
         <TabPane tabId={1}>
           <AuthenticateForm route='register' statusMessage={registerStatusMessage} />
