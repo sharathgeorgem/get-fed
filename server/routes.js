@@ -26,4 +26,8 @@ router.delete('/user/cart/:userId/:itemId', controllers.removeItemFromCart)
 router.put('/user/addresses/:userId/:addressType', controllers.addAddress) // send address in body
 router.post('/user/cart/:userId', controllers.setCart) // send cart in body
 
+router.post('/auth/register/:email/:password', controllers.register)
+router.post('/auth/login/:email/:password', controllers.login)
+router.get('/verify/:token', controllers.verify)
+
 module.exports = router

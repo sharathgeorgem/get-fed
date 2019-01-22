@@ -19,7 +19,7 @@ class DelivererPortal extends React.Component {
     this.socket.emit('acceptDelivery', this.props.id, orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'accepted'
-    this.setState({ 
+    this.setState({
       orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)),
       // for testing
       lat: order.restaurant.address.latitude,
