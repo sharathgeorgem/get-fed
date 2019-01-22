@@ -142,8 +142,7 @@ class ItemCard extends React.Component {
           style={{ height: 250 }}
           src={this.props.dish.img}
         />
-        <CardImgOverlay
-        >
+        <CardImgOverlay>
           <CardText style={{ background: 'black', color: '#fff' }}>
             {this.props.dish.description}
           </CardText>
@@ -156,6 +155,7 @@ class ItemCard extends React.Component {
             <Button
               outline color='primary'
               onClick={this.props.addItem.bind(this, this.props.dish)}
+              style={{ zIndex: 10000 }}
             >
             + Add To Cart
             </Button>
