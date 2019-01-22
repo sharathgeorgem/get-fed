@@ -1,4 +1,5 @@
 const model = require('../model')
+const auth = require('@vinayakrugvedi/authjs')
 
 exports.getDummyUser = async function (req, res) {
   let result = await model.getDummyUser().catch(console.log)
@@ -73,4 +74,35 @@ exports.addAddress = async function (req, res) { // need to add geocoding as mid
 exports.setCart = async function (req, res) {
   let result = await model.setCart(req.params.userId, req.body.cart).catch(console.log)
   res.send(result)
+}
+
+exports.register = async function (req, res) {
+  let result = await auth.signUp(req.params.email, req.params.password).catch(console.log)
+  if (result.authCode === 14) {
+    auth.resendVerificationLink(req.params.email).catch(console.log)
+  }
+  res.send({ result: result.authCode })
+}
+
+exports.login = async function (req, res) {
+  let result = await auth.signIn(req.params.email, req.params.password).catch(console.log)
+  if (result.authCode === 14) {
+    auth.resendVerificationLink(req.params.email).catch(console.log)
+  }
+  res.send({ result: result.authCode })
+}
+
+exports.verify = async function (req, res) {
+  let result = await auth.verify(req.params.token).catch(console.log)
+  if (result.authCode === 3) {
+    let match = /: (\w+)@/.exec(result.authMessage)
+    let res = await model.addUser(match[1]).catch(console.log)
+    console.log('Model response is', res)
+    // redirect to sign in or tell user verification complete
+  } else if (result.authCode === 24) {
+    // auth.resendVerificationLink(email)
+    // tell user link is expired, a new one has been sent
+  } else if (result.authCode === 23) {
+    // tell user link is invalid
+  }
 }
