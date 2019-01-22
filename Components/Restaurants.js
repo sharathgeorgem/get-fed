@@ -36,10 +36,10 @@ const Restaurants = (props) => {
                 <CardBody>
                   <CardTitle>{res.name}</CardTitle>
                   <Row>
-                    <Col>
+                    <Col xs='7'>
                       <CardText>{'Cost for 2: ₹' + res.cost}</CardText>
                     </Col>
-                    <Col>
+                    <Col xs='5'>
                       <CardText>{'Rating : ' + Math.ceil(res.rating) + '/5'}</CardText>
                     </Col>
                   </Row>

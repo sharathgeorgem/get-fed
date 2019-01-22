@@ -1,5 +1,4 @@
 import React from 'react'
-
 // import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
 import Restaurants from '../Components/Restaurants'

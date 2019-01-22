@@ -46,6 +46,9 @@ export default class MyApp extends App {
               .card-columns {
                 column-count: 3;
               }
+              body {
+                background-color: orange;
+              }
             `}
           </style>
         </Container>

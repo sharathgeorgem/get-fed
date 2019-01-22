@@ -12,6 +12,7 @@ import {
   Card,
   CardBody,
   CardImg,
+  CardImgOverlay,
   CardText,
   CardTitle,
   Col,
@@ -141,9 +142,14 @@ class ItemCard extends React.Component {
           style={{ height: 250 }}
           src={this.props.dish.img}
         />
+        <CardImgOverlay
+        >
+          <CardText style={{ background: 'black', color: '#fff' }}>
+            {this.props.dish.description}
+          </CardText>
+        </CardImgOverlay>
         <CardBody>
           <CardTitle>{this.props.dish.name}</CardTitle>
-          <CardText>{this.props.dish.description}</CardText>
         </CardBody>
         <div className='card-footer'>
           { this.props.dish.available ?
