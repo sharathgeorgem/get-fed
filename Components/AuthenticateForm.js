@@ -58,7 +58,6 @@ function AuthenticationField (props) {
             bsSize='lg'
             type={props.type}
             name={props.name}
-            id={props.name}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.handleChange}
