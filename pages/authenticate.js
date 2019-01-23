@@ -77,7 +77,7 @@ class Authenticate extends React.Component {
           <AuthenticateForm route='register' statusMessage={registerStatusMessage}/>
         </TabPane>
         <TabPane tabId={2}>
-          <AuthenticateForm route='login' statusMessage={loginStatusMessage} />
+          <AuthenticateForm route='login' reroute={() => Router.push('/restaurant-scaffold')} statusMessage={loginStatusMessage} />
         </TabPane>
       </TabContent>
       </div>

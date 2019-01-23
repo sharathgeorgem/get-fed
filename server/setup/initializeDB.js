@@ -35,7 +35,7 @@ async function getRestaurantIds () {
 }
 
 async function addItem (resId, details, category) {
-  return http.request('http', 'POST', domain, `menu/${resId}/new`, { item: details, category: category })
+  return http.request('http', 'POST', domain, `menu/new/${resId}`, { item: details, category: category })
 }
 
 async function setupDummyData () {

@@ -98,7 +98,7 @@ exports.verify = async function (req, res) {
     let match = /: (\w+)@/.exec(result.authMessage)
     let res = await model.addUser(match[1]).catch(console.log)
     console.log('Model response is', res)
-    // redirect to sign in or tell user verification complete
+    // tell user verification complete
   } else if (result.authCode === 24) {
     // auth.resendVerificationLink(email)
     // tell user link is expired, a new one has been sent

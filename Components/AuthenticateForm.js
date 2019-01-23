@@ -34,7 +34,10 @@ class AuthenticateForm extends React.Component {
     {method: 'POST'})
     .then(res => res.json())
     .then(res => res.result)
-    this.setState({ status: this.props.statusMessage(result)},() => Router.push('/'))
+    this.setState({ status: this.props.statusMessage(result) })
+    if (result === 3 && this.props.reroute) {
+      this.props.reroute()
+    }
   }
   render () {
     return(
