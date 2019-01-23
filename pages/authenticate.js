@@ -1,5 +1,7 @@
 import React from 'react'
 import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
+import Router, { withRouter } from 'next/router'
+import { compose } from 'recompose'
 
 import AuthenticateForm from '../Components/AuthenticateForm'
 
@@ -72,7 +74,7 @@ class Authenticate extends React.Component {
       </style>
       <TabContent activeTab={this.state.activeTab}>
         <TabPane tabId={1}>
-          <AuthenticateForm route='register' statusMessage={registerStatusMessage} />
+          <AuthenticateForm route='register' statusMessage={registerStatusMessage}/>
         </TabPane>
         <TabPane tabId={2}>
           <AuthenticateForm route='login' statusMessage={loginStatusMessage} />
@@ -83,4 +85,6 @@ class Authenticate extends React.Component {
   }
 }
 
-export default Authenticate
+export default compose(
+  withRouter
+)(Authenticate)
