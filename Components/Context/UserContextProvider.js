@@ -21,10 +21,6 @@ class UserContextProvider extends React.Component {
     if(!this.state.userId) {
       let socket = io()
       socket.on('confirmConnection', () => this.setState({ socket: socket }))
-      
-      // fetch(`${this.domain}/user/dummy`)
-      // .then(res => res.json())
-      // .then(res => this.setState({ userId: res.id }, () => socket.emit('identify', this.state.userId)))
     }
     !this.state.userLocation
     ? (('geolocation' in navigator)

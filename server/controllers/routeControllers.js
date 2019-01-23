@@ -99,15 +99,19 @@ exports.login = async function (req, res) {
 
 exports.verify = async function (req, res) {
   let result = await auth.verify(req.params.token).catch(console.log)
+  console.log('Result is', result) // debug
   if (result.authCode === 3) {
     let match = /: (\S+)@/.exec(result.authMessage)
     let res = await model.addUser(match[1]).catch(console.log)
     console.log('Model response is', res)
+    res.send('You are verified')
     // tell user verification complete
   } else if (result.authCode === 24) {
     // auth.resendVerificationLink(email)
     // tell user link is expired, a new one has been sent
   } else if (result.authCode === 23) {
-    // tell user link is invalid
+    res.send('This token is invalid. ')
+  } else if (result.authCode === 15) {
+    res.send('Your account has already been verified. Please login.')
   }
 }

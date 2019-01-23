@@ -58,12 +58,11 @@ function AuthenticationField (props) {
             bsSize='lg'
             type={props.type}
             name={props.name}
-            id={props.name}
             placeholder={props.placeholder}
             value={props.value}
             onChange={props.handleChange}
             valid={props.valid}
-            invalid={!props.valid}
+            invalid={!props.valid && props.value.length > 0}
           />
           <FormFeedback valid>Nice</FormFeedback>
           <FormFeedback>{props.invalidMessage}</FormFeedback>
