@@ -21,10 +21,6 @@ const images = {
   pizza: 'http://2.bp.blogspot.com/_Vh8ATwGRVqo/SvACUfs2A-I/AAAAAAAAKVk/KHyl0oKRNRA/s320/happy+pizza.JPG'
 }
 
-async function addUser (name) {
-  return http.request('http', 'POST', domain, 'user/new', { name: name })
-}
-
 async function addDeliverer (name) {
   return http.request('http', 'POST', domain, 'deliverer/new', { name: name })
 }
@@ -39,8 +35,8 @@ async function addItem (resId, details, category) {
 }
 
 async function setupDummyData () {
-  addUser('Hungry Maulik')
   addDeliverer('Jadesh Shetty')
+  addDeliverer('Manjunath')
   let ids = await getRestaurantIds()
   ids.forEach(addMenu)
 }

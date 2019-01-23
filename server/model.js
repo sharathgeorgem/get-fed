@@ -109,9 +109,8 @@ function costOfCart (cart) {
 
 // Exported methods
 
-exports.getDummyUser = async function () {
-  let users = await User.find()
-  return users[0].id
+exports.findUser = async function (name) {
+  return User.findOne({ name: name })
 }
 
 exports.getDummyRestaurant = async function () {
