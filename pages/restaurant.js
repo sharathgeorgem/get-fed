@@ -142,11 +142,11 @@ class ItemCard extends React.Component {
           style={{ height: 250 }}
           src={this.props.dish.img}
         />
-        <CardImgOverlay>
+        {/* <CardImgOverlay>
           <CardText style={{ background: 'black', color: '#fff' }}>
             {this.props.dish.description}
           </CardText>
-        </CardImgOverlay>
+        </CardImgOverlay> */}
         <CardBody>
           <CardTitle>{this.props.dish.name}</CardTitle>
         </CardBody>

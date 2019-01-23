@@ -33,8 +33,10 @@ class AuthenticateForm extends React.Component {
     let result = await fetch(`${domain}/auth/${this.props.route}/${this.state.email}/${this.state.password}`,
     {method: 'POST'})
     .then(res => res.json())
-    .then(res => res.result)
-    this.setState({ status: this.props.statusMessage(result)},() => Router.push('/'))
+    this.setState({ status: this.props.statusMessage(result.code) })
+    if (result.code === 3 && this.props.reroute !== undefined) {
+      this.props.reroute(result.user)
+    }
   }
   render () {
     return(

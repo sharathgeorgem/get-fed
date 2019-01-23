@@ -14,7 +14,7 @@ router.get('/deliverer/dummy', controllers.getDummyDeliverer)
 router.post('/user/new', controllers.addUser)
 router.post('/restaurant/new', controllers.addRestaurant)
 router.post('/deliverer/new', controllers.addDeliverer)
-router.post('/menu/:restaurantId/new', controllers.addItem)
+router.post('/menu/new/:restaurantId', controllers.addItem)
 // ---
 
 router.get('/restaurant', controllers.getRestaurants)

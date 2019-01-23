@@ -3,6 +3,7 @@ import { TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap'
 import Router, { withRouter } from 'next/router'
 import { compose } from 'recompose'
 
+import { withUserContext } from '../Components/Context/UserContextProvider'
 import AuthenticateForm from '../Components/AuthenticateForm'
 
 function registerStatusMessage (code) {
@@ -34,8 +35,13 @@ class Authenticate extends React.Component {
     super(props)
     this.state = { activeTab: 1 }
   }
-  switchTab = (tab) => {
+  switchTab = tab => {
     this.setState({ activeTab: tab })
+  }
+  rerouteLogin = user => {
+    console.log('user is', user) // debug
+    this.props.userContext.setUser(user)
+    Router.push('/restaurant-scaffold')
   }
   render () {
     return(
@@ -77,7 +83,7 @@ class Authenticate extends React.Component {
           <AuthenticateForm route='register' statusMessage={registerStatusMessage}/>
         </TabPane>
         <TabPane tabId={2}>
-          <AuthenticateForm route='login' statusMessage={loginStatusMessage} />
+          <AuthenticateForm route='login' reroute={this.rerouteLogin} statusMessage={loginStatusMessage} />
         </TabPane>
       </TabContent>
       </div>
@@ -86,5 +92,6 @@ class Authenticate extends React.Component {
 }
 
 export default compose(
-  withRouter
+  withRouter,
+  withUserContext
 )(Authenticate)
