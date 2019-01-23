@@ -43,6 +43,13 @@ nextApp.prepare()
       app.render(req, res, actualPage, queryParams)
     })
 
+    app.get('verify/:token', (req, res) => {
+      console.log('Verification route reached')
+      const actualPage = '/verify'
+      const queryParams = { tokens: req.params.token, apiRoute: 'verify'}
+      app.render(req, res, actualPage, queryParams)
+    })
+
     app.get('restaurant-portal', (req, res) => {
       let restaurantPage = 'restaurant-portal'
       console.log('Request for restaurant portal')
@@ -60,6 +67,7 @@ nextApp.prepare()
       console.log('Error page reached')
       app.render(req, res, errorPage)
     })
+    
     app.get('*', (req, res) => {
       return handle(req, res)
     })

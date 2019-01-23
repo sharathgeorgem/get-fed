@@ -41,8 +41,8 @@ class AuthenticateForm extends React.Component {
   render () {
     return(
       <Container>
-        <AuthenticationField label='Email' name='email' type='email' value={this.state.email} placeholder='Enter email address' valid={this.state.emailStatus} invalidMessage='This is not a valid email' handleChange={this.handleChange}/>
-        <AuthenticationField label='Password' name='password' type='password' value={this.state.password} placeholder='Enter password' valid={this.state.passwordStatus} invalidMessage='Password must be at least seven characters' handleChange={this.handleChange}/>
+        <AuthenticationField id='email' label='Email' name='email' type='email' value={this.state.email} placeholder='Enter email address' valid={this.state.emailStatus} invalidMessage='This is not a valid email' handleChange={this.handleChange} />
+        <AuthenticationField id='password' label='Password' name='password' type='password' value={this.state.password} placeholder='Enter password' valid={this.state.passwordStatus} invalidMessage='Password must be at least seven characters' handleChange={this.handleChange} />
         <Button onClick={this.submit} disabled={!(this.state.passwordStatus && this.state.emailStatus)}>Continue</Button>
         <p>{this.state.status}</p>
       </Container>

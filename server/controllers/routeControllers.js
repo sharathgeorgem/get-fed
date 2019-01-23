@@ -106,6 +106,7 @@ exports.verify = async function (req, res) {
     console.log('Model response is', res)
     res.send('You are verified')
     // tell user verification complete
+    res.send({ message: 'Verification complete'})
   } else if (result.authCode === 24) {
     // auth.resendVerificationLink(email)
     // tell user link is expired, a new one has been sent
