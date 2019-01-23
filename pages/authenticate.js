@@ -39,24 +39,19 @@ class Authenticate extends React.Component {
     this.setState({ activeTab: tab })
   }
   rerouteLogin = user => {
-    console.log('user is', user) // debug
     this.props.userContext.setUser(user)
     Router.push('/restaurant-scaffold')
   }
   render () {
     return(
       <div>
-      <Nav tabs>
+      <Nav tabs style={{ marginTop: 20 + 'px' }}>
         <NavItem>
           <NavLink
             className={this.state.activeTab===1 ? 'active' : 'not'}
             onClick={() => { this.switchTab(1) }}
           >
-            <span 
-              style={{ color: '#000' }}
-            >
-              Sign Up
-            </span>
+            <span style={{ color: '#000' }}>Sign Up</span>
           </NavLink>
         </NavItem>
         <NavItem>
@@ -64,21 +59,11 @@ class Authenticate extends React.Component {
             className={this.state.activeTab===2 ? 'active' : 'not'}
             onClick={() => { this.switchTab(2) }}
           >
-          <span 
-            style={{ color: '#000' }}
-          >
-            Login
-          </span>
+          <span style={{ color: '#000' }}>Login</span>
           </NavLink>
         </NavItem>
       </Nav>
-      <style jsx global>
-        {`.active {
-          background: 'black';
-          }
-        `}
-      </style>
-      <TabContent activeTab={this.state.activeTab}>
+      <TabContent activeTab={this.state.activeTab} style={{ marginTop: 20 + 'px' }}>
         <TabPane tabId={1}>
           <AuthenticateForm route='register' statusMessage={registerStatusMessage}/>
         </TabPane>
