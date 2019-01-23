@@ -104,12 +104,10 @@ exports.verify = async function (req, res) {
     let match = /: (\S+)@/.exec(result.authMessage)
     let res = await model.addUser(match[1]).catch(console.log)
     console.log('Model response is', res)
-    res.send('You are verified')
-    // tell user verification complete
-    res.send({ message: 'Verification complete'})
+    res.send('You have been successfully verified. Please proceed to login.')
   } else if (result.authCode === 24) {
     // auth.resendVerificationLink(email)
-    // tell user link is expired, a new one has been sent
+    res.send('Your link has expired. A new link has been sent to your email address.')
   } else if (result.authCode === 23) {
     res.send('This token is invalid. ')
   } else if (result.authCode === 15) {

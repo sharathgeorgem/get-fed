@@ -43,10 +43,10 @@ nextApp.prepare()
       app.render(req, res, actualPage, queryParams)
     })
 
-    app.get('verify/:token', (req, res) => {
+    app.get('verify/:id', (req, res) => {
       console.log('Verification route reached')
-      const actualPage = '/verify'
-      const queryParams = { tokens: req.params.token, apiRoute: 'verify'}
+      const actualPage = 'verify'
+      const queryParams = { id: req.params.id, apiRoute: 'verify' }
       app.render(req, res, actualPage, queryParams)
     })
 

@@ -1,13 +1,11 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-class Verify extends Component (
+class Verify extends React.Component {
   render () {
     return (
-      <React.Fragment>
-        <h1>VERIFICATION PAGE</h1>
-      </React.Fragment>
+      <h1>VERIFICATION PAGE</h1>
     )
   }
-)
+}
 
 export default Verify
