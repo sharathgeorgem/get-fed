@@ -18,7 +18,6 @@ nextApp.prepare()
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use('/', router)
 
     const server = app.listen(port, function (err) {
       if (err) throw err
@@ -37,7 +36,7 @@ nextApp.prepare()
     app.get('restaurant/:id', (req, res) => {
       console.log('Request for menu reached')
       const actualPage = 'restaurant'
-      const queryParams = { id: req.params.id, apiRoute: 'restaurant' }
+      const queryParams = { id: req.params.id }
       console.log('The actual page is ', actualPage)
       console.log('Query params are ', queryParams)
       app.render(req, res, actualPage, queryParams)
@@ -49,6 +48,8 @@ nextApp.prepare()
       const queryParams = { id: req.params.id, apiRoute: 'verify' }
       app.render(req, res, actualPage, queryParams)
     })
+
+    app.use('/', router)
 
     app.get('restaurant-portal', (req, res) => {
       let restaurantPage = 'restaurant-portal'

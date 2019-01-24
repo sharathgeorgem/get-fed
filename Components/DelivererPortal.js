@@ -35,7 +35,7 @@ class DelivererPortal extends React.Component {
   }
   transmitLocation = (latDelta, longDelta) => {
     this.setState(
-      { lat: this.state.lat + latDelta, long: this.state.long + longDelta }, 
+      { lat: this.state.lat + latDelta, long: this.state.long + longDelta },
       () => this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
     )
   }
