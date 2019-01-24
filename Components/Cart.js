@@ -14,13 +14,11 @@ import {
 } from 'reactstrap'
 
 class Cart extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      cartItems: ''
-    }
+  componentDidMount () {
+    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}`)
+    .then(res => res.json())
+    .then(this.props.cartContext.updateCart)
   }
-
   addItem = itemType => {
     console.log('added item is', itemType.item.id)
     fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
