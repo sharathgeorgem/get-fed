@@ -1,7 +1,9 @@
 import React from 'react'
 // import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
+
 import Restaurants from '../Components/Restaurants'
+import config from '../config'
 
 import {
   Col,
@@ -49,7 +51,7 @@ class RestaurantScaffold extends React.Component {
 }
 
 RestaurantScaffold.getInitialProps = async function () {
-  const res = await fetch('http://localhost:3000/restaurant')
+  const res = await fetch(`${config.domain}/restaurant`)
   const data = await res.json()
 
   // console.log(`The data fetched is : ${JSON.stringify(data, null, 4)}`)

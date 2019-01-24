@@ -1,7 +1,9 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
 import io from 'socket.io-client'
+
 import keys from '../../keys'
+import config from '../../config'
 
 const UserContext = React.createContext()
 
@@ -14,7 +16,6 @@ class UserContextProvider extends React.Component {
       userLocation: false,
       userAddress: ''
     }
-    this.domain = 'http://localhost:3000'
   }
 
   componentDidMount () {
@@ -59,7 +60,7 @@ class UserContextProvider extends React.Component {
           socket: this.state.socket,
           userLocation: this.state.userLocation,
           userAddress: this.state.userAddress,
-          domain: this.domain,
+          domain: config.domain,
           setUser: this.setUser
         }}
       >

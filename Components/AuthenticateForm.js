@@ -2,7 +2,7 @@
 import React from 'react'
 import { Container, Col, Button, FormFeedback, FormGroup, Label, Input } from 'reactstrap'
 
-const domain = 'http://localhost:3000'
+import config from '../config'
 
 class AuthenticateForm extends React.Component {
   constructor(props) {
@@ -30,7 +30,7 @@ class AuthenticateForm extends React.Component {
     this.setState({ emailStatus: /^(\S+)@(\S+).(\S+)$/.test(email) })
   }
   submit = async () => {
-    let result = await fetch(`${domain}/auth/${this.props.route}/${this.state.email}/${this.state.password}`,
+    let result = await fetch(`${config.domain}/auth/${this.props.route}/${this.state.email}/${this.state.password}`,
     {method: 'POST'})
     .then(res => res.json())
     this.setState({ status: this.props.statusMessage(result.code) })

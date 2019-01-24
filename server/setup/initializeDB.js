@@ -1,6 +1,5 @@
 const http = require('../../utilities/promisifiedHTTP')
-
-const domain = 'http://localhost:3000'
+const config = require('../../config')
 
 const images = {
   wine: 'http://i.pinimg.com/736x/3b/68/82/3b688219528458e3eb06783c05c9f22f.jpg',
@@ -22,16 +21,16 @@ const images = {
 }
 
 async function addDeliverer (name) {
-  return http.request('http', 'POST', domain, 'deliverer/new', { name: name })
+  return http.request('http', 'POST', config.domain, 'deliverer/new', { name: name })
 }
 
 async function getRestaurantIds () {
-  let restaurants = await http.getRequest('http', 'json', domain, 'restaurant')
+  let restaurants = await http.getRequest('http', 'json', config.domain, 'restaurant')
   return restaurants.map(res => res.id)
 }
 
 async function addItem (resId, details, category) {
-  return http.request('http', 'POST', domain, `menu/new/${resId}`, { item: details, category: category })
+  return http.request('http', 'POST', config.domain, `menu/new/${resId}`, { item: details, category: category })
 }
 
 async function setupDummyData () {

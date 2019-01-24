@@ -1,13 +1,12 @@
 const io = require('socket.io-client')
 
 const http = require('../../utilities/promisifiedHTTP')
-
-const domain = 'http://localhost:3000'
+const config = require('../../config')
 
 async function makeOrder (id, socket) {
-  let res = await http.getRequest('http', 'json', domain, 'items')
+  let res = await http.getRequest('http', 'json', config.domain, 'items')
   let cart = res.menu[0][Object.keys(res.menu[0])[0]].map(item => Object.assign({}, { item: item.id, quantity: 1 }))
-  res = await http.request('http', 'POST', domain, `user/cart/${id}`, { cart: cart })
+  res = await http.request('http', 'POST', config.domain, `user/cart/${id}`, { cart: cart })
   let address = {
     latitude: 12.9615365,
     longitude: 77.6419672,
@@ -15,13 +14,13 @@ async function makeOrder (id, socket) {
     apartment: 'Downstairs lobby',
     landmark: 'Near temple'
   }
-  res = await http.request('http', 'PUT', domain, `user/addresses/${id}/home`, { address: address })
+  res = await http.request('http', 'PUT', config.domain, `user/addresses/${id}/home`, { address: address })
   socket.emit('placeOrder', id, res.addresses.home.id)
 }
 
 async function initializeConnection () {
-  let socket = io.connect(domain)
-  let res = await http.getRequest('http', 'json', domain, 'user/dummy')
+  let socket = io.connect(config.domain)
+  let res = await http.getRequest('http', 'json', config.domain, 'user/dummy')
   socket.emit('identify', res.id)
   setTimeout(() => makeOrder(res.id, socket), 1000)
   socket.on('orderAccepted', () => console.log('Order Accepted'))

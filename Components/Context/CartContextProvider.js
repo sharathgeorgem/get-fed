@@ -1,6 +1,8 @@
 import React from 'react'
 import fetch from 'isomorphic-unfetch'
 
+import config from '../../config'
+
 const CartContext = React.createContext()
 
 class CartContextProvider extends React.Component {
@@ -13,7 +15,6 @@ class CartContextProvider extends React.Component {
       restaurantAddress: null,
       orderId: ''
     }
-    this.domain = 'http://localhost:3000'
   }
 
   updateCart = cart => {
@@ -34,7 +35,7 @@ class CartContextProvider extends React.Component {
           restaurantId: this.state.restaurantId,
           restaurantAddress: this.state.restaurantAddress,
           orderId: this.state.orderId,
-          domain: this.domain,
+          domain: config.domain,
           updateCart: this.updateCart,
           updateRestaurantAddress: this.updateRestaurantAddress,
           updateOrderId: this.updateOrderId

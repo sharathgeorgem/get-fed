@@ -1,8 +1,7 @@
 const io = require('socket.io-client')
 
 const http = require('../../utilities/promisifiedHTTP')
-
-const domain = 'http://localhost:3000'
+const config = require('../../config')
 
 function handleNewOrder (order, id, socket) {
   console.log('New order is', order)
@@ -13,8 +12,8 @@ function handleNewOrder (order, id, socket) {
 }
 
 async function initializeConnection () {
-  let socket = io.connect(domain)
-  let res = await http.getRequest('http', 'json', domain, 'deliverer/dummy')
+  let socket = io.connect(config.domain)
+  let res = await http.getRequest('http', 'json', config.domain, 'deliverer/dummy')
   socket.emit('identifyDeliverer', res.id)
   socket.on('newOrder', order => handleNewOrder(order, res.id, socket))
 }

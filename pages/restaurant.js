@@ -167,20 +167,6 @@ class ItemCard extends React.Component {
   }
 }
 
-Restaurant.getInitialProps = async function (req, query, params) {
-  console.log('The request is ', req)
-  console.log('The query is ', query)
-  console.log('The parameters are ', params)
-  // const res = await fetch('http://localhost:3000/items')
-  // const data = await res.json()
-
-  console.log(`The menu items fetched are : ${JSON.stringify(data, null, 4)}`)
-  console.log(`The menu items fetched are : ${data.length}`)
-  return {
-    items: data
-  }
-}
-
 export default compose(
   withRouter,
   withUserContext,
