@@ -62,10 +62,11 @@ function AuthenticationField (props) {
             value={props.value}
             onChange={props.handleChange}
             valid={props.valid}
-            invalid={!props.valid && props.value.length > 0}
+            invalid={!props.valid}
           />
           <FormFeedback valid>Nice</FormFeedback>
-          <FormFeedback>{props.invalidMessage}</FormFeedback>
+          <FormFeedback className={props.value.length > 0 ? '' : 'regular'}>{props.value.length > 0 ? props.invalidMessage : props.placeholder}</FormFeedback>
+          <style jsx global>{ `.regular { color: #6c757d }` }</style>
         </Col>
       </FormGroup>
 }

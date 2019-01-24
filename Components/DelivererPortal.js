@@ -1,6 +1,6 @@
 import React from 'react'
 import io from 'socket.io-client'
-import { Card, CardText, CardBody, CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { Card, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap'
 
 const domain = 'http://localhost:3000'
 
