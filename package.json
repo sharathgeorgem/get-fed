@@ -25,6 +25,7 @@
     "bootstrap": "^4.2.1",
     "cors": "^2.8.5",
     "express": "^4.16.4",
+    "express-session": "^1.15.6",
     "isomorphic-unfetch": "^3.0.0",
     "mongoose": "^5.4.3",
     "next": "^7.0.2",

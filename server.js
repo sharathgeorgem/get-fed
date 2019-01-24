@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const io = require('socket.io')
 const next = require('next')
+const session = require('express-session')
 
 const router = require('./server/routes')
 const eventControllers = require('./server/controllers/eventControllers')
@@ -18,6 +19,7 @@ nextApp.prepare()
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
+    app.use(session({ secret: 'Gettin chwiggy with it' }))
     app.use('/', router)
 
     const server = app.listen(port, function (err) {
