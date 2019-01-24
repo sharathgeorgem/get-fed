@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node server.js",
+    "dev": "node server.js -p 3000",
     "build": "next build",
-    "start": "NODE_ENV=production node server.js -p 3000",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "next build",
+    "start": "node server.js -p 3000"
   },
   "repository": {
     "type": "git",
