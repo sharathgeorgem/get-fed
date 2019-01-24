@@ -10,6 +10,7 @@ class DelivererPortal extends React.Component {
     this.state = { orders: [], lat: 0, long: 0 }
     this.initializeConnection()
   }
+
   initializeConnection = () => {
     this.socket = io.connect(domain)
     this.socket.emit('identifyDeliverer', this.props.id)
@@ -28,14 +29,28 @@ class DelivererPortal extends React.Component {
   }
   simulateDelivery = (order) => { // only for development
     const time = 10
-    const latDelta = (order.address.latitude - this.state.lat)/time
-    const longDelta = (order.address.longitude - this.state.long)/time
-    let timer = setInterval(() => this.transmitLocation(latDelta, longDelta), 6000)
+    let options = {
+      enableHighAccuracy: true,
+      maximumAge: 0
+    }
+    let latDel, longDel
+    function success(pos) {
+      latDel = pos.coords.latitude
+      longDel = pos.coords.longitude
+      return [latDel, longDel]
+    }
+    function error(err) {
+      console.warn(`Error(${err.code}): ${err.message}`)
+    }
+    // const latDelta = (order.address.latitude - this.state.lat)/time
+    // const longDelta = (order.address.longitude - this.state.long)/time
+    let timer = setInterval(() => this.transmitLocation(
+      navigator.geolocation.getCurrentPosition(success, error, options)), 9000)
     setTimeout(() => clearInterval(timer), 60000)
   }
-  transmitLocation = (latDelta, longDelta) => {
+  transmitLocation = (position) => {
     this.setState(
-      { lat: this.state.lat + latDelta, long: this.state.long + longDelta },
+      { lat: this.state.lat + position[0], long: this.state.long + position[1] },
       () => this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
     )
   }
