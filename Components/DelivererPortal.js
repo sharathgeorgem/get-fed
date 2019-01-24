@@ -33,10 +33,9 @@ class DelivererPortal extends React.Component {
       enableHighAccuracy: true,
       maximumAge: 0
     }
-    let latDel, longDel
     function success(pos) {
-      latDel = pos.coords.latitude
-      longDel = pos.coords.longitude
+      let latDel = pos.coords.latitude
+      let longDel = pos.coords.longitude
       return [latDel, longDel]
     }
     function error(err) {
