@@ -38,8 +38,8 @@ nextApp.prepare()
 
     app.get('restaurant/:id', (req, res) => {
       console.log('Request for menu reached')
-      const actualPage = '/restaurant'
-      const queryParams = { id: req.params.id, apiRoute: 'restaurant' }
+      const actualPage = 'restaurant'
+      const queryParams = { id: req.params.id }
       console.log('The actual page is ', actualPage)
       console.log('Query params are ', queryParams)
       app.render(req, res, actualPage, queryParams)
@@ -65,6 +65,7 @@ nextApp.prepare()
     })
 
     app.get('_error', (req, res) => {
+      console.log('The request parameters are ', req.params)
       let errorPage = '_error'
       console.log('Error page reached')
       app.render(req, res, errorPage)
