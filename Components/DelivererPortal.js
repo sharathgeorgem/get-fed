@@ -7,7 +7,7 @@ const domain = 'http://localhost:3000'
 class DelivererPortal extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { orders: [], lat: 0, long: 0 }
+    this.state = { orders: [], lat: 0, long: 0, timer: null }
     this.initializeConnection()
   }
 
@@ -27,30 +27,22 @@ class DelivererPortal extends React.Component {
       long: order.restaurant.address.longitude
     })
   }
-  simulateDelivery = (order) => { // only for development
-    const time = 10
+  trackDelivery = (order) => {
     let options = {
       enableHighAccuracy: true,
       maximumAge: 0
     }
-    function success(pos) {
-      let latDel = pos.coords.latitude
-      let longDel = pos.coords.longitude
-      return [latDel, longDel]
-    }
-    function error(err) {
-      console.warn(`Error(${err.code}): ${err.message}`)
-    }
-    // const latDelta = (order.address.latitude - this.state.lat)/time
-    // const longDelta = (order.address.longitude - this.state.long)/time
-    let timer = setInterval(() => this.transmitLocation(
-      navigator.geolocation.getCurrentPosition(success, error, options)), 9000)
-    setTimeout(() => clearInterval(timer), 60000)
+    let timer = setInterval(() => navigator.geolocation.getCurrentPosition(this.transmitLocation, console.warn, options), 10000)
+    this.setState({ timer: timer })
   }
   transmitLocation = (position) => {
+    let latDel = position.coords.latitude
+    let longDel = position.coords.longitude
     this.setState(
-      { lat: this.state.lat + position[0], long: this.state.long + position[1] },
-      () => this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
+      { lat: latDel, long: longDel },
+      () => {
+        this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
+      }
     )
   }
   arrivedAtRestaurant = (orderId) => {
@@ -64,13 +56,14 @@ class DelivererPortal extends React.Component {
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'pickedUp'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
-      () => this.simulateDelivery(order)) // callback for testing
+      () => this.trackDelivery(order)) // callback for testing
   }
   delivered = (orderId) => {
     this.socket.emit('delivered', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'delivered'
-    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
+    clearTimer(this.state.timer)
+    this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)), timer: null })
   }
   render () {
     return (
