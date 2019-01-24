@@ -16,7 +16,6 @@ class CartContextProvider extends React.Component {
       orderId: ''
     }
   }
-
   updateCart = cart => {
     this.setState({ items: cart.cart, total: cart.total, restaurantId: cart.cart[0].restaurant })
   }
