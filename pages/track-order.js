@@ -4,11 +4,20 @@ import fetch from 'isomorphic-unfetch'
 import { withRouter } from 'next/router'
 import io from 'socket.io-client'
 // import Router from 'next/router'
-import { Button } from 'reactstrap'
+import { Button, Progress } from 'reactstrap'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withCartContext } from '../Components/Context/CartContextProvider'
 import keys from '../keys'
+
+const orderStatusMessages = {
+  '0': 'Awaiting restaurant confirmation',
+  '1': 'Order Confirmed',
+  '2': 'Manjunath is on his way to the restaurant',
+  '3': 'Manjunath has arrived at the restaurant',
+  '4': 'Order picked up, tasty food is on its way!',
+  '5': 'Your order has been delivered, enjoy!'
+}
 
 class TrackOrder extends Component {
   constructor (props) {
@@ -17,7 +26,8 @@ class TrackOrder extends Component {
       mapReceived: false,
       mapURL: '',
       mapRouteURL: '',
-      orderStatus: 'Awaiting restaurant confirmation',
+      orderStatus: '0',
+      deliverer: '',
       delivererCoords: [0, 0]
     }
     this.mapRequest = this.mapRequest.bind(this)
@@ -35,11 +45,11 @@ componentDidMount () {
   this.props.userContext.socket.emit('identify', this.props.userContext.userId)
 
   this.props.userContext.socket.on('cancelConfirmed', () => this.setState({ orderStatus: 'Order Cancelled' }))
-  this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: 'Order Confirmed' }))
-  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: 'Manjunath is on his way to the restaurant' }, console.log('Deliverer is', deliverer)))
-  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: 'Manjunath has arrived at the restaurant' }))
-  this.props.userContext.socket.on('orderPickedUp', () => this.setState({ orderStatus: 'Order picked up, tasty food is on its way!' }))
-  this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: 'Your order has been delivered, enjoy!' }))
+  this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: '1' }))
+  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: '2', deliverer: deliverer }, console.log('Deliverer is', deliverer)))
+  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: '3' }))
+  this.props.userContext.socket.on('orderPickedUp', () => this.setState({ orderStatus: '4' }))
+  this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: '5' }))
   this.props.userContext.socket.on('updateLocation', coords => {
     this.setState({
       delivererCoords: coords
@@ -96,8 +106,9 @@ componentDidMount () {
         <div className='img-container' style={{height: 400, width: 400}}>
           <img src={this.state.mapURL} alt='Map image'/>
         </div>
-        <h4>{this.state.orderStatus}</h4>
-        { this.state.orderStatus==='Awaiting restaurant confirmation'
+        <Progress animated color="warning" value={this.state.orderStatus * 20}/>
+        <h4>{orderStatusMessages[this.state.orderStatus]}</h4>
+        { this.state.orderStatus==='0'
         ? <Button onClick={() => this.cancelOrder()}>Cancel Order</Button>
         : null }
         <hr />
