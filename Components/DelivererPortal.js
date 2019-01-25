@@ -32,8 +32,8 @@ class DelivererPortal extends React.Component {
     const time = 12
     const latDelta = (order.address.latitude - this.state.lat)/time
     const longDelta = (order.address.longitude - this.state.long)/time
-    let timer = setInterval(() => this.transmitLocation(this.state.lat + latDelta, this.state.long + longDelta), 5000)
-    this.setState({ timer: timer })    
+    let timer = setInterval(() => this.transmitLocation({ coords: {latitude: this.state.lat + latDelta, longitude: this.state.long + longDelta} }), 5000)
+    this.setState({ timer: timer })
   }
 
   trackDelivery = (order) => {
