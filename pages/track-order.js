@@ -105,7 +105,11 @@ componentDidMount () {
         <div className='img-container' style={{height: 400, width: 400}}>
           <img src={this.state.mapURL} alt='Map image'/>
         </div>
-        <Progress animated color="warning" value={this.state.orderStatus * 20}/>
+        <Progress multi>
+          {(this.state.orderStatus * 20) > 80 ?
+          <Progress animated color="success" value={this.state.orderStatus * 20} />
+          : <Progress animated color="warning" value={this.state.orderStatus * 20} />}
+        </Progress>
         <h4>{orderStatusMessages[this.state.orderStatus]}</h4>
         { this.state.orderStatus==='0'
         ? <Button onClick={() => this.cancelOrder()}>Cancel Order</Button>
