@@ -3,7 +3,6 @@ import React from 'react'
 import { Container, Col, Button, FormFeedback, FormGroup, Label, Input } from 'reactstrap'
 
 import config from '../config'
-import { Z_BLOCK } from 'zlib';
 
 class AuthenticateForm extends React.Component {
   constructor(props) {

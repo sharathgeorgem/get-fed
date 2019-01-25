@@ -23,7 +23,6 @@ class DelivererPortal extends React.Component {
     order.status = 'accepted'
     this.setState({
       orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)),
-      // for testing
       lat: order.restaurant.address.latitude,
       long: order.restaurant.address.longitude
     })
@@ -68,7 +67,7 @@ class DelivererPortal extends React.Component {
     this.socket.emit('delivered', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'delivered'
-    clearTimer(this.state.timer)
+    clearTimeout(this.state.timer)
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)), timer: null })
   }
 
@@ -112,7 +111,7 @@ class DelivererOrderCard extends React.Component {
         return <p>Order delivered</p>
     }
   }
-  
+
   render () {
     console.log('The deliverer order card props are', this.props)
     return (
