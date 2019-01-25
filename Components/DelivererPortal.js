@@ -28,6 +28,14 @@ class DelivererPortal extends React.Component {
     })
   }
 
+  simulateDelivery = (order) => {
+    const time = 12
+    const latDelta = (order.address.latitude - this.state.lat)/time
+    const longDelta = (order.address.longitude - this.state.long)/time
+    let timer = setInterval(() => this.transmitLocation(this.state.lat + latDelta, this.state.long + longDelta), 5000)
+    this.setState({ timer: timer })    
+  }
+
   trackDelivery = (order) => {
     let options = {
       enableHighAccuracy: true,
@@ -60,7 +68,7 @@ class DelivererPortal extends React.Component {
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'pickedUp'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
-      () => this.trackDelivery(order)) // callback for testing
+      () => this.simulateDelivery(order)) // change to trackDelivery later
   }
 
   delivered = (orderId) => {
