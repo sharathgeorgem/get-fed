@@ -31,8 +31,11 @@ class UserContextProvider extends React.Component {
   }
 
   setUser = user => {
-    this.setState({ userId: user }, () => this.state.socket.emit('identify', this.state.userId))
-  }
+    console.log('Will this fire?')
+    this.setState({ userId: user }, () => {
+    console.log('I guess it just did')
+    this.state.socket.emit('identify', this.state.userId)
+  })}
 
   setPosition = position => {
     console.log(position)
