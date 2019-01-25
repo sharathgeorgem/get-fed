@@ -191,7 +191,7 @@ exports.getDelivererName = async function (delivererId) {
 }
 
 exports.getOrderDetails = async function (orderId) {
-  return Order.findById(orderId).populate('items.item')
+  return Order.findById(orderId).populate('items.item deliverer')
 }
 
 exports.addToCart = async function (userId, item) {

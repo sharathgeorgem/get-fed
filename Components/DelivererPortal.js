@@ -16,6 +16,7 @@ class DelivererPortal extends React.Component {
     this.socket.emit('identifyDeliverer', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
   }
+
   acceptDelivery = (orderId) => {
     this.socket.emit('acceptDelivery', this.props.id, orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
@@ -27,6 +28,7 @@ class DelivererPortal extends React.Component {
       long: order.restaurant.address.longitude
     })
   }
+
   trackDelivery = (order) => {
     let options = {
       enableHighAccuracy: true,
@@ -35,6 +37,7 @@ class DelivererPortal extends React.Component {
     let timer = setInterval(() => navigator.geolocation.getCurrentPosition(this.transmitLocation, console.warn, options), 10000)
     this.setState({ timer: timer })
   }
+
   transmitLocation = (position) => {
     let latDel = position.coords.latitude
     let longDel = position.coords.longitude
@@ -45,12 +48,14 @@ class DelivererPortal extends React.Component {
       }
     )
   }
+
   arrivedAtRestaurant = (orderId) => {
     this.socket.emit('arrivedAtRestaurant', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'arrivedAtRestaurant'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) })
   }
+
   pickedUp = (orderId) => {
     this.socket.emit('pickedUp', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
@@ -58,6 +63,7 @@ class DelivererPortal extends React.Component {
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
       () => this.trackDelivery(order)) // callback for testing
   }
+
   delivered = (orderId) => {
     this.socket.emit('delivered', orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
@@ -65,6 +71,7 @@ class DelivererPortal extends React.Component {
     clearTimer(this.state.timer)
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)), timer: null })
   }
+
   render () {
     return (
       <div>
@@ -105,6 +112,7 @@ class DelivererOrderCard extends React.Component {
         return <p>Order delivered</p>
     }
   }
+  
   render () {
     console.log('The deliverer order card props are', this.props)
     return (

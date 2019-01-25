@@ -28,22 +28,25 @@ class RestaurantPortal extends React.Component {
     return (
       <div>
       <h2>Restaurant Portal</h2>
+      <hr />
+      <h3>Orders</h3>
         {this.state.orders.filter(order => !order.accepted).map(order => {
           return <RestaurantOrderCard
           key={order.id}
           id={order.id}
-          timePlaced={order.timePlaced}
+          timePlaced={new Date(order.timePlaced).toLocaleTimeString()}
+          customerAddress={order.address.value}
           items={order.items}
           accepted={false}
           acceptOrder={this.acceptOrder}
           />
         })}
-        <hr />
+        { this.state.orders.length > 0 ? <hr /> : null}
         {this.state.orders.filter(order => order.accepted).map(order => {
           return <RestaurantOrderCard
             key={order.id}
             id={order.id}
-            timePlaced={order.timePlaced}
+            timePlaced={new Date(order.timePlaced).toLocaleTimeString()}
             customerAddress={order.address.value}
             items={order.items}
             accepted={true}
@@ -63,7 +66,7 @@ class RestaurantOrderCard extends React.Component {
       return <CardText>Order Fulfilled</CardText>
     }
     if (this.props.deliverer) {
-      return <CardText>{this.props.deliverer} waiting to pick up order...</CardText>
+      return <CardText>{this.props.deliverer.name} waiting to pick up order...</CardText>
     }
     if (this.props.accepted) {
       return <CardText>Order Accepted</CardText>
@@ -74,9 +77,9 @@ class RestaurantOrderCard extends React.Component {
     return (
       <div>
         <Card>
-          <CardTitle>{this.props.timePlaced}</CardTitle>
-          <CardSubtitle>{this.props.customerAddress}</CardSubtitle>
-          <CardText>{this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
+          <CardText>Time Placed: {this.props.timePlaced}</CardText>
+          <CardText>Customer Address: {this.props.customerAddress}</CardText>
+          <CardText>Items: {this.props.items.map(itemType => `${itemType.quantity} ${itemType.item.name}`).join('\n')}</CardText>
           { this.progressMessage() }
         </Card>
       </div>

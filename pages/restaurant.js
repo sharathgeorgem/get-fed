@@ -159,7 +159,7 @@ class ItemCard extends React.Component {
             >
             + Add To Cart
             </Button>
-            : <p>Sold Out</p>
+            : <CardText>Sold Out</CardText>
           }
         </div>
       </Card>   
