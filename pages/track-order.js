@@ -116,7 +116,7 @@ componentDidMount () {
         </div>
       </React.Fragment>)
     else return (
-      <h3>No map</h3>
+      <h3>No map</h3> // put spinner here
     )
   }
 }
