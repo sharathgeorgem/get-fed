@@ -43,7 +43,9 @@ class Restaurant extends React.Component {
   }
 
   addItem = item => {
-    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${item.id}`, {
+    if (this.props.cartContext.restaurantId && this.props.cartContext.restaurantId !== item.restaurant) {
+      alert('Please empty your cart before adding items from a different restaurant')
+    } else fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${item.id}`, {
       method: 'PUT'
     })
     .then(res => res.json())
