@@ -1,11 +1,6 @@
 const model = require('../model')
 const auth = require('@vinayakrugvedi/authjs')
 
-exports.getDummyUser = async function (req, res) {
-  let result = await model.getDummyUser().catch(console.log)
-  res.send({ id: result })
-}
-
 exports.getDummyRestaurant = async function (req, res) {
   let result = await model.getDummyRestaurant().catch(console.log)
   res.send({ id: result })

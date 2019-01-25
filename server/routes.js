@@ -5,7 +5,6 @@ const controllers = require('./controllers/routeControllers')
 const router = express.Router()
 
 // only for development
-router.get('/user/dummy', controllers.getDummyUser)
 router.get('/restaurant/dummy', controllers.getDummyRestaurant)
 router.get('/deliverer/dummy', controllers.getDummyDeliverer)
 // ---

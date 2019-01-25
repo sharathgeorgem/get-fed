@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { compose } from 'recompose'
 import fetch from 'isomorphic-unfetch'
 import { withRouter } from 'next/router'
-import io from 'socket.io-client'
 // import Router from 'next/router'
 import { Button, Progress } from 'reactstrap'
 
@@ -11,12 +10,12 @@ import { withCartContext } from '../Components/Context/CartContextProvider'
 import keys from '../keys'
 
 const orderStatusMessages = {
-  '0': 'Awaiting restaurant confirmation',
-  '1': 'Order Confirmed',
-  '2': 'Manjunath is on his way to the restaurant',
-  '3': 'Manjunath has arrived at the restaurant',
-  '4': 'Order picked up, tasty food is on its way!',
-  '5': 'Your order has been delivered, enjoy!'
+  0: 'Awaiting restaurant confirmation',
+  1: 'Order Confirmed',
+  2: 'Manjunath is on his way to the restaurant',
+  3: 'Manjunath has arrived at the restaurant',
+  4: 'Order picked up, tasty food is on its way!',
+  5: 'Your order has been delivered, enjoy!'
 }
 
 class TrackOrder extends Component {
