@@ -164,7 +164,7 @@ class ItemCard extends React.Component {
             : <CardText>Sold Out</CardText>
           }
         </div>
-      </Card>   
+      </Card>
     )
   }
 }
