@@ -111,8 +111,12 @@ function costOfCart (cart) {
 
 // Exported methods
 
-exports.findUser = async function (name) {
+exports.findUserByName = async function (name) {
   return User.findOne({ name: name })
+}
+
+exports.findUserById = async function (id) {
+  return User.findById(id)
 }
 
 exports.getDummyRestaurant = async function () {

@@ -1,5 +1,4 @@
 const model = require('../model')
-const auth = require('@vinayakrugvedi/authjs')
 
 exports.getDummyRestaurant = async function (req, res) {
   let result = await model.getDummyRestaurant().catch(console.log)

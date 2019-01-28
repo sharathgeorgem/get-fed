@@ -3,8 +3,11 @@ const cors = require('cors')
 const io = require('socket.io')
 const next = require('next')
 const session = require('express-session')
+const passport = require('passport')
+const Strategy = require('passport-local').Strategy
 
 const router = require('./server/routes')
+const model = require('./server/model')
 const eventControllers = require('./server/controllers/eventControllers')
 
 const dev = process.env.NODE_ENV !== 'production'
@@ -13,13 +16,40 @@ const handle = nextApp.getRequestHandler()
 
 const port = process.env.PORT || 3000
 
+// Passport Configuration
+passport.use(new Strategy(
+  function (username, password, cb) {
+    model.findUserByName(username)
+      .then(user => {
+        if (user === undefined) { return cb(null, false) }
+        if (user.password !== password) { return cb(null, false) }
+        return cb(null, user)
+      })
+      .catch(cb)
+  }
+))
+
+passport.serializeUser(function (user, cb) {
+  cb(null, user._id)
+})
+
+passport.deserializeUser(function (id, cb) {
+  model.findUserById(id)
+    .then(user => cb(null, user))
+    .catch(cb)
+})
+
+// -----
+
 nextApp.prepare()
   .then(() => {
     const app = express()
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use(session({ secret: 'Gettin chwiggy with it' }))
+    app.use(session({ secret: 'Gettin chwiggy with it', resave: false, saveUninitialized: false }))
+    app.use(passport.initialize())
+    app.use(passport.session())
     app.use('/', router)
 
     const server = app.listen(port, function (err) {
