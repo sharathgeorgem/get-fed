@@ -5,9 +5,9 @@
  *
  * PORT=3000
  * SERVER_URL=http://localhost:3000
- * MONGO_URI=mongodb://localhost:27017/my-database
+ * MONGO_URI=mongodb://localhost/test
  *
- * If you wish, you can put these in a .env to seperate your environment 
+ * If you wish, you can put these in a .env to seperate your environment
  * specific configuration from your code.
  **/
 

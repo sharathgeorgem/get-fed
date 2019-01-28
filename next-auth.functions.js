@@ -45,7 +45,7 @@ require('dotenv').load()
 // This config includes options for NeDB, which it defaults to if no DB URI 
 // is specified. NeDB is an in-memory only database intended here for testing.
 const MongoClient = require('mongodb').MongoClient
-const NeDB = require('nedb')
+// const NeDB = require('nedb')
 const MongoObjectId = (process.env.MONGO_URI) ? require('mongodb').ObjectId : (id) => { return id }
 
 // Use Node Mailer for email sign in

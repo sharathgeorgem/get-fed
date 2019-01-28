@@ -150,11 +150,11 @@ export class SignInButtons extends React.Component {
           Object.keys(this.props.providers).map((provider, i) => {
             return (
               <p key={i}>
-                <a className="btn btn-block btn-outline-secondary" href={this.props.providers[provider].signin}>
+                <a className='btn btn-block btn-outline-secondary' href={this.props.providers[provider].signin}>
                   Sign in with {provider}
                 </a>
               </p>
-              )              
+            )              
           })
         }
       </React.Fragment>
