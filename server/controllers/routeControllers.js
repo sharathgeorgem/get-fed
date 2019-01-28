@@ -108,3 +108,13 @@ exports.verify = async function (req, res) {
     res.send('Your account has already been verified. Please login.')
   }
 }
+
+exports.loginRestaurant = async function (req, res) {
+  let restaurant = await model.findRestaurant(req.params.name).catch(console.log)
+  res.send({ restaurant: restaurant._id })
+}
+
+exports.loginDeliverer = async function (req, res) {
+  let deliverer = await model.findDeliverer(req.params.name).catch(console.log)
+  res.send({ deliverer: deliverer._id })
+}
