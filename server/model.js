@@ -115,6 +115,14 @@ exports.findUser = async function (name) {
   return User.findOne({ name: name })
 }
 
+exports.findDeliverer = async function (name) {
+  return Deliverer.findOne({ name: name })
+}
+
+exports.findRestaurant = async function (name) {
+  return Restaurant.findOne({ name: name })
+}
+
 exports.getDummyRestaurant = async function () {
   let restaurants = await Restaurant.find()
   return restaurants[0].id
