@@ -14,7 +14,7 @@
 // Load environment variables from a .env file if one exists
 require('dotenv').load()
 
-const nextAuthProviders = require('./next-auth.functions')
+const nextAuthProviders = require('./next-auth.providers')
 const nextAuthFunctions = require('./next-auth.functions')
 
 // If we want to pass a custom session store then we also need to pass an 

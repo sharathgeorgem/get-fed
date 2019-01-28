@@ -20,8 +20,9 @@ const port = process.env.PORT || 3000
 nextApp.prepare()
   .then(async () => {
     const nextAuthOptions = await nextAuthConfig()
+    if (nextAuthOptions.port) delete nextAuthOptions.port
     const nextAuthApp = await nextAuth(nextApp, nextAuthOptions)
-    const app = express()
+    const app = nextAuthApp.expressApp
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
