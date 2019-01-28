@@ -75,7 +75,7 @@ module.exports = () => {
         if (err) return reject(err)
         const dbName = process.env.MONGO_URI.split('/').pop().split('?').shift()
         const db = mongoClient.db(dbName)
-        return resolve(db.collection('users'))
+        return resolve(db.collection('auth'))
       })
     // } else {
     //   // If no MongoDB URI string specified, use NeDB, an in-memory work-a-like.
@@ -87,10 +87,10 @@ module.exports = () => {
     //   })
     }
   })
-  .then(usersCollection => {
+  .then(authCollection => {
     return Promise.resolve({
       // If a user is not found find() should return null (with no error).
-      find: ({id, email, emailToken, provider} = {}) => {
+      find: ({ id, email, emailToken, provider } = {}) => {
         let query = {}
  
         // Find needs to support looking up a user by ID, Email, Email Token,
@@ -106,7 +106,7 @@ module.exports = () => {
         }
 
         return new Promise((resolve, reject) => {
-          usersCollection.findOne(query, (err, user) => {
+          authCollection.findOne(query, (err, user) => {
             if (err) return reject(err)
             return resolve(user)
           })
@@ -121,7 +121,7 @@ module.exports = () => {
       // You can use this to capture profile.avatar, profile.location, etc.
       insert: (user, oAuthProfile) => {
         return new Promise((resolve, reject) => {
-          usersCollection.insert(user, (err, response) => {
+          authCollection.insert(user, (err, response) => {
             if (err) return reject(err)
 
             // Mongo Client automatically adds an id to an inserted object, but 
@@ -141,7 +141,7 @@ module.exports = () => {
       // You can use this to capture profile.avatar, profile.location, etc.
       update: (user, profile) => {
         return new Promise((resolve, reject) => {
-          usersCollection.update({_id: MongoObjectId(user._id)}, user, {}, (err) => {
+          authCollection.update({ _id: MongoObjectId(user._id) }, user, {}, (err) => {
             if (err) return reject(err)
             return resolve(user)
           })
@@ -153,7 +153,7 @@ module.exports = () => {
       // be in a future release, to provide an endpoint for account deletion.
       remove: (id) => {
         return new Promise((resolve, reject) => {
-          usersCollection.remove({_id: MongoObjectId(id)}, (err) => {
+          authCollection.remove({ _id: MongoObjectId(id) }, (err) => {
             if (err) return reject(err)
             return resolve(true)
           })
@@ -177,7 +177,7 @@ module.exports = () => {
       // only fields you want to expose via the user interface.
       deserialize: (id) => {
         return new Promise((resolve, reject) => {
-          usersCollection.findOne({ _id: MongoObjectId(id) }, (err, user) => {
+          authCollection.findOne({ _id: MongoObjectId(id) }, (err, user) => {
             if (err) return reject(err)
               
             // If user not found (e.g. account deleted) return null object

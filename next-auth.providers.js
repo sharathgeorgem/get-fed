@@ -16,7 +16,7 @@
  * TWITTER_KEY=
  * TWITTER_SECRET=
  *
- * If you wish, you can put these in a `.env` to seperate your environment 
+ * If you wish, you can put these in a .env to seperate your environment 
  * specific configuration from your code.
  **/
 
