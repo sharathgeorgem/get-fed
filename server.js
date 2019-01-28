@@ -3,6 +3,10 @@ const cors = require('cors')
 const io = require('socket.io')
 const next = require('next')
 const session = require('express-session')
+const nextAuth = require('next-auth')
+const nextAuthConfig = require('./next-auth.config')
+
+require('dotenv').load()
 
 const router = require('./server/routes')
 const eventControllers = require('./server/controllers/eventControllers')
@@ -14,7 +18,9 @@ const handle = nextApp.getRequestHandler()
 const port = process.env.PORT || 3000
 
 nextApp.prepare()
-  .then(() => {
+  .then(async () => {
+    const nextAuthOptions = await nextAuthConfig()
+    const nextAuthApp = await nextAuth(nextApp, nextAuthOptions)
     const app = express()
     app.use(cors())
     app.use(express.json())
