@@ -69,7 +69,7 @@ if (process.env.EMAIL_SERVER && process.env.EMAIL_USERNAME && process.env.EMAIL_
 
 module.exports = () => {
   return new Promise((resolve, reject) => {
-    if (process.env.MONGO_URI) { 
+    if (process.env.MONGO_URI) {
       // Connect to MongoDB Database and return user connection
       MongoClient.connect(process.env.MONGO_URI, (err, mongoClient) => {
         if (err) return reject(err)
@@ -77,15 +77,15 @@ module.exports = () => {
         const db = mongoClient.db(dbName)
         return resolve(db.collection('users'))
       })
-    } else {
-      // If no MongoDB URI string specified, use NeDB, an in-memory work-a-like.
-      // NeDB is not persistant and is intended for testing only.
-      let collection = new NeDB({ autoload: true })
-      collection.loadDatabase(err => {
-        if (err) return reject(err)
-        resolve(collection)
-      })
-    }  
+    // } else {
+    //   // If no MongoDB URI string specified, use NeDB, an in-memory work-a-like.
+    //   // NeDB is not persistant and is intended for testing only.
+    //   // let collection = new NeDB({ autoload: true })
+    //   collection.loadDatabase(err => {
+    //     if (err) return reject(err)
+    //     resolve(collection)
+    //   })
+    }
   })
   .then(usersCollection => {
     return Promise.resolve({
