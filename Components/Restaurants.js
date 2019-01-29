@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Cookies from 'js-cookie'
 import {
   // Button,
   Card,
@@ -16,7 +17,7 @@ import {
 const Restaurants = (props) => {
   const RestaurantList = props.restaurants
   if (!RestaurantList) return <h1>Loading</h1>
-
+  console.log('The cookie name is ', Cookies.get())
   if (RestaurantList && RestaurantList.length) {
     return (
       <div>
@@ -48,7 +49,7 @@ const Restaurants = (props) => {
                   <Link
                     href={`/restaurant?id=${res._id}`}
                     as={`/restaurant/${res._id}`}
-                    >
+                  >
                     <a className='btn btn-primary'>View</a>
                   </Link>
                 </div>

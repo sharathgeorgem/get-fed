@@ -1,7 +1,6 @@
 import React from 'react'
 // import Layout from '../Components/Layout'
 import fetch from 'isomorphic-unfetch'
-import Cookies from 'js-cookies'
 
 import Restaurants from '../Components/Restaurants'
 import config from '../config'
