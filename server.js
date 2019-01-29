@@ -48,7 +48,7 @@ nextApp.prepare()
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use(session({ secret: 'Gettin chwiggy with it', resave: false, saveUninitialized: false }))
+    app.use(session({ secret: 'Gettin chwiggy with it', cookie: { httpOnly: false }, resave: false, saveUninitialized: false }))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use('/', router)
@@ -58,14 +58,14 @@ nextApp.prepare()
       console.log(`Server listening on port ${port}`)
     })
 
-    app.get('restaurant-scaffold', (req, res) => {
-      const actualPage = 'restaurant-scaffold'
-      console.log('Request for restaurants reached')
-      // console.log('The request is ', req)
-      console.log('The response is ', res)
-      console.log('The actualPage is ', actualPage)
-      app.render(req, res, actualPage)
-    })
+    // app.get('restaurant-scaffold', (req, res) => {
+    //   const actualPage = 'restaurant-scaffold'
+    //   console.log('Request for restaurants reached')
+    //   // console.log('The request is ', req)
+    //   console.log('The response is ', res)
+    //   console.log('The actualPage is ', actualPage)
+    //   app.render(req, res, actualPage)
+    // })
 
     app.get('restaurant/:id', (req, res) => {
       console.log('Request for menu reached')
