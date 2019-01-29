@@ -53,53 +53,55 @@ nextApp.prepare()
     app.use(passport.session())
     app.use('/', router)
 
-    const server = app.listen(port, function (err) {
-      if (err) throw err
-      console.log(`Server listening on port ${port}`)
-    })
+    // app.get('/', (req, res) => {
+    //   console.log('Home page reached')
+    //   const actualPage = '/'
+    //   return app.render(req, res, actualPage)
+    // })
 
-    app.get('restaurant-scaffold', (req, res) => {
-      const actualPage = 'restaurant-scaffold'
+    app.get('/restaurant-scaffold', (req, res) => {
+      const actualPage = '/restaurant-scaffold'
       console.log('Request for restaurants reached')
+      console.log('Session details ', res.session)
       // console.log('The request is ', req)
       console.log('The response is ', res)
       console.log('The actualPage is ', actualPage)
-      app.render(req, res, actualPage)
+      return nextApp.render(req, res, actualPage)
     })
 
-    app.get('restaurant/:id', (req, res) => {
+    app.get('/restaurant/:id', (req, res) => {
       console.log('Request for menu reached')
-      const actualPage = 'restaurant'
+      const actualPage = '/restaurant'
       const queryParams = { id: req.params.id }
       console.log('The actual page is ', actualPage)
       console.log('Query params are ', queryParams)
-      app.render(req, res, actualPage, queryParams)
+      return nextApp.render(req, res, actualPage, queryParams)
     })
 
     app.get('verify/:id', (req, res) => {
       console.log('Verification route reached')
       const actualPage = 'verify'
       const queryParams = { id: req.params.id, apiRoute: 'verify' }
-      app.render(req, res, actualPage, queryParams)
+      return nextApp.render(req, res, actualPage, queryParams)
     })
 
     app.get('restaurant-portal', (req, res) => {
       let restaurantPage = 'restaurant-portal'
       console.log('Request for restaurant portal')
-      app.render(req, res, restaurantPage)
+      return nextApp.render(req, res, restaurantPage)
     })
 
     app.get('deliverer-portal', (req, res) => {
       let delivererPage = 'deliverer-portal'
       console.log('Request for deliverer portal')
-      app.render(req, res, delivererPage)
+      return nextApp.render(req, res, delivererPage)
     })
 
     app.get('_error', (req, res) => {
       console.log('The request parameters are ', req.params)
       let errorPage = '_error'
       console.log('Error page reached')
-      app.render(req, res, errorPage)
+      return nextApp.render(req, res, errorPage)
     })
 
     app.get('*', (req, res) => {
@@ -112,6 +114,11 @@ nextApp.prepare()
         res.redirect('/restaurant-scaffold')
       }
     )
+
+    const server = app.listen(port, function (err) {
+      if (err) throw err
+      console.log(`Server listening on port ${port}`)
+    })
 
     let serverSocket = io.listen(server)
 
