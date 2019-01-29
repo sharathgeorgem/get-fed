@@ -56,6 +56,7 @@ const OrderSchema = createSchema({
 })
 const UserSchema = createSchema({
   name: String,
+  password: String,
   cart: [{
     item: { type: ObjectId, ref: 'Item' },
     quantity: Number
@@ -119,6 +120,14 @@ exports.findUserById = async function (id) {
   return User.findById(id)
 }
 
+exports.findDeliverer = async function (name) {
+  return Deliverer.findOne({ name: name })
+}
+
+exports.findRestaurant = async function (name) {
+  return Restaurant.findOne({ name: name })
+}
+
 exports.getDummyRestaurant = async function () {
   let restaurants = await Restaurant.find()
   return restaurants[0].id
@@ -131,8 +140,8 @@ exports.getDummyDeliverer = async function () {
 
 // --- above only for development
 
-exports.addUser = async function (name) {
-  let user = new User({ name: name, cart: [], currentOrders: [], pastOrders: [], addresses: { home: {}, work: {}, others: [] } })
+exports.addUser = async function (name, password) {
+  let user = new User({ name: name, password: password, cart: [], currentOrders: [], pastOrders: [], addresses: { home: {}, work: {}, others: [] } })
   return user.save()
 }
 

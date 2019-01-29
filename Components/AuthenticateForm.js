@@ -1,4 +1,3 @@
-// font Arial
 import React from 'react'
 import { Container, Col, Button, FormFeedback, FormGroup, Label, Input } from 'reactstrap'
 
@@ -30,13 +29,19 @@ class AuthenticateForm extends React.Component {
     this.setState({ emailStatus: /^(\S+)@(\S+).(\S+)$/.test(email) })
   }
   submit = async () => {
-    let result = await fetch(`${config.domain}/auth/${this.props.route}/${this.state.email}/${this.state.password}`,
-    {method: 'POST'})
-    .then(res => res.json())
-    this.setState({ status: this.props.statusMessage(result.code) })
-    if (result.code === 3 && this.props.reroute !== undefined) {
-      this.props.reroute(result.user)
-    }
+    let result = await fetch(`${config.domain}/auth/${this.props.route}`, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ username: this.state.email, password: this.state.password })
+    })
+    // .then(res => res.json())
+    console.log('submit response is', result)
+    // this.setState({ status: this.props.statusMessage(result.code) })
+    // if (result.code === 3 && this.props.reroute !== undefined) {
+    //   this.props.reroute(result.user)
   }
   render () {
     return(

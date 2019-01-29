@@ -5,6 +5,7 @@ const next = require('next')
 const session = require('express-session')
 const passport = require('passport')
 const Strategy = require('passport-local').Strategy
+const bcrypt = require('bcrypt')
 
 const router = require('./server/routes')
 const model = require('./server/model')
@@ -22,8 +23,8 @@ passport.use(new Strategy(
     model.findUserByName(username)
       .then(user => {
         if (user === undefined) { return cb(null, false) }
-        if (user.password !== password) { return cb(null, false) }
-        return cb(null, user)
+        bcrypt.compare(password, user.password)
+          .then(res => res ? cb(null, user) : cb(null, false))
       })
       .catch(cb)
   }
@@ -100,10 +101,17 @@ nextApp.prepare()
       console.log('Error page reached')
       app.render(req, res, errorPage)
     })
-    
+
     app.get('*', (req, res) => {
       return handle(req, res)
     })
+
+    app.post('/auth/login',
+      passport.authenticate('local', { failureRedirect: '/auth/login' }),
+      function (req, res) {
+        res.redirect('/restaurant-scaffold')
+      }
+    )
 
     let serverSocket = io.listen(server)
 

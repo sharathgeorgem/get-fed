@@ -10,7 +10,6 @@ router.get('/deliverer/dummy', controllers.getDummyDeliverer)
 // ---
 
 // for adding initial data in db
-router.post('/user/new', controllers.addUser)
 router.post('/restaurant/new', controllers.addRestaurant)
 router.post('/deliverer/new', controllers.addDeliverer)
 router.post('/menu/new/:restaurantId', controllers.addItem)
@@ -25,8 +24,10 @@ router.delete('/user/cart/:userId/:itemId', controllers.removeItemFromCart)
 router.put('/user/addresses/:userId/:addressType', controllers.addAddress) // send address in body
 router.post('/user/cart/:userId', controllers.setCart) // send cart in body
 
-router.post('/auth/register/:email/:password', controllers.register)
-router.post('/auth/login/:email/:password', controllers.login)
-router.get('/verify/:token', controllers.verify)
+router.post('/auth/register', controllers.register)
+// router.post('/auth/login/:name/:password', controllers.login)
+// router.get('/verify/:token', controllers.verify)
+router.get('/restaurant/login/:name', controllers.loginRestaurant)
+router.get('/deliverer/login/:name', controllers.loginDeliverer)
 
 module.exports = router
