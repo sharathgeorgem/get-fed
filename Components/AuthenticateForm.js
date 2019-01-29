@@ -43,7 +43,7 @@ class AuthenticateForm extends React.Component {
     })
     // .then(res => res.json())
     console.log('submit response is', result)
-    if(result.ok) {
+    if(result.ok && this.props.reroute) {
       this.props.reroute()
     }
     // this.setState({ status: this.props.statusMessage(result.code) })
