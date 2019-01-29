@@ -107,7 +107,7 @@ nextApp.prepare()
     })
 
     app.post('/auth/login',
-      passport.authenticate('local', { failureRedirect: '/auth/login' }),
+      passport.authenticate('local', { failureRedirect: '/authenticate' }),
       function (req, res) {
         res.redirect('/restaurant-scaffold')
       }

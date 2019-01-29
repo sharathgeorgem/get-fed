@@ -37,11 +37,11 @@ class Index extends React.Component {
             <h1 style={{ margin: 20 }}>LOGIN</h1>
           </Col>
           <Col style={{ paddingLeft: 5 }} sm={{ size: 6, order: 2 }}>
-            <img src='https://source.unsplash.com/900x450/?restaurant' alt='Restaurant image' />  
+            <img src='https://source.unsplash.com/700x450/?restaurant' alt='Restaurant image' />
           </Col>
         </Row>
         <ul>
-          <li><Link href='/auth/index'><a>Customer</a></Link></li>
+          <li><Link href='/authenticate'><a>Customer</a></Link></li>
           <li><Link href='/deliverer-portal'><a>Deliverer</a></Link></li>
           <li><Link href='/restaurant-portal'><a>Restaurant</a></Link></li>
         </ul>

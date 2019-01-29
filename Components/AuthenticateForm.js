@@ -11,8 +11,12 @@ class AuthenticateForm extends React.Component {
       password: '',
       status: '',
       passwordStatus: false,
-      emailStatus: false
+      emailStatus: false,
+      loggedIn: false
     }
+  }
+  componentDidMount () {
+    console.log('The props in authenticateForm are ', this.props)
   }
   handleChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
@@ -39,6 +43,11 @@ class AuthenticateForm extends React.Component {
     })
     // .then(res => res.json())
     console.log('submit response is', result)
+    this.setState({
+      loggedIn: result.ok
+    }, () => {
+      result.ok ? this.props.reroute() : null
+    })
     // this.setState({ status: this.props.statusMessage(result.code) })
     // if (result.code === 3 && this.props.reroute !== undefined) {
     //   this.props.reroute(result.user)
