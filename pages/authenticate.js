@@ -39,6 +39,7 @@ class Authenticate extends React.Component {
     this.setState({ activeTab: tab })
   }
   rerouteLogin = () => {
+    console.log('Rerouting') // debug
     // this.props.userContext.setUser(user)
     Router.push('/restaurant-scaffold')
   }

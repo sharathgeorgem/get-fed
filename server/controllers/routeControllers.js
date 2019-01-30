@@ -72,7 +72,7 @@ exports.register = async function (req, res) {
     let hash = await bcrypt.hash(req.body.password, 10)
     user = await model.addUser(req.body.username, hash).catch(console.log)
   }
-  res.send({ result: user })
+  res.send({ result: !!user })
 }
 
 // exports.login = async function (req, res) {

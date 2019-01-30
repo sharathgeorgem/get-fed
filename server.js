@@ -72,7 +72,7 @@ nextApp.prepare()
     app.get('/restaurant-scaffold', (req, res) => {
       const actualPage = '/restaurant-scaffold'
       console.log('Request for restaurants reached')
-      console.log('Session details cookie ', req.session.cookie)
+      console.log('User ID', req.session.passport.user)
       // console.log('The request is ', req)
       // console.log('The response is ', res)
       // console.log('The actualPage is ', actualPage)
@@ -119,9 +119,9 @@ nextApp.prepare()
     })
 
     app.post('/auth/login',
-      passport.authenticate('local', { failureRedirect: '/authenticate' }),
+      passport.authenticate('local', { successFlash: 'Login successful', failureFlash: true }),
       function (req, res) {
-        res.redirect('/restaurant-scaffold')
+        res.send({ result: true })
       }
     )
 
