@@ -53,16 +53,16 @@ nextApp.prepare()
     app.use(passport.session())
     app.use('/', router)
 
-    // app.get('/', (req, res) => {
-    //   console.log('Home page reached')
-    //   const actualPage = '/'
-    //   return app.render(req, res, actualPage)
-    // })
+    app.get('/authenticate', (req, res) => {
+      console.log('Authentication page refresh')
+      const actualPage = '/authenticate'
+      return nextApp.render(req, res, actualPage)
+    })
 
     app.get('/restaurant-scaffold', (req, res) => {
       const actualPage = '/restaurant-scaffold'
       console.log('Request for restaurants reached')
-      console.log('Session details ', res.session)
+      // console.log('Session details ', res.session)
       // console.log('The request is ', req)
       console.log('The response is ', res)
       console.log('The actualPage is ', actualPage)
@@ -78,28 +78,28 @@ nextApp.prepare()
       return nextApp.render(req, res, actualPage, queryParams)
     })
 
-    app.get('verify/:id', (req, res) => {
+    app.get('/verify/:id', (req, res) => {
       console.log('Verification route reached')
       const actualPage = 'verify'
       const queryParams = { id: req.params.id, apiRoute: 'verify' }
       return nextApp.render(req, res, actualPage, queryParams)
     })
 
-    app.get('restaurant-portal', (req, res) => {
-      let restaurantPage = 'restaurant-portal'
+    app.get('/restaurant-portal', (req, res) => {
+      let restaurantPage = '/restaurant-portal'
       console.log('Request for restaurant portal')
       return nextApp.render(req, res, restaurantPage)
     })
 
-    app.get('deliverer-portal', (req, res) => {
-      let delivererPage = 'deliverer-portal'
+    app.get('/deliverer-portal', (req, res) => {
+      let delivererPage = '/deliverer-portal'
       console.log('Request for deliverer portal')
       return nextApp.render(req, res, delivererPage)
     })
 
-    app.get('_error', (req, res) => {
+    app.get('/_error', (req, res) => {
       console.log('The request parameters are ', req.params)
-      let errorPage = '_error'
+      let errorPage = '/_error'
       console.log('Error page reached')
       return nextApp.render(req, res, errorPage)
     })
