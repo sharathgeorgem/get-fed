@@ -49,8 +49,8 @@ class UserContextProvider extends React.Component {
         .then(response => {
           console.log(response)
           const address = response.results[0].locations[0]
-          console.log('The User address is ', address.street + ' ' + address.adminArea5 + ' ' + address.adminArea3)
-          const userAddress = address.street + ' ' + address.adminArea5 + ' ' + address.adminArea3
+          const userAddress = [address.street, address.adminArea6, address.adminArea5, address.adminArea4, address.adminArea3, address.adminArea2, address.adminArea1].join(' ')
+          console.log('The User address is ', userAddress)
           this.setState({userAddress: userAddress})
         })
     )

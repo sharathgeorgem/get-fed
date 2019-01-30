@@ -30,29 +30,30 @@ class TrackOrder extends Component {
       delivererCoords: [0, 0]
     }
   }
-componentDidMount () {
-  const restaurantLocation = this.props.cartContext.restaurantAddress
-  let locations = []
-  locations.push([restaurantLocation.latitude, restaurantLocation.longitude])
-  const userLocation = this.props.userContext.userLocation.coords
-  locations.push([userLocation.latitude, userLocation.longitude])
-  console.log('The final array is ', locations)
-  this.mapRequest(locations)
 
-  this.props.userContext.socket.emit('identify', this.props.userContext.userId)
+  componentDidMount () {
+    const restaurantLocation = this.props.cartContext.restaurantAddress
+    let locations = []
+    locations.push([restaurantLocation.latitude, restaurantLocation.longitude])
+    const userLocation = this.props.userContext.userLocation.coords
+    locations.push([userLocation.latitude, userLocation.longitude])
+    console.log('The final array is ', locations)
+    this.mapRequest(locations)
 
-  this.props.userContext.socket.on('cancelConfirmed', () => this.setState({ orderStatus: 'Order Cancelled' }))
-  this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: '1' }))
-  this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: '2', deliverer: deliverer }, console.log('Deliverer is', deliverer)))
-  this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: '3' }))
-  this.props.userContext.socket.on('orderPickedUp', () => this.setState({ orderStatus: '4' }))
-  this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: '5' }))
-  this.props.userContext.socket.on('updateLocation', coords => {
-    this.setState({
-      delivererCoords: coords
-    }, () => this.mapRouteRequest(this.state.delivererCoords, locations[1]))
-  })
-}
+    this.props.userContext.socket.emit('identify', this.props.userContext.userId)
+
+    this.props.userContext.socket.on('cancelConfirmed', () => this.setState({ orderStatus: 'Order Cancelled' }))
+    this.props.userContext.socket.on('orderAccepted', () => this.setState({ orderStatus: '1' }))
+    this.props.userContext.socket.on('delivererAssigned', (id, deliverer) => this.setState({ orderStatus: '2', deliverer: deliverer }, console.log('Deliverer is', deliverer)))
+    this.props.userContext.socket.on('delivererArrivedRestaurant', () => this.setState({ orderStatus: '3' }))
+    this.props.userContext.socket.on('orderPickedUp', () => this.setState({ orderStatus: '4' }))
+    this.props.userContext.socket.on('orderDelivered', () => this.setState({ orderStatus: '5' }))
+    this.props.userContext.socket.on('updateLocation', coords => {
+      this.setState({
+        delivererCoords: coords
+      }, () => this.mapRouteRequest(this.state.delivererCoords, locations[1]))
+    })
+  }
 
   mapRequest = locations => {
     locations = locations.map(loc => loc.join(',')).join('||')
@@ -65,6 +66,7 @@ componentDidMount () {
             })
           })
   }
+
   mapRouteRequest = (start, end) => {
     start = start.join(',')
     end = end.join(',')
@@ -76,9 +78,11 @@ componentDidMount () {
             })
           })
   }
+
   cancelOrder = () => {
     this.props.userContext.socket.emit('cancel', this.props.cartContext.orderId)
   }
+  
   render () {
     console.log('Tracking props are', this.props)
     console.log('The tracked deliverer co-ordinates are ', this.state.delivererCoords)
