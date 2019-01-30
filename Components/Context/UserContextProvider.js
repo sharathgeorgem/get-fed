@@ -12,6 +12,7 @@ class UserContextProvider extends React.Component {
     super(props)
     this.state = {
       userId: '',
+      userName: '',
       socket: null,
       userLocation: false,
       userAddress: ''
@@ -30,9 +31,9 @@ class UserContextProvider extends React.Component {
     ) : this.state.userLocation
   }
 
-  setUser = user => {
+  setUser = (user, name) => {
     console.log('Will this fire?')
-    this.setState({ userId: user }, () => {
+    this.setState({ userId: user, userName: name }, () => {
     console.log('I guess it just did')
     this.state.socket.emit('identify', this.state.userId)
   })}
@@ -60,6 +61,7 @@ class UserContextProvider extends React.Component {
       <UserContext.Provider
         value={{
           userId: this.state.userId,
+          userName: this.state.userName,
           socket: this.state.socket,
           userLocation: this.state.userLocation,
           userAddress: this.state.userAddress,

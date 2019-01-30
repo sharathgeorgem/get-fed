@@ -24,8 +24,9 @@ class Authenticate extends React.Component {
 
   handleLogin = async (res) => {
     if (res.ok) {
-      console.log('Rerouting') // debug
-      // this.props.userContext.setUser(user)
+      res = await res.json()
+      console.log('Id is', res.result._id)
+      this.props.userContext.setUser(res.result._id, res.result.name)
       Router.push('/restaurant-scaffold')
       return 'Login successful'
     } return 'Invalid username or password'

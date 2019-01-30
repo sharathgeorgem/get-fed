@@ -108,6 +108,13 @@ nextApp.prepare()
       return nextApp.render(req, res, errorPage)
     })
 
+    app.get('/logout', (req, res) => {
+      req.session.destroy(() => {
+        res.clearCookie('connect.sid')
+        res.redirect('/')
+      })
+    })
+
     app.get('*', (req, res) => {
       return handle(req, res)
     })

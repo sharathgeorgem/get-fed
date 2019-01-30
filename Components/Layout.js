@@ -47,7 +47,7 @@ class Layout extends React.Component {
             </NavItem>
 
             <NavItem>
-              <Link href='/'>
+              <Link href='/logout'>
                 <a className='nav-link'> Log Out</a>
               </Link>
             </NavItem>
