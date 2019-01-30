@@ -120,7 +120,7 @@ nextApp.prepare()
 
     app.post('/auth/login',
       passport.authenticate('local', { successFlash: 'Login successful', failureFlash: true }),
-      function (req, res) {
+      (req, res) => {
         res.send({ result: true })
       }
     )
