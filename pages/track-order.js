@@ -29,8 +29,6 @@ class TrackOrder extends Component {
       deliverer: '',
       delivererCoords: [0, 0]
     }
-    this.mapRequest = this.mapRequest.bind(this)
-    this.mapRouteRequest = this.mapRouteRequest.bind(this)
   }
 componentDidMount () {
   const restaurantLocation = this.props.cartContext.restaurantAddress

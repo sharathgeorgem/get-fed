@@ -18,7 +18,6 @@ class CheckoutForm extends React.Component {
       error: '',
       address: null // For the user
     }
-    // this.submitOrder = this.submitOrder.bind(this)
   }
 
   componentDidMount () {
@@ -51,7 +50,7 @@ class CheckoutForm extends React.Component {
     this.setState({ data })
   }
 
-  submitOrder () {
+  submitOrder = () => {
     this.props.userContext.socket.emit('placeOrder', this.props.userContext.userId, this.state.address)
   }
 
@@ -82,7 +81,7 @@ class CheckoutForm extends React.Component {
         <FormGroup style={{ display: 'flex' }}>
           
           <Link href='/track-order'>
-            <a onClick={this.submitOrder.bind(this)}><button>Place Order</button></a>
+            <a onClick={this.submitOrder}><button>Place Order</button></a>
           </Link>
         </FormGroup>
 

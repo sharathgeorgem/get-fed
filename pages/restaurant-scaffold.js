@@ -20,7 +20,7 @@ class RestaurantScaffold extends React.Component {
       query: ''
     }
   }
-  onChange (e) {
+  onChange = (e) => {
     this.setState({ query: e.target.value.toLowerCase() })
   }
   render () {
@@ -31,7 +31,7 @@ class RestaurantScaffold extends React.Component {
             <div className='search'>
               <InputGroup>
                 <InputGroupAddon addonType='append'> Search </InputGroupAddon>
-                <Input onChange={this.onChange.bind(this)} />
+                <Input onChange={this.onChange} />
               </InputGroup>
             </div>
             <Restaurants restaurants={this.props.restaurants} />
