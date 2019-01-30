@@ -68,7 +68,7 @@ class DelivererPortal extends React.Component {
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'pickedUp'
     this.setState({ orders: [order].concat(this.state.orders.filter(order => order.id !== orderId)) },
-      () => this.simulateDelivery(order)) // change to trackDelivery later
+      () => this.trackDelivery(order)) // change to trackDelivery later
   }
 
   delivered = (orderId) => {
