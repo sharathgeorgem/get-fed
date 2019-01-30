@@ -44,7 +44,7 @@ class UserContextProvider extends React.Component {
     console.log('Key is ', keys.mapquest)
     this.setState(
       { userLocation : position },
-      () => fetch(`http://www.mapquestapi.com/geocoding/v1/reverse?key=${keys.mapquest}&location=${this.state.userLocation.coords.latitude},${this.state.userLocation.coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
+      () => fetch(`https://www.mapquestapi.com/geocoding/v1/reverse?key=${keys.mapquest}&location=${this.state.userLocation.coords.latitude},${this.state.userLocation.coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
         .then(res => res.json())
         .then(response => {
           console.log(response)
