@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { compose } from 'recompose'
 import fetch from 'isomorphic-unfetch'
 import { withRouter } from 'next/router'
-// import Router from 'next/router'
 import { Button, Progress } from 'reactstrap'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
@@ -82,7 +81,7 @@ class TrackOrder extends Component {
   cancelOrder = () => {
     this.props.userContext.socket.emit('cancel', this.props.cartContext.orderId)
   }
-  
+
   render () {
     console.log('Tracking props are', this.props)
     console.log('The tracked deliverer co-ordinates are ', this.state.delivererCoords)
