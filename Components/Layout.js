@@ -43,14 +43,12 @@ class Layout extends React.Component {
             </NavItem>
 
             <NavItem className='ml-auto'>
-              <Link href='/signIn'>
-                <a className='nav-link'>Hi User</a>
-              </Link>
+              <a className='nav-link'>Hi User</a>
             </NavItem>
 
             <NavItem>
-              <Link href='/signUp'>
-                <a className='nav-link'> Sign Up</a>
+              <Link href='/'>
+                <a className='nav-link'> Log Out</a>
               </Link>
             </NavItem>
           </Nav>

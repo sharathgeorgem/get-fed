@@ -73,6 +73,7 @@ nextApp.prepare()
       const actualPage = '/restaurant-scaffold'
       console.log('Request for restaurants reached')
       console.log('User ID', req.session.passport.user)
+      res.session.passport.user = req.session.passport.user
       // console.log('The request is ', req)
       // console.log('The response is ', res)
       // console.log('The actualPage is ', actualPage)
@@ -85,13 +86,6 @@ nextApp.prepare()
       const queryParams = { id: req.params.id }
       console.log('The actual page is ', actualPage)
       console.log('Query params are ', queryParams)
-      return nextApp.render(req, res, actualPage, queryParams)
-    })
-
-    app.get('/verify/:id', (req, res) => {
-      console.log('Verification route reached')
-      const actualPage = 'verify'
-      const queryParams = { id: req.params.id, apiRoute: 'verify' }
       return nextApp.render(req, res, actualPage, queryParams)
     })
 

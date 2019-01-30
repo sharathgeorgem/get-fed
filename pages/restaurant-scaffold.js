@@ -50,10 +50,10 @@ class RestaurantScaffold extends React.Component {
   }
 }
 
-RestaurantScaffold.getInitialProps = async function () {
+RestaurantScaffold.getInitialProps = async function (obj) {
   const res = await fetch(`${config.domain}/restaurant`)
   const data = await res.json()
-
+  console.log('The user id defined is ', obj)
   // console.log(`The data fetched is : ${JSON.stringify(data, null, 4)}`)
   console.log(`The data fetched : ${data.length}`)
 
