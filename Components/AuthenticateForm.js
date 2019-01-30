@@ -42,7 +42,7 @@ class AuthenticateForm extends React.Component {
       body: JSON.stringify({ username: this.state.email, password: this.state.password })
     })
     .catch(console.log)
-    this.props.handleSubmitResponse(res)
+    this.props.handleSubmitResponse(res).then(res => this.setState({ status: res }) )
   }
   render () {
     return(

@@ -24,7 +24,7 @@ passport.use(new Strategy(
   function (username, password, cb) {
     model.findUserByName(username)
       .then(user => {
-        if (user === undefined) { return cb(null, false) }
+        if (user === null) { return cb(null, false) }
         bcrypt.compare(password, user.password)
           .then(res => res ? cb(null, user) : cb(null, false))
       })
