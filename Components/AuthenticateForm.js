@@ -41,11 +41,8 @@ class AuthenticateForm extends React.Component {
       },
       body: JSON.stringify({ username: this.state.email, password: this.state.password })
     })
-    .then(res => res.json())
     .catch(console.log)
-    if(res.result && this.props.reroute) {
-      this.props.reroute()
-    }
+    this.props.handleSubmitResponse(res)
   }
   render () {
     return(

@@ -35,14 +35,26 @@ class Authenticate extends React.Component {
     super(props)
     this.state = { activeTab: 1 }
   }
+
   switchTab = tab => {
     this.setState({ activeTab: tab })
   }
-  rerouteLogin = () => {
-    console.log('Rerouting') // debug
-    // this.props.userContext.setUser(user)
-    Router.push('/restaurant-scaffold')
+
+  handleRegister = async (res) => {
+    res = await res.json()
+    if (res.result) {
+      console.log('Registration successful')
+    } else console.log('Account already exists')
   }
+
+  handleLogin = (res) => {
+    if (res.ok) {
+      console.log('Rerouting') // debug
+      // this.props.userContext.setUser(user)
+      Router.push('/restaurant-scaffold')  
+    } else console.log('Invalid login')
+  }
+
   render () {
     return(
       <div>
@@ -66,10 +78,10 @@ class Authenticate extends React.Component {
       </Nav>
       <TabContent activeTab={this.state.activeTab} style={{ marginTop: 20 + 'px' }}>
         <TabPane tabId={1}>
-          <AuthenticateForm route='register' statusMessage={registerStatusMessage}/>
+          <AuthenticateForm route='register' handleSubmitResponse={this.handleRegister} statusMessage={registerStatusMessage}/>
         </TabPane>
         <TabPane tabId={2}>
-          <AuthenticateForm route='login' reroute={this.rerouteLogin} statusMessage={loginStatusMessage} />
+          <AuthenticateForm route='login' handleSubmitResponse={this.handleLogin} statusMessage={loginStatusMessage} />
         </TabPane>
       </TabContent>
       </div>
