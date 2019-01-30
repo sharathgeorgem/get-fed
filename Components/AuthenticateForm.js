@@ -33,7 +33,7 @@ class AuthenticateForm extends React.Component {
     this.setState({ emailStatus: /^(\S+)@(\S+).(\S+)$/.test(email) })
   }
   submit = async () => {
-    let result = await fetch(`${config.domain}/auth/${this.props.route}`, {
+    let res = await fetch(`${config.domain}/auth/${this.props.route}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -41,14 +41,11 @@ class AuthenticateForm extends React.Component {
       },
       body: JSON.stringify({ username: this.state.email, password: this.state.password })
     })
-    // .then(res => res.json())
-    console.log('submit response is', result)
-    if(result.ok && this.props.reroute) {
+    .then(res => res.json())
+    .catch(console.log)
+    if(res.result && this.props.reroute) {
       this.props.reroute()
     }
-    // this.setState({ status: this.props.statusMessage(result.code) })
-    // if (result.code === 3 && this.props.reroute !== undefined) {
-    //   this.props.reroute(result.user)
   }
   render () {
     return(

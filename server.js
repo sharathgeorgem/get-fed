@@ -3,10 +3,12 @@ const cors = require('cors')
 const io = require('socket.io')
 const next = require('next')
 const session = require('express-session')
+const MongoDBStore = require('connect-mongodb-session')(session)
 const passport = require('passport')
 const Strategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
+const config = require('./config')
 const router = require('./server/routes')
 const model = require('./server/model')
 const eventControllers = require('./server/controllers/eventControllers')
@@ -45,10 +47,18 @@ passport.deserializeUser(function (id, cb) {
 nextApp.prepare()
   .then(() => {
     const app = express()
+
+    const store = new MongoDBStore({
+      uri: config.db,
+      collection: 'sessions'
+    })
+
+    store.on('error', console.log)
+
     app.use(cors())
     app.use(express.json())
     app.use(express.urlencoded({ extended: false }))
-    app.use(session({ secret: 'Gettin chwiggy with it', cookie: { httpOnly: false }, resave: false, saveUninitialized: false }))
+    app.use(session({ secret: 'Gettin chwiggy with it', cookie: { httpOnly: false }, store: store, resave: false, saveUninitialized: false }))
     app.use(passport.initialize())
     app.use(passport.session())
     app.use('/', router)
@@ -62,10 +72,10 @@ nextApp.prepare()
     app.get('/restaurant-scaffold', (req, res) => {
       const actualPage = '/restaurant-scaffold'
       console.log('Request for restaurants reached')
-      // console.log('Session details ', res.session)
+      console.log('User ID', req.session.passport.user)
       // console.log('The request is ', req)
-      console.log('The response is ', res)
-      console.log('The actualPage is ', actualPage)
+      // console.log('The response is ', res)
+      // console.log('The actualPage is ', actualPage)
       return nextApp.render(req, res, actualPage)
     })
 
@@ -109,9 +119,9 @@ nextApp.prepare()
     })
 
     app.post('/auth/login',
-      passport.authenticate('local', { failureRedirect: '/authenticate' }),
+      passport.authenticate('local', { successFlash: 'Login successful', failureFlash: true }),
       function (req, res) {
-        res.redirect('/restaurant-scaffold')
+        res.send({ result: true })
       }
     )
 

@@ -67,9 +67,12 @@ exports.setCart = async function (req, res) {
 }
 
 exports.register = async function (req, res) {
-  let hash = await bcrypt.hash(req.body.password, 10)
-  let user = await model.addUser(req.body.username, hash).catch(console.log)
-  res.send({ result: user })
+  let user = await model.findUserByName(req.body.username)
+  if (user === null) {
+    let hash = await bcrypt.hash(req.body.password, 10)
+    user = await model.addUser(req.body.username, hash).catch(console.log)
+  }
+  res.send({ result: !!user })
 }
 
 // exports.login = async function (req, res) {
