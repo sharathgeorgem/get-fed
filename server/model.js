@@ -12,6 +12,7 @@ db.once('open', function () {
 })
 
 mongoose.set('useFindAndModify', false) // findAndModify is deprecated but enabled by default
+mongoose.set('useCreateIndex', true) // ensureIndex is deprecated but enabled by default
 
 // Schemas
 
@@ -33,8 +34,11 @@ const ItemSchema = createSchema({
 })
 const AddressSchema = createSchema({
   location: [Number, Number],
+<<<<<<< HEAD
   // latitude: Number,
   // longitude: Number,
+=======
+>>>>>>> 94ed3a27eebb3abb4f382b01b2bad574336a5a48
   value: String,
   apartment: String,
   landmark: String
@@ -55,7 +59,7 @@ const OrderSchema = createSchema({
   address: AddressSchema
 })
 const UserSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   password: String,
   cart: [{
     item: { type: ObjectId, ref: 'Item' },
@@ -66,7 +70,7 @@ const UserSchema = createSchema({
   addresses: { home: AddressSchema, work: AddressSchema, others: [AddressSchema] }
 })
 const RestaurantSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   address: AddressSchema,
   cost: Number,
   score: Number,
@@ -85,7 +89,7 @@ RestaurantSchema.virtual('rating').get(function () { return this.score / this.vo
 RestaurantSchema.index({ 'address.location': '2d' })
 
 const DelivererSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   score: Number,
   votes: Number,
   currentOrders: [{ type: ObjectId, ref: 'Order' }],
@@ -186,7 +190,11 @@ exports.addItem = async function (resId, itemDetails, category) {
 }
 
 exports.getRestaurants = async function (lat, long) {
+<<<<<<< HEAD
   return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(10)
+=======
+  return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(20)
+>>>>>>> 94ed3a27eebb3abb4f382b01b2bad574336a5a48
 }
 
 exports.getMenu = async function (resId) {
