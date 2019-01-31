@@ -6,6 +6,7 @@ import { Button, Progress } from 'reactstrap'
 
 import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withCartContext } from '../Components/Context/CartContextProvider'
+import config from '../config'
 
 const orderStatusMessages = {
   0: 'Awaiting restaurant confirmation',
@@ -55,7 +56,7 @@ class TrackOrder extends Component {
 
   mapRequest = locations => {
     locations = locations.map(loc => loc.join(',')).join('||')
-    return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${process.env.MAPQUEST_API_KEY}&locations=${locations}`)
+    return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${config.mapquestKey}&locations=${locations}`)
           .then(response => {
             console.log('Map request', response)
             this.setState({
@@ -68,7 +69,7 @@ class TrackOrder extends Component {
   mapRouteRequest = (start, end) => {
     start = start.join(',')
     end = end.join(',')
-    return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${process.env.MAPQUEST_API_KEY}&start=${start}&end=${end}`)
+    return fetch(`https://www.mapquestapi.com/staticmap/v5/map?key=${config.mapquestKey}&start=${start}&end=${end}`)
           .then(response => {
             console.log('Map Route request', response)
             this.setState({

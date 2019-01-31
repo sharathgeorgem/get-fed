@@ -10,7 +10,7 @@ class DelivererPortal extends React.Component {
   }
 
   initializeConnection = () => {
-    this.socket = io.connect(process.env.DOMAIN)
+    this.socket = io.connect(this.props.domain)
     this.socket.emit('identifyDeliverer', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
   }

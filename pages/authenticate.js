@@ -55,10 +55,10 @@ class Authenticate extends React.Component {
       </Nav>
       <TabContent activeTab={this.state.activeTab} style={{ marginTop: 20 + 'px' }}>
         <TabPane tabId={1}>
-          <AuthenticateForm route='register' handleSubmitResponse={this.handleRegister} />
+          <AuthenticateForm domain={this.props.userContext.domain} route='register' handleSubmitResponse={this.handleRegister} />
         </TabPane>
         <TabPane tabId={2}>
-          <AuthenticateForm route='login' handleSubmitResponse={this.handleLogin} />
+          <AuthenticateForm domain={this.props.userContext.domain} route='login' handleSubmitResponse={this.handleLogin} />
         </TabPane>
       </TabContent>
       </div>

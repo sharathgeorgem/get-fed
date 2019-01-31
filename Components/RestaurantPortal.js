@@ -9,7 +9,7 @@ class RestaurantPortal extends React.Component {
     this.initializeConnection()
   }
   initializeConnection = () => {
-    this.socket = io.connect(process.env.DOMAIN)
+    this.socket = io.connect(this.props.domain)
     this.socket.emit('identify', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [order].concat(this.state.orders) }))
     this.socket.on('updateOrderStatus', order => this.setState(

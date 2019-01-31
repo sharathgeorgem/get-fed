@@ -2,6 +2,7 @@ import React from 'react'
 
 import fetch from 'isomorphic-unfetch'
 import DelivererPortal from '../Components/DelivererPortal'
+import config from '../config'
 
 class DelivererView extends React.Component {
   constructor () {
@@ -10,13 +11,13 @@ class DelivererView extends React.Component {
   }
   render () {
     return (
-      <DelivererPortal id={this.props.id} />
+      <DelivererPortal id={this.props.id} domain={config.domain} />
     )
   }
 }
 
 DelivererView.getInitialProps = async function () {
-  let res = await fetch(`${process.env.DOMAIN}/deliverer/dummy`)
+  let res = await fetch(`${config.domain}/deliverer/dummy`)
     .then(res => res.json())
   console.log('id is', res.id)
   return { id: res.id }

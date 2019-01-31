@@ -31,7 +31,7 @@ class AuthenticateForm extends React.Component {
     this.setState({ emailStatus: /^(\S+)@(\S+).(\S+)$/.test(email) })
   }
   submit = async () => {
-    let res = await fetch(`${process.env.DOMAIN}/auth/${this.props.route}`, {
+    let res = await fetch(`${this.props.domain}/auth/${this.props.route}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

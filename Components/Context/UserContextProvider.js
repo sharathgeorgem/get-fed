@@ -2,6 +2,8 @@ import React from 'react'
 import fetch from 'isomorphic-unfetch'
 import io from 'socket.io-client'
 
+import config from '../../config'
+
 const UserContext = React.createContext()
 
 class UserContextProvider extends React.Component {
@@ -40,7 +42,7 @@ class UserContextProvider extends React.Component {
     console.log('The props are ', this.props)
     this.setState(
       { userLocation : position },
-      () => fetch(`https://www.mapquestapi.com/geocoding/v1/reverse?key=${process.env.MAPQUEST_API_KEY}&location=${this.state.userLocation.coords.latitude},${this.state.userLocation.coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
+      () => fetch(`https://www.mapquestapi.com/geocoding/v1/reverse?key=${config.mapquestKey}&location=${this.state.userLocation.coords.latitude},${this.state.userLocation.coords.longitude}&includeRoadMetadata=true&includeNearestIntersection=true`)
         .then(res => res.json())
         .then(response => {
           console.log(response)
@@ -61,7 +63,8 @@ class UserContextProvider extends React.Component {
           socket: this.state.socket,
           userLocation: this.state.userLocation,
           userAddress: this.state.userAddress,
-          setUser: this.setUser
+          setUser: this.setUser,
+          domain: config.domain
         }}
       >
         {this.props.children}
