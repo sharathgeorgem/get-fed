@@ -34,8 +34,6 @@ const ItemSchema = createSchema({
 })
 const AddressSchema = createSchema({
   location: [Number, Number],
-  // latitude: Number,
-  // longitude: Number,
   value: String,
   apartment: String,
   landmark: String

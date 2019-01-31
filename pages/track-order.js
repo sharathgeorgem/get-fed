@@ -33,7 +33,7 @@ class TrackOrder extends Component {
   componentDidMount () {
     const restaurantLocation = this.props.cartContext.restaurantAddress
     let locations = []
-    locations.push([restaurantLocation.latitude, restaurantLocation.longitude])
+    locations.push([restaurantLocation.location[0], restaurantLocation.location[1]])
     const userLocation = this.props.userContext.userLocation.coords
     locations.push([userLocation.latitude, userLocation.longitude])
     console.log('The final array is ', locations)

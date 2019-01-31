@@ -27,8 +27,7 @@ class CheckoutForm extends React.Component {
     })
 
     this.setState({ address: {
-      latitude: this.props.userContext.userLocation.coords.latitude,
-      longitude: this.props.userContext.userLocation.coords.longitude,
+      location: [this.props.userContext.userLocation.coords.latitude, this.props.userContext.userLocation.coords.longitude],
       value: this.props.userContext.userAddress,
       apartment: '',
       landmark: ''
