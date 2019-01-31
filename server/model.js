@@ -12,6 +12,7 @@ db.once('open', function () {
 })
 
 mongoose.set('useFindAndModify', false) // findAndModify is deprecated but enabled by default
+mongoose.set('useCreateIndex', true) // ensureIndex is deprecated but enabled by default
 
 // Schemas
 
@@ -32,8 +33,9 @@ const ItemSchema = createSchema({
   restaurant: { type: ObjectId, ref: 'Restaurant' }
 })
 const AddressSchema = createSchema({
-  latitude: Number,
-  longitude: Number,
+  location: [Number, Number],
+  // latitude: Number,
+  // longitude: Number,
   value: String,
   apartment: String,
   landmark: String
@@ -54,7 +56,7 @@ const OrderSchema = createSchema({
   address: AddressSchema
 })
 const UserSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   password: String,
   cart: [{
     item: { type: ObjectId, ref: 'Item' },
@@ -65,7 +67,7 @@ const UserSchema = createSchema({
   addresses: { home: AddressSchema, work: AddressSchema, others: [AddressSchema] }
 })
 const RestaurantSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   address: AddressSchema,
   cost: Number,
   score: Number,
@@ -81,9 +83,10 @@ const RestaurantSchema = createSchema({
   pastOrders: [{ type: ObjectId, ref: 'Order' }]
 })
 RestaurantSchema.virtual('rating').get(function () { return this.score / this.votes })
+RestaurantSchema.index({ 'address.location': '2d' })
 
 const DelivererSchema = createSchema({
-  name: String,
+  name: { type: String, index: true },
   score: Number,
   votes: Number,
   currentOrders: [{ type: ObjectId, ref: 'Order' }],
@@ -179,8 +182,8 @@ exports.addItem = async function (resId, itemDetails, category) {
   return item
 }
 
-exports.getRestaurants = async function () {
-  return Restaurant.find()
+exports.getRestaurants = async function (lat, long) {
+  return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(20)
 }
 
 exports.getMenu = async function (resId) {
