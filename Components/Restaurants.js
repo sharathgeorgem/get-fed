@@ -17,7 +17,7 @@ import {
 const Restaurants = (props) => {
   const RestaurantList = props.restaurants
   if (!RestaurantList) return <h1>Loading</h1>
-  console.log('The cookie name is ', Cookies.get())
+  console.log('The cookie name is ', Cookies.get('connect.sid'))
   if (RestaurantList && RestaurantList.length) {
     return (
       <div>
