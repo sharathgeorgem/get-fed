@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
+import Cookies from 'js-cookie'
 import { withUserContext } from '../Components/Context/UserContextProvider'
 import { withRouter } from 'next/router'
 import { compose } from 'recompose'
-import { 
+import {
   Button,
   Row,
   Col,
@@ -25,8 +26,17 @@ class Index extends React.Component {
   //   }
   //   loop()
   // }
+  constructor (props) {
+    super(props)
+    this.state = {
+      loggedIn: false
+    }
+  }
 
   render () {
+    if (Cookies.get('connect.sid')) {
+      this.state.loggedIn = true
+    }
     return (
       <React.Fragment>
         <Row>
@@ -41,7 +51,11 @@ class Index extends React.Component {
           </Col>
         </Row>
         <ul>
-          <li><Link href='/authenticate'><a>Customer</a></Link></li>
+          <li>
+            <Link href={this.state.loggedIn ? '/restaurant-scaffold' : '/authenticate'}>
+              <a>Customer</a>
+            </Link>
+          </li>
           <li><Link href='/deliverer-portal'><a>Deliverer</a></Link></li>
           <li><Link href='/restaurant-portal'><a>Restaurant</a></Link></li>
         </ul>
