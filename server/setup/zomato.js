@@ -19,8 +19,6 @@ function formatRestaurantData (data) {
     name: r.restaurant.name,
     address: {
       location: [r.restaurant.location.latitude, r.restaurant.location.longitude],
-      // latitude: r.restaurant.location.latitude,
-      // longitude: r.restaurant.location.longitude,
       value: r.restaurant.location.address,
       apartment: '',
       landmark: r.restaurant.location.locality
@@ -39,4 +37,6 @@ async function addRestaurantsToDB (start) {
   formatRestaurantData(data).forEach(addRestaurant)
 }
 
-addRestaurantsToDB(0)
+for (let i = 0; i < 500; i += 20) {
+  addRestaurantsToDB(i)
+}

@@ -140,6 +140,10 @@ exports.getDummyDeliverer = async function () {
   return deliverers[0].id
 }
 
+exports.getAllRestaurants = async function () {
+  return Restaurant.find().limit(100)
+}
+
 // --- above only for development
 
 exports.addUser = async function (name, password) {

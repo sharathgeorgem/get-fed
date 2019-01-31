@@ -5,8 +5,9 @@ const controllers = require('./controllers/routeControllers')
 const router = express.Router()
 
 // only for development
-router.get('/restaurant/dummy', controllers.getDummyRestaurant)
-router.get('/deliverer/dummy', controllers.getDummyDeliverer)
+router.get('/dev/restaurant/dummy', controllers.getDummyRestaurant)
+router.get('/dev/deliverer/dummy', controllers.getDummyDeliverer)
+router.get('/dev/restaurant/all', controllers.getAllRestaurants)
 // ---
 
 // for adding initial data in db

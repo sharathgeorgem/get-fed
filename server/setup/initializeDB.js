@@ -2,22 +2,22 @@ const http = require('../../utilities/promisifiedHTTP')
 const config = require('../../config')
 
 const images = {
-  wine: 'http://i.pinimg.com/736x/3b/68/82/3b688219528458e3eb06783c05c9f22f.jpg',
-  coffee: 'http://www.walkaboutflorence.com/sites/default/files/styles/news_detail/public/Coffee_Caffe__Cappuccino_Latte_Florence_Italy.jpg',
-  beer: 'https://www.underconsideration.com/brandnew/archives/heineken_00_hero_shot_02.jpg',
-  lemonade: 'https://www.domechan.com/shop/1424-thickbox_default/ramune-working-lemonade-japanese-taste-pineapple-200-ml.jpg',
-  milk: 'http://betterhousekeeper.com/wp-content/uploads/2014/05/bottle-and-glass-of-milk.jpg',
-  chocolate: 'http://www.chocablog.com/wp-content/uploads/2008/09/chocolat-bonnat-2.jpg',
-  cornet: 'https://images.japancentre.com/images/pics/12217/large/3566-chocolate-cornet-side.jpg?1469571297',
-  banana: 'https://img-global.cpcdn.com/001_recipes/5325406057005056/640x640sq70/photo.jpg',
-  potatoes: 'http://justhungry.com/files/images/shinjagashouyubutter.jpg',
-  sorbet: 'http://tendingmygarden.com/wp-content/uploads/2010/08/L1690384tomsherbet-in-small-crystal.png',
-  lemonpie: 'https://www.kcet.org/sites/kl/files/atoms/article_atoms/www.kcet.org/living/food/assets/images/lemonchiffonpie.png',
-  cake: 'https://i.kym-cdn.com/photos/images/original/000/115/357/portal-cake.jpg',
-  pumpkinpie: 'http://comicpoplibrary.com/wp-content/uploads/2011/06/herring-and-pumpkin-pie.jpg',
-  omurice: 'https://sociorocketnewsen.files.wordpress.com/2014/06/kr-7.png',
-  curry: 'https://japanesecurry.weebly.com/uploads/1/4/6/5/14652372/5502478_orig.jpg?0',
-  pizza: 'http://2.bp.blogspot.com/_Vh8ATwGRVqo/SvACUfs2A-I/AAAAAAAAKVk/KHyl0oKRNRA/s320/happy+pizza.JPG'
+  wine: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/redredwine.jpg',
+  coffee: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/coffee.jpg',
+  beer: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/heineken.jpg',
+  lemonade: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/ramune.jpg',
+  milk: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/milk.jpg',
+  chocolate: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/chocolate.jpg',
+  cornet: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/choco_cornet.jpg',
+  banana: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/banana.jpg',
+  potatoes: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/buttered_potatoes.jpg',
+  sorbet: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/tomato_sherbet.jpg',
+  lemonpie: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/lemonchiffonpie.jpg',
+  cake: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/portal-cake.jpg',
+  pumpkinpie: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/herring-and-pumpkin-pie.jpg',
+  omurice: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/omurice.jpg',
+  curry: 'https://res.cloudinary.com/geekskool/image/upload/v1548926622/get-fed/choco_curry.jpg',
+  pizza: 'https://res.cloudinary.com/geekskool/image/upload/v1548926660/get-fed/happy_pizza.jpg'
 }
 
 async function addDeliverer (name) {
@@ -25,7 +25,8 @@ async function addDeliverer (name) {
 }
 
 async function getRestaurantIds () {
-  let restaurants = await http.getRequest('http', 'json', config.domain, 'restaurant')
+  console.log('Lets get restaurants') // debug
+  let restaurants = await http.getRequest('http', 'json', config.domain, 'dev/restaurant/all')
   return restaurants.map(res => res.id)
 }
 
