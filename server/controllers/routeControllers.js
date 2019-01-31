@@ -27,7 +27,7 @@ exports.addItem = async function (req, res) {
 }
 
 exports.getRestaurants = async function (req, res) {
-  let result = await model.getRestaurants().catch(console.log)
+  let result = await model.getRestaurants(req.params.latitude, req.params.longitude).catch(console.log)
   res.send(result)
 }
 

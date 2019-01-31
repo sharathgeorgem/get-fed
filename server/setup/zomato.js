@@ -18,8 +18,9 @@ function formatRestaurantData (data) {
   return data.restaurants.map(r => Object.assign({}, {
     name: r.restaurant.name,
     address: {
-      latitude: r.restaurant.location.latitude,
-      longitude: r.restaurant.location.longitude,
+      location: [r.restaurant.location.latitude, r.restaurant.location.longitude],
+      // latitude: r.restaurant.location.latitude,
+      // longitude: r.restaurant.location.longitude,
       value: r.restaurant.location.address,
       apartment: '',
       landmark: r.restaurant.location.locality

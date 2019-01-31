@@ -33,8 +33,9 @@ const ItemSchema = createSchema({
   restaurant: { type: ObjectId, ref: 'Restaurant' }
 })
 const AddressSchema = createSchema({
-  latitude: Number,
-  longitude: Number,
+  location: [Number, Number],
+  // latitude: Number,
+  // longitude: Number,
   value: String,
   apartment: String,
   landmark: String
@@ -82,6 +83,7 @@ const RestaurantSchema = createSchema({
   pastOrders: [{ type: ObjectId, ref: 'Order' }]
 })
 RestaurantSchema.virtual('rating').get(function () { return this.score / this.votes })
+RestaurantSchema.index({ 'address.location': '2d' })
 
 const DelivererSchema = createSchema({
   name: String,
@@ -180,8 +182,8 @@ exports.addItem = async function (resId, itemDetails, category) {
   return item
 }
 
-exports.getRestaurants = async function () {
-  return Restaurant.find()
+exports.getRestaurants = async function (lat, long) {
+  return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(10)
 }
 
 exports.getMenu = async function (resId) {
