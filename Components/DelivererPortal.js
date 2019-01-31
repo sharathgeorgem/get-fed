@@ -2,8 +2,6 @@ import React from 'react'
 import io from 'socket.io-client'
 import { Card, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap'
 
-import config from '../config'
-
 class DelivererPortal extends React.Component {
   constructor (props) {
     super(props)
@@ -12,7 +10,7 @@ class DelivererPortal extends React.Component {
   }
 
   initializeConnection = () => {
-    this.socket = io.connect(config.domain)
+    this.socket = io.connect(process.env.DOMAIN)
     this.socket.emit('identifyDeliverer', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
   }

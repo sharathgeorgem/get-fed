@@ -15,13 +15,13 @@ import {
 
 class Cart extends React.Component {
   componentDidMount () {
-    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}`)
+    fetch(`${process.env.DOMAIN}/user/cart/${this.props.userContext.userId}`)
     .then(res => res.json())
     .then(this.props.cartContext.updateCart)
   }
   addItem = itemType => {
     console.log('added item is', itemType.item.id)
-    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
+    fetch(`${process.env.DOMAIN}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
       method: 'PUT'
     })
     .then(res => res.json())
@@ -30,7 +30,7 @@ class Cart extends React.Component {
 
   removeItem = itemType => {
     console.log('removed item is', itemType.item.id)
-    fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
+    fetch(`${process.env.DOMAIN}/user/cart/${this.props.userContext.userId}/${itemType.item.id}`, {
       method: 'DELETE'
     })
     .then(res => res.json())

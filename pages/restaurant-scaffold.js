@@ -2,7 +2,6 @@ import React from 'react'
 import fetch from 'isomorphic-unfetch'
 
 import Restaurants from '../Components/Restaurants'
-import config from '../config'
 
 import {
   Col,
@@ -50,7 +49,7 @@ class RestaurantScaffold extends React.Component {
 }
 
 RestaurantScaffold.getInitialProps = async function (obj) {
-  const res = await fetch(`${config.domain}/restaurant`)
+  const res = await fetch(`${process.env.DOMAIN}/restaurant`)
   const data = await res.json()
   console.log('The user id defined is ', obj)
   console.log(`The data fetched : ${data.length}`)

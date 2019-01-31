@@ -30,7 +30,7 @@ class Restaurant extends React.Component {
 
   componentDidMount () {
     console.log('Component mounting')
-    fetch(`${this.props.cartContext.domain}/menu/${this.props.router.query.id}`)
+    fetch(`${process.env.DOMAIN}/menu/${this.props.router.query.id}`)
       .then(res => res.json())
       .then(res => {
         console.log('Props available can be', this.props)
@@ -45,7 +45,7 @@ class Restaurant extends React.Component {
   addItem = item => {
     if (this.props.cartContext.restaurantId && this.props.cartContext.restaurantId !== item.restaurant) {
       alert('Please empty your cart before adding items from a different restaurant')
-    } else fetch(`${this.props.cartContext.domain}/user/cart/${this.props.userContext.userId}/${item.id}`, {
+    } else fetch(`${process.env.DOMAIN}/user/cart/${this.props.userContext.userId}/${item.id}`, {
       method: 'PUT'
     })
     .then(res => res.json())

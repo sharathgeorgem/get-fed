@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const cors = require('cors')
 const io = require('socket.io')
@@ -8,7 +9,6 @@ const passport = require('passport')
 const Strategy = require('passport-local').Strategy
 const bcrypt = require('bcrypt')
 
-const config = require('./config')
 const router = require('./server/routes')
 const model = require('./server/model')
 const eventControllers = require('./server/controllers/eventControllers')
@@ -49,7 +49,7 @@ nextApp.prepare()
     const app = express()
 
     const store = new MongoDBStore({
-      uri: config.db,
+      uri: process.env.DATABASE,
       collection: 'sessions'
     })
 

@@ -34,7 +34,7 @@ class CheckoutForm extends React.Component {
       landmark: ''
     } },
     () => {
-      fetch(`${this.props.userContext.domain}/user/addresses/${this.props.userContext.userId}/home`, {
+      fetch(`${process.env.DOMAIN}/user/addresses/${this.props.userContext.userId}/home`, {
         method: 'PUT',
         body: { address: this.state.address }
       }).then(res => res.json())

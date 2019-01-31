@@ -1,8 +1,6 @@
 import React from 'react'
 import { Container, Col, Button, FormFeedback, FormGroup, Label, Input } from 'reactstrap'
 
-import config from '../config'
-
 class AuthenticateForm extends React.Component {
   constructor(props) {
     super(props)
@@ -33,7 +31,7 @@ class AuthenticateForm extends React.Component {
     this.setState({ emailStatus: /^(\S+)@(\S+).(\S+)$/.test(email) })
   }
   submit = async () => {
-    let res = await fetch(`${config.domain}/auth/${this.props.route}`, {
+    let res = await fetch(`${process.env.DOMAIN}/auth/${this.props.route}`, {
       method: 'POST',
       headers: {
         'Accept': 'application/json',

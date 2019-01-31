@@ -1,11 +1,10 @@
 const mongoose = require('mongoose')
-const config = require('../config')
 
 const ObjectId = mongoose.Schema.Types.ObjectId
 
 // Connect to database
 
-mongoose.connect(config.db, { useNewUrlParser: true })
+mongoose.connect(process.env.DATABASE, { useNewUrlParser: true })
 const db = mongoose.connection
 db.on('error', console.log)
 db.once('open', function () {

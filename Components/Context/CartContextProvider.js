@@ -1,7 +1,5 @@
 import React from 'react'
 
-import config from '../../config'
-
 const CartContext = React.createContext()
 
 class CartContextProvider extends React.Component {
@@ -33,7 +31,6 @@ class CartContextProvider extends React.Component {
           restaurantId: this.state.restaurantId,
           restaurantAddress: this.state.restaurantAddress,
           orderId: this.state.orderId,
-          domain: config.domain,
           updateCart: this.updateCart,
           updateRestaurantAddress: this.updateRestaurantAddress,
           updateOrderId: this.updateOrderId
