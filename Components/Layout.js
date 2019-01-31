@@ -1,7 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
 import Link from 'next/link'
-
 import { Container, Nav, NavItem } from 'reactstrap'
 
 class Layout extends React.Component {
@@ -41,11 +40,9 @@ class Layout extends React.Component {
                 <a className='navbar-brand'>Get Fed</a>
               </Link>
             </NavItem>
-
             <NavItem className='ml-auto'>
               <a className='nav-link'>Hi User</a>
             </NavItem>
-
             <NavItem>
               <Link href='/logout'>
                 <a className='nav-link'> Log Out</a>

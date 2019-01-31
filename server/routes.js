@@ -5,8 +5,9 @@ const controllers = require('./controllers/routeControllers')
 const router = express.Router()
 
 // only for development
-router.get('/restaurant/dummy', controllers.getDummyRestaurant)
-router.get('/deliverer/dummy', controllers.getDummyDeliverer)
+router.get('/dev/restaurant/dummy', controllers.getDummyRestaurant)
+router.get('/dev/deliverer/dummy', controllers.getDummyDeliverer)
+router.get('/dev/restaurant/all', controllers.getAllRestaurants)
 // ---
 
 // for adding initial data in db
@@ -15,7 +16,7 @@ router.post('/deliverer/new', controllers.addDeliverer)
 router.post('/menu/new/:restaurantId', controllers.addItem)
 // ---
 
-router.get('/restaurant', controllers.getRestaurants) // add latitude and longitude as params
+router.get('/restaurant/:latitude/:longitude', controllers.getRestaurants) // add latitude and longitude as params
 router.get('/menu/:restaurantId', controllers.getMenu)
 router.get('/user/cart/:userId', controllers.getCart)
 router.get('/user/addresses/:userId', controllers.getAddresses)

@@ -26,8 +26,13 @@ exports.addItem = async function (req, res) {
   res.send(result)
 }
 
+exports.getAllRestaurants = async function (req, res) {
+  let result = await model.getAllRestaurants()
+  res.send(result)
+}
+
 exports.getRestaurants = async function (req, res) {
-  let result = await model.getRestaurants().catch(console.log)
+  let result = await model.getRestaurants(req.params.latitude, req.params.longitude).catch(console.log)
   res.send(result)
 }
 
