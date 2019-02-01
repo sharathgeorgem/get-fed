@@ -42,23 +42,23 @@ class Index extends React.Component {
         <Row>
           <Col
             style={{ paddingRight: 0 }}
-            sm={{ size: 3, order: 1, offset: 2 }}
+            sm={{ size: 3, order: 1 }}
           >
             <h1 style={{ margin: 20 }}>LOGIN</h1>
+            <ul>
+              <li>
+                <Link href={this.state.loggedIn ? '/restaurant-scaffold' : '/authenticate'}>
+                  <a>Customer</a>
+                </Link>
+              </li>
+              <li><Link href='/deliverer-portal'><a>Deliverer</a></Link></li>
+              <li><Link href='/restaurant-portal'><a>Restaurant</a></Link></li>
+            </ul>
           </Col>
-          <Col style={{ paddingLeft: 5 }} sm={{ size: 6, order: 2 }}>
-            <img src='https://source.unsplash.com/700x450/?restaurant' alt='Restaurant image' />
+          <Col style={{ paddingLeft: 5 }} sm={{ size: 9, order: 2 }}>
+            <img src='https://source.unsplash.com/700x450/?restaurant' alt='Restaurant image' width='100%' />
           </Col>
         </Row>
-        <ul>
-          <li>
-            <Link href={this.state.loggedIn ? '/restaurant-scaffold' : '/authenticate'}>
-              <a>Customer</a>
-            </Link>
-          </li>
-          <li><Link href='/deliverer-portal'><a>Deliverer</a></Link></li>
-          <li><Link href='/restaurant-portal'><a>Restaurant</a></Link></li>
-        </ul>
         <style jsx global>
           {`
             li {
