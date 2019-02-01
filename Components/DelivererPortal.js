@@ -1,22 +1,29 @@
 import React from 'react'
 import io from 'socket.io-client'
 import { Card, CardText, CardTitle, CardSubtitle, Input, Button } from 'reactstrap'
+import fetch from 'isomorphic-unfetch'
 
 class DelivererPortal extends React.Component {
   constructor (props) {
     super(props)
-    this.state = { orders: [], lat: 0, long: 0, timer: null }
+    this.state = { name: '', id: null, msg: 'Enter your name', orders: [], lat: 0, long: 0, timer: null }
     this.initializeConnection()
+  }
+
+  getId = async () => {
+    let res = await fetch(`${this.props.domain}/auth/deliverer/${this.state.name}`)
+    res = await res.json()
+    let id = res.deliverer
+    this.setState({ id: id, msg: id ? 'Login successful' : 'Invalid name' }, () => this.socket.emit('identifyDeliverer', this.state.id))
   }
 
   initializeConnection = () => {
     this.socket = io.connect(this.props.domain)
-    this.socket.emit('identifyDeliverer', this.props.id)
     this.socket.on('newOrder', order => this.setState({ orders: [Object.assign(order, { status: 'new' })].concat(this.state.orders) }))
   }
 
   acceptDelivery = (orderId) => {
-    this.socket.emit('acceptDelivery', this.props.id, orderId)
+    this.socket.emit('acceptDelivery', this.state.id, orderId)
     let order = Object.assign({}, this.state.orders.filter(order => order.id === orderId)[0])
     order.status = 'accepted'
     this.setState({
@@ -49,7 +56,7 @@ class DelivererPortal extends React.Component {
     this.setState(
       { lat: latDel, long: longDel },
       () => {
-        this.socket.emit('updateLocation', this.props.id, this.state.lat, this.state.long)
+        this.socket.emit('updateLocation', this.state.id, this.state.lat, this.state.long)
       }
     )
   }
@@ -81,8 +88,9 @@ class DelivererPortal extends React.Component {
     return (
       <div>
       <h2>Deliverer Portal</h2>
-      <Input placeholder='Enter Deliverer Name' />
-      <Button>Submit</Button>
+      <Input onChange={e => this.setState({ name: e.target.value })} value={this.state.name} placeholder='Enter Name'>Deliverer : </Input>
+      <Button onClick={this.getId}>Submit</Button>
+      <p>{this.state.msg}</p>
       <hr />
       <h3>Deliveries</h3>
         {this.state.orders.map(order => {
@@ -110,13 +118,13 @@ class DelivererOrderCard extends React.Component {
   renderButton = () => {
     switch (this.props.status) {
       case 'new':
-        return <Button onClick={() => this.props.acceptDelivery(this.props.id)}>Deliver Order</Button>
+        return <Button onClick={() => this.props.acceptDelivery(this.state.id)}>Deliver Order</Button>
       case 'accepted':
-        return <Button onClick={() => this.props.arrived(this.props.id)}>Arrived at Restaurant</Button>
+        return <Button onClick={() => this.props.arrived(this.state.id)}>Arrived at Restaurant</Button>
       case 'arrivedAtRestaurant':
-        return <Button onClick={() => this.props.pickedUp(this.props.id)}>Picked Up</Button>
+        return <Button onClick={() => this.props.pickedUp(this.state.id)}>Picked Up</Button>
       case 'pickedUp':
-        return <Button onClick={() => this.props.delivered(this.props.id)}>Delivered</Button>
+        return <Button onClick={() => this.props.delivered(this.state.id)}>Delivered</Button>
       case 'delivered':
         return <p>Order delivered</p>
     }

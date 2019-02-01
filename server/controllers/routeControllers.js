@@ -83,20 +83,10 @@ exports.register = async function (req, res) {
 
 exports.loginRestaurant = async function (req, res) {
   let restaurant = await model.findRestaurant(req.params.name).catch(console.log)
-  res.send({ restaurant: restaurant._id })
+  res.send({ restaurant: restaurant ? restaurant._id : null })
 }
 
 exports.loginDeliverer = async function (req, res) {
   let deliverer = await model.findDeliverer(req.params.name).catch(console.log)
-  res.send({ deliverer: deliverer._id })
-}
-
-exports.loginRestaurant = async function (req, res) {
-  let restaurant = await model.findRestaurant(req.params.name).catch(console.log)
-  res.send({ restaurant: restaurant._id })
-}
-
-exports.loginDeliverer = async function (req, res) {
-  let deliverer = await model.findDeliverer(req.params.name).catch(console.log)
-  res.send({ deliverer: deliverer._id })
+  res.send({ deliverer: deliverer ? deliverer._id : null })
 }

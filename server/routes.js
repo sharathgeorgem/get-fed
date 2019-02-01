@@ -26,7 +26,7 @@ router.put('/user/addresses/:userId/:addressType', controllers.addAddress) // se
 router.post('/user/cart/:userId', controllers.setCart) // send cart in body
 
 router.post('/auth/register', controllers.register)
-router.get('/restaurant/login/:name', controllers.loginRestaurant)
-router.get('/deliverer/login/:name', controllers.loginDeliverer)
+router.get('/auth/restaurant/:name', controllers.loginRestaurant)
+router.get('/auth/deliverer/:name', controllers.loginDeliverer)
 
 module.exports = router
