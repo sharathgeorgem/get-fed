@@ -17,7 +17,7 @@ class RestaurantView extends React.Component {
 }
 
 RestaurantView.getInitialProps = async function () {
-  let res = await fetch(`${config.domain}/restaurant/dummy`)
+  let res = await fetch(`${config.domain}/dev/restaurant/dummy`)
     .then(res => res.json())
   console.log('id is', res.id)
   return { id: res.id }

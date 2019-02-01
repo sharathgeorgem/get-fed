@@ -17,7 +17,7 @@ class DelivererView extends React.Component {
 }
 
 DelivererView.getInitialProps = async function () {
-  let res = await fetch(`${config.domain}/deliverer/dummy`)
+  let res = await fetch(`${config.domain}/dev/deliverer/dummy`)
     .then(res => res.json())
   console.log('id is', res.id)
   return { id: res.id }
