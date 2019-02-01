@@ -61,7 +61,7 @@ exports.removeItemFromCart = async function (req, res) {
   res.send(cart)
 }
 
-exports.addAddress = async function (req, res) { // need to add geocoding as middleware here
+exports.addAddress = async function (req, res) {
   let address = await model.addAddress(req.params.userId, req.params.addressType, req.body.address).catch(console.log)
   res.send({ addresses: address })
 }
