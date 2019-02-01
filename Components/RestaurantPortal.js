@@ -1,6 +1,6 @@
 import React from 'react'
 import io from 'socket.io-client'
-import { Card, CardText, CardTitle, CardSubtitle, Button } from 'reactstrap'
+import { Card, CardText, CardTitle, CardSubtitle, Input, Button } from 'reactstrap'
 
 class RestaurantPortal extends React.Component {
   constructor (props) {
@@ -26,6 +26,7 @@ class RestaurantPortal extends React.Component {
     return (
       <div>
       <h2>Restaurant Portal</h2>
+      <Input placeholder='Enter Restaurant Name'>Restaurant : </Input>
       <hr />
       <h3>Orders</h3>
         {this.state.orders.filter(order => !order.accepted).map(order => {

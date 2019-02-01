@@ -23,7 +23,7 @@ export default class MyApp extends App {
         <Container>
           <UserContextProvider>
             <CartContextProvider>
-              <Layout {...pageProps}>
+              <Layout {...pageProps} style={{ position: 'fixed' }}>
                 <Component {...pageProps} />
               </Layout>
             </CartContextProvider>

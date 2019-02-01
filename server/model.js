@@ -34,11 +34,6 @@ const ItemSchema = createSchema({
 })
 const AddressSchema = createSchema({
   location: [Number, Number],
-<<<<<<< HEAD
-  // latitude: Number,
-  // longitude: Number,
-=======
->>>>>>> 94ed3a27eebb3abb4f382b01b2bad574336a5a48
   value: String,
   apartment: String,
   landmark: String
@@ -190,11 +185,7 @@ exports.addItem = async function (resId, itemDetails, category) {
 }
 
 exports.getRestaurants = async function (lat, long) {
-<<<<<<< HEAD
-  return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(10)
-=======
   return Restaurant.find({ 'address.location': { $near: [lat, long] } }).limit(20)
->>>>>>> 94ed3a27eebb3abb4f382b01b2bad574336a5a48
 }
 
 exports.getMenu = async function (resId) {

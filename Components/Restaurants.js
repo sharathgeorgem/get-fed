@@ -78,6 +78,7 @@ const Restaurants = (props) => {
             }
             .card {
               display: inline-block !important;
+              box-shadow: 3px 3px 3px 2px #00000F;
             }
           `}
         </style>

@@ -86,7 +86,7 @@ class Restaurant extends React.Component {
                       margin-bottom: 30px;
                     }
                     .btn-outline-primary {
-                      color: #007bff !important;
+                      color: #ffffff !important;
                     }
                     a:hover {
                       color: white !important;
@@ -96,12 +96,13 @@ class Restaurant extends React.Component {
                     }
                     .card {
                       display: inline-block !important;
+                      box-shadow: 3px 3px 3px 2px #00000F;
                     }
                   `}
                   </style>
                 </div>
               </Col>
-              <Col xs='3' style={{ padding: 0 }}>
+              <Col xs='3' style={{ padding: 0, position: 'fixed', right: '5px' }}>
                 <div>
                   <h1>Cart</h1>
                   <Cart />
@@ -150,14 +151,14 @@ class ItemCard extends React.Component {
           </CardText>
         </CardImgOverlay> */}
         <CardBody>
-          <CardTitle>{this.props.dish.name}</CardTitle>
+          <CardTitle style={{ color: '#000'}}>{this.props.dish.name}</CardTitle>
         </CardBody>
         <div className='card-footer'>
           { this.props.dish.available ?
             <Button
               outline color='primary'
               onClick={this.props.addItem.bind(this, this.props.dish)}
-              style={{ zIndex: 10000 }}
+              style={{ zIndex: 10000, backgroundColor: '#00c367' }}
             >
             + Add To Cart
             </Button>
