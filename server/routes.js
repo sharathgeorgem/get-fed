@@ -16,7 +16,7 @@ router.post('/deliverer/new', controllers.addDeliverer)
 router.post('/menu/new/:restaurantId', controllers.addItem)
 // ---
 
-router.get('/restaurant/:latitude/:longitude', controllers.getRestaurants) // add latitude and longitude as params
+router.get('/restaurant/:latitude/:longitude', controllers.getRestaurants)
 router.get('/menu/:restaurantId', controllers.getMenu)
 router.get('/user/cart/:userId', controllers.getCart)
 router.get('/user/addresses/:userId', controllers.getAddresses)
@@ -26,7 +26,7 @@ router.put('/user/addresses/:userId/:addressType', controllers.addAddress) // se
 router.post('/user/cart/:userId', controllers.setCart) // send cart in body
 
 router.post('/auth/register', controllers.register)
-router.get('/restaurant/login/:name', controllers.loginRestaurant)
-router.get('/deliverer/login/:name', controllers.loginDeliverer)
+router.get('/auth/restaurant/:name', controllers.loginRestaurant)
+router.get('/auth/deliverer/:name', controllers.loginDeliverer)
 
 module.exports = router

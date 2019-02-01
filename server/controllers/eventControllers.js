@@ -17,7 +17,7 @@ exports.cancelOrder = async function (orderId, client, connections) {
 exports.acceptOrder = async function (orderId, connections) {
   console.log('Order accepted')
   let order = await model.acceptOrder(orderId).catch(console.log)
-  Object.values(connections.deliverers).forEach(val => val.socket.emit('newOrder', order)) // change to nearby deliverers
+  Object.values(connections.deliverers).forEach(val => val.socket.emit('newOrder', order))
   connections[order.customer].emit('orderAccepted', orderId)
   connections[order.restaurant.id].emit('updateOrderStatus', order)
 }
@@ -28,7 +28,6 @@ exports.acceptDelivery = async function (delivererId, orderId, connections) {
   if (res) {
     connections[res.customer].emit('delivererAssigned', orderId, res.deliverer)
     Object.entries(connections.deliverers).forEach(([key, value]) => value.socket.emit('orderTaken'))
-    // only emit event to previously messaged deliverers
   }
 }
 
