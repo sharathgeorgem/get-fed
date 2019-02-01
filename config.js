@@ -1,4 +1,4 @@
 module.exports = {
-  domain: 'http://localhost:3000',
+  domain: 'https://get-fed.herokuapp.com',
   mapquestKey: 'GFf1LiiyRhj0zRd4UBrVzlmr7fUOjUvu'
 }

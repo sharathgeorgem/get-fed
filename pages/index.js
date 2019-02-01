@@ -56,7 +56,9 @@ class Index extends React.Component {
             </ul>
           </Col>
           <Col style={{ paddingLeft: 5 }} sm={{ size: 9, order: 2 }}>
-            <img src='https://source.unsplash.com/700x450/?restaurant' alt='Restaurant image' width='100%' />
+            <div width='100%'>
+              <img src='https://source.unsplash.com/700x450/?restaurant' alt='Restaurant image' max-width='100%' max-height='100%' />
+            </div>
           </Col>
         </Row>
         <style jsx global>
