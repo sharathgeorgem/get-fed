@@ -78,7 +78,7 @@ class RestaurantOrderCard extends React.Component {
     if (this.props.accepted) {
       return <CardText>Order Accepted</CardText>
     }
-    return <Button onClick={() => this.props.acceptOrder(this.state.id)}>Accept Order</Button>
+    return <Button onClick={() => this.props.acceptOrder(this.props.id)}>Accept Order</Button>
   }
   render () {
     return (

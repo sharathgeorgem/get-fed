@@ -118,13 +118,13 @@ class DelivererOrderCard extends React.Component {
   renderButton = () => {
     switch (this.props.status) {
       case 'new':
-        return <Button onClick={() => this.props.acceptDelivery(this.state.id)}>Deliver Order</Button>
+        return <Button onClick={() => this.props.acceptDelivery(this.props.id)}>Deliver Order</Button>
       case 'accepted':
-        return <Button onClick={() => this.props.arrived(this.state.id)}>Arrived at Restaurant</Button>
+        return <Button onClick={() => this.props.arrived(this.props.id)}>Arrived at Restaurant</Button>
       case 'arrivedAtRestaurant':
-        return <Button onClick={() => this.props.pickedUp(this.state.id)}>Picked Up</Button>
+        return <Button onClick={() => this.props.pickedUp(this.props.id)}>Picked Up</Button>
       case 'pickedUp':
-        return <Button onClick={() => this.props.delivered(this.state.id)}>Delivered</Button>
+        return <Button onClick={() => this.props.delivered(this.props.id)}>Delivered</Button>
       case 'delivered':
         return <p>Order delivered</p>
     }
