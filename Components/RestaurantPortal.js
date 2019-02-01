@@ -27,6 +27,7 @@ class RestaurantPortal extends React.Component {
       <div>
       <h2>Restaurant Portal</h2>
       <Input placeholder='Enter Restaurant Name'>Restaurant : </Input>
+      <Button>Submit</Button>
       <hr />
       <h3>Orders</h3>
         {this.state.orders.filter(order => !order.accepted).map(order => {
